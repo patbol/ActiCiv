@@ -1,0 +1,11 @@
+Command: pnpm test
+Exit: 0
+$ vitest run
+
+ RUN  v4.1.11 /workspace/scratch/28aa7e1fbf85/acticiv
+
+
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+   Start at  21:24:57
+   Duration  7.30s (transform 267ms, setup 0ms, import 1.09s, tests 6.04s, environment 1ms)

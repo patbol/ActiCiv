@@ -1,0 +1,132 @@
+Command: pnpm test:e2e
+Exit: 1
+$ playwright test
+[WebServer] (node:38) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3000
+[WebServer] (node:53) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3001
+[WebServer] (node:94) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 2 workers
+
+(node:119) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (2.9s)
+  ✘   3 [desktop] › e2e/foundation.spec.ts:48:3 › surface 3000: skip link and reduced motion (51ms)
+  ✓   2 [desktop] › e2e/foundation.spec.ts:25:3 › surface 3000: keyboard dialog focus and persistent labels (3.5s)
+  ✘   4 [desktop] › e2e/foundation.spec.ts:25:3 › surface 3001: keyboard dialog focus and persistent labels (42ms)
+(node:226) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:235) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [desktop] › e2e/foundation.spec.ts:48:3 › surface 3001: skip link and reduced motion (1.7s)
+  ✓   5 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (3.2s)
+(node:333) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:341) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (3.8s)
+  ✘   9 [mobile] › e2e/foundation.spec.ts:48:3 › surface 3000: skip link and reduced motion (50ms)
+  ✓   8 [mobile] › e2e/foundation.spec.ts:25:3 › surface 3000: keyboard dialog focus and persistent labels (4.8s)
+  ✘  10 [mobile] › e2e/foundation.spec.ts:25:3 › surface 3001: keyboard dialog focus and persistent labels (63ms)
+(node:444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:453) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [mobile] › e2e/foundation.spec.ts:48:3 › surface 3001: skip link and reduced motion (1.7s)
+  ✓  11 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (3.6s)
+
+
+  1) [desktop] › e2e/foundation.spec.ts:48:3 › surface 3000: skip link and reduced motion ──────────
+
+    Error: browserContext.newPage: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /workspace/scratch/28aa7e1fbf85/browser-qa/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --no-zygote --single-process --user-data-dir=/tmp/playwright_chromiumdev_profile-bUHL24 --remote-debugging-pipe --no-startup-window
+    <launched> pid=143
+    [pid=143][err] [0915/212654.817017:ERROR:../net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1)
+    [pid=143][err] [0915/212655.532647:ERROR:../gpu/ipc/client/command_buffer_proxy_impl.cc:285] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+
+    Error Context: test-results/foundation-surface-3000-skip-link-and-reduced-motion-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3000-skip-link-and-reduced-motion-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3000-skip-link-and-reduced-motion-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › e2e/foundation.spec.ts:25:3 › surface 3001: keyboard dialog focus and persistent labels
+
+    Error: browserContext.newPage: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /workspace/scratch/28aa7e1fbf85/browser-qa/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --no-zygote --single-process --user-data-dir=/tmp/playwright_chromiumdev_profile-tnp22Y --remote-debugging-pipe --no-startup-window
+    <launched> pid=148
+    [pid=148][err] [0915/212654.886205:ERROR:../net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1)
+    [pid=148][err] [0915/212655.544358:ERROR:../gpu/ipc/client/command_buffer_proxy_impl.cc:285] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+
+    Error Context: test-results/foundation-surface-3001-ke-9b22b-focus-and-persistent-labels-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3001-ke-9b22b-focus-and-persistent-labels-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3001-ke-9b22b-focus-and-persistent-labels-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › e2e/foundation.spec.ts:48:3 › surface 3000: skip link and reduced motion ───────────
+
+    Error: browserContext.newPage: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /workspace/scratch/28aa7e1fbf85/browser-qa/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --no-zygote --single-process --user-data-dir=/tmp/playwright_chromiumdev_profile-nZl43h --remote-debugging-pipe --no-startup-window
+    <launched> pid=353
+    [pid=353][err] [0915/212704.708688:ERROR:../net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1)
+
+    Error Context: test-results/foundation-surface-3000-skip-link-and-reduced-motion-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3000-skip-link-and-reduced-motion-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3000-skip-link-and-reduced-motion-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › e2e/foundation.spec.ts:25:3 › surface 3001: keyboard dialog focus and persistent labels
+
+    Error: browserContext.newPage: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /workspace/scratch/28aa7e1fbf85/browser-qa/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --no-zygote --single-process --user-data-dir=/tmp/playwright_chromiumdev_profile-gwBEEv --remote-debugging-pipe --no-startup-window
+    <launched> pid=401
+    [pid=401][err] [0915/212705.237187:ERROR:../net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1)
+    [pid=401][err] [0915/212705.565176:ERROR:../gpu/ipc/client/command_buffer_proxy_impl.cc:285] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+
+    Error Context: test-results/foundation-surface-3001-ke-9b22b-focus-and-persistent-labels-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3001-ke-9b22b-focus-and-persistent-labels-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3001-ke-9b22b-focus-and-persistent-labels-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › e2e/foundation.spec.ts:48:3 › surface 3000: skip link and reduced motion ───────────
+    [desktop] › e2e/foundation.spec.ts:25:3 › surface 3001: keyboard dialog focus and persistent labels
+    [mobile] › e2e/foundation.spec.ts:48:3 › surface 3000: skip link and reduced motion ────────────
+    [mobile] › e2e/foundation.spec.ts:25:3 › surface 3001: keyboard dialog focus and persistent labels
+  8 passed (27.9s)
+[ELIFECYCLE] Command failed with exit code 1.

@@ -1,0 +1,161 @@
+Command: pnpm test:e2e
+Exit: 1
+$ playwright test
+[WebServer] (node:39) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3000
+[WebServer] (node:54) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:80) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3001
+[WebServer] (node:95) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 2 workers
+
+(node:120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:121) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (1.7s)
+(node:271) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [desktop] › e2e/foundation.spec.ts:26:3 › surface 3000: keyboard dialog focus and persistent labels (3.9s)
+  ✘   4 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (1.3s)
+  ✓   3 [desktop] › e2e/foundation.spec.ts:49:3 › surface 3000: skip link and reduced motion (1.4s)
+  ✓   5 [desktop] › e2e/foundation.spec.ts:49:3 › surface 3001: skip link and reduced motion (1.2s)
+(node:376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   7 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (1.8s)
+  ✓   6 [desktop] › e2e/foundation.spec.ts:26:3 › surface 3001: keyboard dialog focus and persistent labels (4.0s)
+(node:556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [mobile] › e2e/foundation.spec.ts:49:3 › surface 3000: skip link and reduced motion (1.9s)
+  ✘  10 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (1.5s)
+  ✓   8 [mobile] › e2e/foundation.spec.ts:26:3 › surface 3000: keyboard dialog focus and persistent labels (4.2s)
+(node:741) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 [mobile] › e2e/foundation.spec.ts:49:3 › surface 3001: skip link and reduced motion (1.4s)
+  ✓  12 [mobile] › e2e/foundation.spec.ts:26:3 › surface 3001: keyboard dialog focus and persistent labels (3.8s)
+
+
+  1) [desktop] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks
+
+    ReferenceError: testInfo is not defined
+
+       7 |     await page.goto(`http://127.0.0.1:${port}`);
+       8 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    >  9 |     await page.screenshot({ path: testInfo.outputPath("surface.png"), fullPage: true });
+         |                                   ^
+      10 |     await expect(
+      11 |       page.getByText("Aperçu de développement · Aucun signalement envoyé"),
+      12 |     ).toBeVisible();
+        at /workspace/scratch/28aa7e1fbf85/acticiv/e2e/foundation.spec.ts:9:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-desktop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks
+
+    ReferenceError: testInfo is not defined
+
+       7 |     await page.goto(`http://127.0.0.1:${port}`);
+       8 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    >  9 |     await page.screenshot({ path: testInfo.outputPath("surface.png"), fullPage: true });
+         |                                   ^
+      10 |     await expect(
+      11 |       page.getByText("Aperçu de développement · Aucun signalement envoyé"),
+      12 |     ).toBeVisible();
+        at /workspace/scratch/28aa7e1fbf85/acticiv/e2e/foundation.spec.ts:9:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-desktop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks
+
+    ReferenceError: testInfo is not defined
+
+       7 |     await page.goto(`http://127.0.0.1:${port}`);
+       8 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    >  9 |     await page.screenshot({ path: testInfo.outputPath("surface.png"), fullPage: true });
+         |                                   ^
+      10 |     await expect(
+      11 |       page.getByText("Aperçu de développement · Aucun signalement envoyé"),
+      12 |     ).toBeVisible();
+        at /workspace/scratch/28aa7e1fbf85/acticiv/e2e/foundation.spec.ts:9:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-mobile/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3000-re-23b1c-omatic-accessibility-checks-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks
+
+    ReferenceError: testInfo is not defined
+
+       7 |     await page.goto(`http://127.0.0.1:${port}`);
+       8 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    >  9 |     await page.screenshot({ path: testInfo.outputPath("surface.png"), fullPage: true });
+         |                                   ^
+      10 |     await expect(
+      11 |       page.getByText("Aperçu de développement · Aucun signalement envoyé"),
+      12 |     ).toBeVisible();
+        at /workspace/scratch/28aa7e1fbf85/acticiv/e2e/foundation.spec.ts:9:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-mobile/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-mobile/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/foundation-surface-3001-re-c1897-omatic-accessibility-checks-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks
+    [desktop] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks
+    [mobile] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks
+    [mobile] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks
+  8 passed (31.3s)
+[ELIFECYCLE] Command failed with exit code 1.

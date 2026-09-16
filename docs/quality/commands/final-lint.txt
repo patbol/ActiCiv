@@ -1,0 +1,3 @@
+Command: pnpm lint
+Exit: 0
+$ eslint . --max-warnings 0

@@ -1,0 +1,5 @@
+Command: pnpm db:start
+Exit: 1
+$ supabase start
+{"_tag":"Error","error":{"code":"LegacyDockerLifecycleInspectError","message":"failed to inspect container health: docker: command not found (podman also not found) — install Docker Desktop or Podman and ensure it is on PATH"}}
+[ELIFECYCLE] Command failed with exit code 1.

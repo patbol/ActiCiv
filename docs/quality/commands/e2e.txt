@@ -1,0 +1,38 @@
+Command: pnpm test:e2e
+Exit: 0
+$ playwright test
+[WebServer] (node:39) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3000
+[WebServer] (node:54) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:80) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3001
+[WebServer] (node:95) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 2 workers
+
+(node:120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:121) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (3.7s)
+  ✓   2 [desktop] › e2e/foundation.spec.ts:29:3 › surface 3000: keyboard dialog focus and persistent labels (3.8s)
+  ✓   3 [desktop] › e2e/foundation.spec.ts:52:3 › surface 3000: skip link and reduced motion (1.3s)
+  ✓   4 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (3.7s)
+  ✓   5 [desktop] › e2e/foundation.spec.ts:29:3 › surface 3001: keyboard dialog focus and persistent labels (3.7s)
+  ✓   6 [desktop] › e2e/foundation.spec.ts:52:3 › surface 3001: skip link and reduced motion (1.3s)
+(node:377) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:385) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile] › e2e/foundation.spec.ts:29:3 › surface 3000: keyboard dialog focus and persistent labels (4.0s)
+  ✓   7 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (5.0s)
+  ✓   9 [mobile] › e2e/foundation.spec.ts:52:3 › surface 3000: skip link and reduced motion (1.8s)
+  ✓  10 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (4.5s)
+  ✓  11 [mobile] › e2e/foundation.spec.ts:29:3 › surface 3001: keyboard dialog focus and persistent labels (3.8s)
+  ✓  12 [mobile] › e2e/foundation.spec.ts:52:3 › surface 3001: skip link and reduced motion (1.4s)
+
+  12 passed (29.9s)

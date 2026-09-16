@@ -1,0 +1,20 @@
+Command: pnpm typecheck
+Exit: 0
+$ pnpm -r typecheck && tsc -p tsconfig.tools.json
+Scope: 6 of 7 workspace projects
+packages/backend typecheck$ tsc --noEmit
+packages/shared typecheck$ tsc --noEmit
+packages/types typecheck$ tsc --noEmit
+packages/ui typecheck$ tsc --noEmit
+packages/shared typecheck: Done
+packages/types typecheck: Done
+packages/backend typecheck: Done
+packages/ui typecheck: Done
+apps/citizen typecheck$ next typegen && tsc --noEmit
+apps/pro typecheck$ next typegen && tsc --noEmit
+apps/citizen typecheck: Generating route types...
+apps/citizen typecheck: ✓ Types generated successfully
+apps/pro typecheck: Generating route types...
+apps/pro typecheck: ✓ Types generated successfully
+apps/citizen typecheck: Done
+apps/pro typecheck: Done
