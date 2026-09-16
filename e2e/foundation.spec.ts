@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 for (const port of [3000, 3001]) {
   test(`surface ${port}: renders and passes automatic accessibility checks`, async ({
     page,
-  }) => {
+  }, testInfo) => {
     await page.goto(`http://127.0.0.1:${port}`);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await page.screenshot({
