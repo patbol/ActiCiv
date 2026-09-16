@@ -1,3 +1,5 @@
+> Stratégie historique Phase 1, désormais clôturée : VoiceOver Safari validé sur Citizen et Pro, TalkBack différé. Pour les tests métier, RLS et Auth implémentés en Phase 2, voir [la procédure courante](../phase-2.md).
+
 # Vérification de phase 1
 
 Les unités couvrent les comportements de configuration et la non-divulgation des logs. Playwright vérifie les deux surfaces desktop/mobile, le dialogue, le focus, les labels, le lien d'évitement et reduced-motion. axe recherche les violations WCAG A/AA détectables.

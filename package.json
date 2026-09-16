@@ -6,6 +6,9 @@
     "node": ">=24 <25"
   },
   "scripts": {
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles",
+    "verify:full": "pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm audit --audit-level high",
+    "test:integration": "node --test integration/*.test.mjs",
     "dev": "pnpm --parallel --filter @acticiv/citizen --filter @acticiv/pro dev",
     "build": "pnpm --filter @acticiv/citizen build && pnpm --filter @acticiv/pro build",
     "typecheck": "pnpm -r typecheck && tsc -p tsconfig.tools.json",
@@ -18,7 +21,10 @@
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset --local",
     "db:status": "supabase status",
-    "db:test": "supabase test db"
+    "db:test": "node scripts/check-db-tests.mjs",
+    "db:provision": "node scripts/provision-dev.mjs",
+    "verify:bundles": "node scripts/check-client-bundles.mjs",
+    "release:verify": "node scripts/verify-release.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

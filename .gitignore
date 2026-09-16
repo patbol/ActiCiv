@@ -2,7 +2,7 @@ node_modules/
 .next/
 .env*
 !.env.example
-coverage/
+/coverage/
 playwright-report/
 test-results/
 .supabase/

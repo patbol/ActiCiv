@@ -1,21 +1,16 @@
-# Décisions produit ouvertes
+# Décisions produit ouvertes — phases futures
 
-Aucune de ces questions n'est tranchée par le code de phase 1.
+Les décisions Phase 2 sont verrouillées dans [Phase 2 Decisions](../references/ActiCiv_Phase2_Decisions.md) et complétées par les précisions d'implémentation approuvées. Mono-organisation, multi-services, rôles exclusifs, périmètre de supervision, PostGIS/frontières, contrats, scopes SLA, pauses, versionnement et DST ne sont plus ouverts.
 
-| Sujet                                                                                 | Échéance     |
-| ------------------------------------------------------------------------------------- | ------------ |
-| Organisations multi-territoires, chevauchements, règles de priorité de routage        | Phases 2–3   |
-| Zone couverte sans service routable et statut citoyen correspondant                   | Phase 3      |
-| Utilisateur multi-organisations/services, cumul des rôles, héritage admin/superviseur | Phase 2      |
-| Transferts internes ou inter-organisations et motif de clôture transféré              | Phases 2–5   |
-| Fusion : permissions, médias, tokens, SLA, statistiques                               | Avant fusion |
-| SLA : départs, pauses, jours fériés, changements de règles, réouverture               | Phase 2      |
-| File : garder l'ordre détaillé priorité, distance si connue, âge, SLA                 | Phase 4      |
-| Anti-abus : rayon, appareil/IP, 10e ou 11e envoi                                      | Phase 3      |
-| Contenu visible via token et rétention du suivi                                       | Phase 3      |
-| Anciens signalements lors de l'ouverture d'une zone                                   | Phase 6      |
-| PWA : installation, hors ligne, brouillons, envoi différé                             | Phase 3      |
+| Sujet                                                     | Échéance                |
+| --------------------------------------------------------- | ----------------------- |
+| Routage complet et candidats non départageables           | Phase 3                 |
+| Payload public de suivi et rétention                      | Phase 3 / avant PROD    |
+| Anti-abus : rayon, appareil/IP, seuil précis              | Phase 3                 |
+| Fusion : permissions, médias, tokens, SLA, statistiques   | Avant fusion            |
+| Réouverture et conséquences SLA                           | Avant workflow concerné |
+| Anciens signalements lors de l'ouverture d'une zone       | Phase 6                 |
+| PWA : installation, hors ligne, brouillons, envoi différé | Phase 3                 |
+| Rétention détaillée PROD                                  | Avant PROD              |
 
-Livre prioritaire sur prompt : Vercel, Resend, Turnstile, MapLibre DEV ; PWA citoyenne et preview branding à conserver. La carte/listes est prévue phase 5, son temps réel phase 7. La qualité s'applique à chaque phase, pas seulement phase 8.
-
-Les hypothèses de prix, revenus, financement et partenariat ne sont pas des configurations applicatives.
+Transferts inter-organisations hors MVP. Aucun report ni moteur de routage en Phase 2. TalkBack reste une validation manuelle différée, pas un arbitrage produit.

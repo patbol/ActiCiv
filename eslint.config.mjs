@@ -47,4 +47,34 @@ export default defineConfig([
       ],
     },
   },
+  {
+    files: [
+      "packages/backend/src/modules/**/domain/**/*.ts",
+      "packages/backend/src/modules/**/application/**/*.ts",
+    ],
+    ignores: ["**/*.test.ts"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: [
+                "next",
+                "next/*",
+                "react",
+                "@supabase/*",
+                "**/infrastructure/**",
+                "**/platform/**",
+                "server-only",
+                "@js-temporal/*",
+              ],
+              message:
+                "Domain and use cases must depend only on domain types and explicit ports.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);

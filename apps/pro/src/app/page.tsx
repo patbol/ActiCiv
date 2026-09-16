@@ -28,6 +28,7 @@ export default function Page() {
             </p>
             <div className="actions">
               <FoundationDialog />
+              <Link href="/auth/login">Connexion professionnelle</Link>
             </div>
             <p className="small">
               Aperçu de développement · Aucun signalement envoyé
