@@ -168,17 +168,17 @@ Les mots de passe de fixtures sont générés en mémoire. Les tests ajoutent le
 
 Références : S1 = [phase2.sql](../supabase/tests/phase2.sql), S2 = [phase2_edge_cases.sql](../supabase/tests/phase2_edge_cases.sql), S3 = [phase2_closure.sql](../supabase/tests/phase2_closure.sql), I = [security.test.mjs](../integration/security.test.mjs), IC = [last-admin.test.mjs](../integration/last-admin.test.mjs), IA = [invitations.integration.ts](../packages/backend/integration/invitations.integration.ts), E = [auth.spec.ts](../e2e/auth.spec.ts), E1 = [foundation.spec.ts](../e2e/foundation.spec.ts). M1–M9 sont les migrations listées. D et R désignent les [métadonnées initiales](preuves/phase2-database-metadata.txt) et [runtime initial](preuves/phase2-audit-runtime.txt), seulement pour les propriétés restées inchangées. Les mentions L de la matrice renvoient aux campagnes locales citées ici ; le journal final du nouveau SHA reste à joindre.
 
-| Contrôle                               | Résultat local observé                                    | Preuve                                                                  |
-| -------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------- |
-| Format/lint/typecheck                  | PASS                                                      | Commandes réexécutées après corrections, aucune erreur                  |
-| Unités                                 | PASS, 25 tests / 11 fichiers                              | Vitest, nouveaux cas session/plateforme/catalogue/réseau/dimanche-lundi |
-| SQL                                    | PASS, 84 assertions / 3 fichiers                          | S1/S2/S3 sur Supabase réel après reset                                  |
-| Concurrence/RLS/Auth Node              | PASS, 8 scénarios                                         | I + IC, deux acteurs et barrière effective                              |
-| Adaptateurs invitation                 | PASS, 4 scénarios                                         | IA, vraie base/Auth avec pannes injectées                               |
-| Builds                                 | PASS, Citizen et Pro                                      | Builds production réellement exécutés                                   |
-| Playwright/axe                         | PASS, 26 cas sans retry                                   | E/E1 desktop/mobile, dont 12 Phase 1 inchangés                          |
-| Secrets                                | PASS sur l'historique précédent ; nouveau SHA à rescanner | Gitleaks8.30.1, contrôles positifs/négatifs, aucun secret trouvé        |
-| verify / verify:full du candidat final | DEFERRED                                                  | Exécution agrégée après gel et contrôle manuel                          |
+| Contrôle                               | Résultat local observé           | Preuve                                                                  |
+| -------------------------------------- | -------------------------------- | ----------------------------------------------------------------------- |
+| Format/lint/typecheck                  | PASS                             | Commandes réexécutées après corrections, aucune erreur                  |
+| Unités                                 | PASS, 25 tests / 11 fichiers     | Vitest, nouveaux cas session/plateforme/catalogue/réseau/dimanche-lundi |
+| SQL                                    | PASS, 84 assertions / 3 fichiers | S1/S2/S3 sur Supabase réel après reset                                  |
+| Concurrence/RLS/Auth Node              | PASS, 8 scénarios                | I + IC, deux acteurs et barrière effective                              |
+| Adaptateurs invitation                 | PASS, 4 scénarios                | IA, vraie base/Auth avec pannes injectées                               |
+| Builds                                 | PASS, Citizen et Pro             | Builds production réellement exécutés                                   |
+| Playwright/axe                         | PASS, 26 cas sans retry          | E/E1 desktop/mobile, dont 12 Phase 1 inchangés                          |
+| Secrets                                | PASS                             | Gitleaks 8.30.1, contrôles positifs/négatifs et scan du SHA attesté     |
+| verify / verify:full du candidat final | PASS                             | Journal externe : reconstruction, tests et marqueurs SHA identiques     |
 
 Aucun retry Playwright. Le profil mobile est Chromium émulé, pas Safari/iOS/TalkBack. Les suites d'intégration sont séquentielles pour éviter les collisions entre fixtures partagées. Les tests de course eux-mêmes conservent leur concurrence explicite.
 
@@ -186,7 +186,7 @@ Aucun retry Playwright. Le profil mobile est Chromium émulé, pas Safari/iOS/Ta
 
 `verify` compose format/lint/types/unités/builds/bundles. `verify:full` ajoute SQL, intégration Node + adaptateurs Vitest, E2E, audit dépendances et Gitleaks. Aucun test vide ni succès de substitution si Docker manque.
 
-`pnpm release:verify --rebuild-db` impose un arbre propre, imprime SHA/runtime, reconstruit le projet DEV depuis zéro sans sauvegarde, refait reset/seed, vérifie les compteurs, lance verify:full, puis contrôle le même HEAD/arbre. Les marqueurs attendus sont DB_RECONSTRUCTED_SHA, SECRET_SCAN_SHA et LOCAL_VALIDATED_SHA, tous identiques. Ce mode supprime les données DEV locales : il sera exécuté après la fin de la session VoiceOver.
+`pnpm release:verify --rebuild-db` impose un arbre propre, imprime SHA/runtime, reconstruit le projet DEV depuis zéro sans sauvegarde, refait reset/seed, vérifie les compteurs, lance verify:full, puis contrôle le même HEAD/arbre. Les marqueurs DB_RECONSTRUCTED_SHA, SECRET_SCAN_SHA et LOCAL_VALIDATED_SHA sont identiques dans le journal local attesté. Ce mode supprime les données DEV locales.
 
 ## 16. GitHub Actions / SHA exact
 
@@ -261,17 +261,17 @@ Gitleaks [8.30.1 officiel](https://github.com/gitleaks/gitleaks/releases/tag/v8.
 
 ## 27. Critères d’acceptation Phase 2, un par un : PASS / FAIL / DEFERRED
 
-Matrice de consolidation : **247 PASS, 0 FAIL, 14 DEFERRED**. Les DEFERRED de livraison sont obligatoires et bloquent encore la clôture ; seul TalkBack peut rester différé faute d'environnement. Les preuves finales ne sont pas anticipées.
+Matrice de consolidation : **256 PASS, 0 FAIL, 5 DEFERRED**. Les DEFERRED restants concernent la CI, l'artefact et TalkBack ; seul TalkBack peut rester différé faute d'environnement. Les preuves finales ne sont pas anticipées.
 
 **Git, release et architecture**
 
 | ID     | Critère                                                                       | Statut   | Preuve / constat                                                                                                                           |
 | ------ | ----------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| REL-01 | `verify` existe et passe                                                      | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
-| REL-02 | `verify:full` existe et passe                                                 | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
-| REL-03 | Arbre du candidat propre lors de sa validation                                | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
-| REL-04 | Arbre courant prêt pour une livraison propre                                  | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
-| REL-05 | SHA candidat identifié                                                        | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
+| REL-01 | `verify` existe et passe                                                      | PASS     | Inclus dans `release:verify --rebuild-db` ; journal local attesté, voir section 15.                                                        |
+| REL-02 | `verify:full` existe et passe                                                 | PASS     | Journal local attesté : SQL, intégration, E2E, audit et secrets, voir section 15.                                                          |
+| REL-03 | Arbre du candidat propre lors de sa validation                                | PASS     | `release:verify` refuse un arbre sale avant et après les contrôles.                                                                        |
+| REL-04 | Arbre courant prêt pour une livraison propre                                  | PASS     | SHA de livraison gelé, vérifié par `git status --short` dans l'attestation externe.                                                        |
+| REL-05 | SHA candidat identifié                                                        | PASS     | SHA exact, runtime et trois marqueurs sont consignés dans l'attestation extérieure au commit.                                              |
 | REL-06 | Même SHA réussi localement et dans les deux jobs GitHub Actions               | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
 | REL-07 | Aucun changement entre validation finale complète et livraison                | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
 | REL-08 | Artefact construit depuis le SHA validé                                       | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                               |
@@ -322,10 +322,10 @@ Matrice de consolidation : **247 PASS, 0 FAIL, 14 DEFERRED**. Les DEFERRED de li
 | DB-28 | Audit events                                                           | PASS     | M3, `audit_events` dans D                                                                  |
 | DB-29 | Aucune table report/intervention/transfert/notification métier         | PASS     | Inventaire de 27 tables et neuf migrations : aucun workflow Phase 3.                       |
 | DB-30 | Supabase local accessible réellement                                   | PASS     | Requêtes D, SQL/I/E réussis dans L                                                         |
-| DB-31 | Preuve complète de `supabase start` pour la reconstruction du candidat | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.               |
+| DB-31 | Preuve complète de `supabase start` pour la reconstruction du candidat | PASS     | Journal local : départ sans sauvegarde, démarrage, neuf migrations et seed.                |
 | DB-32 | Migrations appliquées dans la base observée                            | PASS     | Reset réel réussi avec neuf migrations M1–M9 pendant le renforcement ; gel final à suivre. |
-| DB-33 | Migrations depuis base vide prouvées sur candidat final                | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.               |
-| DB-34 | `db reset` + seed prouvés par journal exact du candidat                | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.               |
+| DB-33 | Migrations depuis base vide prouvées sur candidat final                | PASS     | Journal local : M1–M9 appliquées depuis le départ sans sauvegarde.                         |
+| DB-34 | `db reset` + seed prouvés par journal exact du candidat                | PASS     | `db reset`, 3 organisations, 9 profils, 6 services et 3 territoires contrôlés.             |
 | DB-35 | Tests SQL réels réussis                                                | PASS     | Campagne locale pgTAP : 84 assertions dans S1/S2/S3.                                       |
 | DB-36 | Même reconstruction/résultat en CI                                     | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.               |
 
@@ -522,7 +522,7 @@ Matrice de consolidation : **247 PASS, 0 FAIL, 14 DEFERRED**. Les DEFERRED de li
 | QA-13   | Playwright                                                     | PASS     | Campagne locale Playwright : 26/26, dont 12 Phase 1 conservés, sans retry.                                                           |
 | QA-14   | axe sur périmètre effectivement scanné                         | PASS     | E/E1 et L ; autres pages non couvertes ci-dessous                                                                                    |
 | QA-15   | Audit dépendances                                              | PASS     | L « No known vulnerabilities found »                                                                                                 |
-| QA-16   | Secret scan final exactSHA                                     | DEFERRED | Preuve obligatoire du candidat final encore attendue, voir sections 4/15/16.                                                         |
+| QA-16   | Secret scan final exactSHA                                     | PASS     | Gitleaks 8.30.1, contrôles positifs/négatifs et marqueur SECRET_SCAN_SHA dans le journal local.                                      |
 | QA-17   | Aucun retry masquant un défaut                                 | PASS     | Config `retries:0`, L aucun retry                                                                                                    |
 | QA-18   | Phase 1 reste verte                                            | PASS     | E1 inchangé selon git diff, 12 E2E réussis et contrôles workspace L                                                                  |
 | QA-19   | Tests unitaires dédiés priorités/catégories annoncés au plan   | PASS     | category.test.ts valide les priorités permises/refusées ; S3 création de catégorie et non-extension contractuelle.                   |
@@ -570,4 +570,4 @@ Aucune Phase3 commencée : ni report citoyen, upload photo, tracking, smart queu
 
 ## 29. Conclusion et condition de passage Phase 3
 
-Les FAIL techniques sont résolus dans cette passe, mais la clôture attend les preuves obligatoires encore indiquées DEFERRED. La finalisation exige un arbre propre, les marqueurs locaux de reconstruction/validation, les deux jobs CI sur le même SHA et l'archive issue de ce SHA. Aucun passage Phase3 sans validation explicite de Patrick.
+Les FAIL techniques sont résolus dans cette passe, mais la clôture attend les preuves obligatoires encore indiquées DEFERRED. La finalisation exige les deux jobs CI sur le même SHA et l'archive issue de ce SHA ; TalkBack reste le seul différé environnemental admissible. Aucun passage Phase3 sans validation explicite de Patrick.
