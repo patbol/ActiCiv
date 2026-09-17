@@ -1,3 +1,5 @@
+import { saveHoldTranslation } from "../modules/locales/application/translations";
+import { translationWriter } from "../modules/locales/infrastructure/translations";
 import "server-only";
 import { z } from "zod";
 import { priorities } from "../modules/catalog/domain/category";
@@ -16,12 +18,26 @@ import {
   saveService,
   setServiceMember,
 } from "../modules/organizations/application/administration";
+import { setOrganizationLocale } from "../modules/locales/application/preferences";
+import { localePreferences } from "../modules/locales/infrastructure/preferences";
 const uuid = z.guid(),
   org = { organizationId: uuid };
 const role = z.enum(["agent", "supervisor", "client_admin"]);
 const priority = z.enum(priorities);
 const nonempty = z.string().trim().min(1).max(200);
 const command = z.discriminatedUnion("action", [
+  z.strictObject({
+    action: z.literal("translation.hold"),
+    ...org,
+    entityId: uuid,
+    locale: z.enum(["fr-FR", "en-GB"]),
+    label: nonempty,
+  }),
+  z.strictObject({
+    action: z.literal("locale.organization"),
+    ...org,
+    locale: z.enum(["fr-FR", "en-GB"]),
+  }),
   z.object({
     action: z.literal("service.save"),
     ...org,
@@ -113,6 +129,21 @@ export async function configure(
     throw new Error("Accès refusé");
   const port = administration(client);
   switch (value.action) {
+    case "translation.hold":
+      return saveHoldTranslation(
+        context,
+        value.entityId,
+        value.locale,
+        value.label,
+        translationWriter(client),
+      );
+    case "locale.organization":
+      return setOrganizationLocale(
+        context,
+        value.organizationId,
+        value.locale,
+        localePreferences(client),
+      );
     case "service.save":
       return saveService(
         context,

@@ -11,3 +11,10 @@ condition = "AND"
 paths = ['''(^|/)docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8\.md$''']
 regexTarget = "secret"
 regexes = ['''^fac0fc8663d1f32b09b720fddffd46f0829c8a6a$''']
+
+[[rules.allowlists]]
+description = "Non-secret checkpoint B commit identified by the C validation log"
+condition = "AND"
+paths = ['''(^|/)docs/evidence/phase2bis/2bis-c-validation\.txt$''']
+regexTarget = "secret"
+regexes = ['''^7d43c1b8b3ece14cb6df03f4a445030cbbec326b$''']

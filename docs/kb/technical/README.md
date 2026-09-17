@@ -18,3 +18,5 @@ Fiche active ajoutée en 2bis-B : [testing, POM et conventions exécutables](tes
 Les sujets POM/tagging (B), i18n (C), coverage/rapports/gates (D), Security Assurance/artefacts/performance (E), observabilité (F), KB/Skills approfondis (G), Quality Center (H) seront documentés à partir de leur implémentation réelle. Ils ne sont pas implémentés par cet index.
 
 Employer le [modèle technique](../templates/technical-topic.md). Une fiche explique la responsabilité, les frontières, les contrats, les risques et les preuves, plutôt que recopier chaque ligne de code.
+
+Fiche active ajoutée en 2bis-C : [internationalisation, préférences et traductions](internationalisation.md).

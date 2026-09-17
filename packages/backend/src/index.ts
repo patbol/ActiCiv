@@ -28,3 +28,5 @@ export {
   acceptProfessionalInvitation,
   signOutProfessional,
 } from "./modules/auth/application/session";
+export { readLocalePreferences } from "./modules/locales/infrastructure/preferences";
+export { changeLocalePreference } from "./platform/locale-preference";

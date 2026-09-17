@@ -1,10 +1,14 @@
+import { getTranslations, getLocale } from "next-intl/server";
 import type { MetadataRoute } from "next";
 import { brand } from "@acticiv/shared";
-export default function manifest(): MetadataRoute.Manifest {
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const t = await getTranslations("common");
+  const locale = await getLocale();
   return {
     name: brand.name,
     short_name: brand.shortName,
-    description: brand.description,
+    lang: locale,
+    description: t("description"),
     start_url: "/",
     display: "standalone",
     background_color: "#f8faf7",

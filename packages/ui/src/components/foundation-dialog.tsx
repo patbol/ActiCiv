@@ -4,40 +4,43 @@ import { ArrowUpRight, X } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { Label } from "./label";
-export function FoundationDialog() {
+export type DialogLabels = {
+  trigger: string;
+  title: string;
+  description: string;
+  inputLabel: string;
+  placeholder: string;
+  help: string;
+  close: string;
+};
+export function FoundationDialog({ labels }: { labels: DialogLabels }) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <Button variant="outline">
-          Découvrir le projet <ArrowUpRight size={18} aria-hidden="true" />
+          {labels.trigger} <ArrowUpRight size={18} aria-hidden="true" />
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
         <Dialog.Content className="dialog-content">
-          <Dialog.Title className="dialog-title">
-            Une ville plus accessible
-          </Dialog.Title>
-          <Dialog.Description>
-            Le service est en préparation. Ce premier aperçu présente ses
-            fondations ; aucun signalement ne peut encore être envoyé.
-          </Dialog.Description>
+          <Dialog.Title className="dialog-title">{labels.title} </Dialog.Title>
+          <Dialog.Description>{labels.description} </Dialog.Description>
           <div className="field">
-            <Label htmlFor="preview-name">Texte de démonstration</Label>
+            <Label htmlFor="preview-name">{labels.inputLabel} </Label>
             <Input
               id="preview-name"
-              placeholder="Essayez la saisie"
+              placeholder={labels.placeholder}
               aria-describedby="preview-help"
               autoComplete="off"
             />
             <p id="preview-help" className="small">
-              Champ de démonstration. Cette saisie n’est ni enregistrée ni
-              envoyée.
+              {labels.help}{" "}
             </p>
           </div>
           <Dialog.Close asChild>
             <Button>
-              Fermer <X size={16} aria-hidden="true" />
+              {labels.close} <X size={16} aria-hidden="true" />
             </Button>
           </Dialog.Close>
         </Dialog.Content>

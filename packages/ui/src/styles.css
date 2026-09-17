@@ -274,3 +274,20 @@ footer {
     scroll-behavior: auto !important;
   }
 }
+
+.locale-preference {
+  padding-block: 1rem;
+}
+.locale-preference label {
+  display: block;
+  font-weight: 600;
+}
+.locale-preference select {
+  font: inherit;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  background: white;
+}

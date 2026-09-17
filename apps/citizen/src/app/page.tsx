@@ -1,72 +1,69 @@
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { brand } from "@acticiv/shared";
 import { FoundationDialog } from "@acticiv/ui";
-export default function Page() {
+export default async function Page() {
+  const t = await getTranslations();
   return (
     <div className="shell">
       <header>
-        <Link className="brand" href="/" aria-label={brand.name + " — accueil"}>
+        <Link className="brand" href="/" aria-label={t("common.homeLabel")}>
           <Image src={brand.logo} width={36} height={36} alt="" />
           {brand.name}
         </Link>
-        <span className="status">Espace citoyen · En préparation</span>
+        <span className="status">{t("foundation.citizenStatus")} </span>
       </header>
       <main id="main">
         <section className="hero">
           <div>
-            <p className="eyebrow">{brand.tagline}</p>
+            <p className="eyebrow">{t("common.tagline")}</p>
             <h1>
-              Un petit geste.
-              <br />
-              <em>Un accès pour tous.</em>
+              {t("foundation.citizenTitle")} <br />
+              <em>{t("foundation.citizenEmphasis")} </em>
             </h1>
-            <p className="lead">
-              Vous voyez un obstacle à l’accessibilité ? Notre ambition : vous
-              permettre de le signaler simplement, et de le transmettre au bon
-              acteur.
-            </p>
+            <p className="lead">{t("foundation.citizenLead")} </p>
             <div className="actions">
-              <FoundationDialog />
+              <FoundationDialog
+                labels={{
+                  trigger: t("dialog.trigger"),
+                  title: t("dialog.title"),
+                  description: t("dialog.description"),
+                  inputLabel: t("dialog.inputLabel"),
+                  placeholder: t("dialog.placeholder"),
+                  help: t("dialog.help"),
+                  close: t("dialog.close"),
+                }}
+              />
             </div>
-            <p className="small">
-              Aperçu de développement · Aucun signalement envoyé
-            </p>
+            <p className="small">{t("foundation.notice")} </p>
           </div>
           <div className="scene" aria-hidden="true">
-            <span className="scene-label">L’accessibilité commence ici</span>
+            <span className="scene-label">{t("foundation.sceneLabel")} </span>
             <div className="path" />
             <div className="scene-card">
-              <strong>Des lieux ouverts à chacun.</strong>
-              <span className="small">
-                Une attention. Un geste. Un passage libéré.
-              </span>
+              <strong>{t("foundation.sceneTitle")} </strong>
+              <span className="small">{t("foundation.sceneBody")} </span>
             </div>
           </div>
         </section>
-        <section className="principles" aria-label="Nos engagements">
+        <section className="principles" aria-label={t("foundation.principles")}>
           <article>
-            <h2>Simple, dès le départ</h2>
-            <p>
-              Une expérience pensée pour le quotidien, sur mobile et sur le
-              terrain.
-            </p>
+            <h2>{t("foundation.simpleTitle")} </h2>
+            <p>{t("foundation.simpleBody")} </p>
           </article>
           <article>
-            <h2>Votre sécurité d’abord</h2>
-            <p>Aucun signalement ne mérite de vous mettre en danger.</p>
+            <h2>{t("foundation.safetyTitle")} </h2>
+            <p>{t("foundation.safetyBody")} </p>
           </article>
           <article>
-            <h2>Accessible par conception</h2>
-            <p>
-              Des interfaces lisibles, utilisables au clavier et attentives à
-              chacun.
-            </p>
+            <h2>{t("foundation.accessibleTitle")} </h2>
+            <p>{t("foundation.accessibleBody")} </p>
           </article>
         </section>
       </main>
       <footer>
-        {brand.name} · {brand.description}
+        {brand.name} · {t("common.description")}
       </footer>
     </div>
   );

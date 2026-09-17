@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { AuthHeading, AuthMessage } from "../../../components/auth-feedback";
 import { password } from "../actions";
 export default async function Password({
@@ -6,17 +7,16 @@ export default async function Password({
   searchParams: Promise<{ error?: string }>;
 }) {
   const params = await searchParams;
+  const t = await getTranslations();
   return (
     <main id="main" className="shell">
-      <AuthHeading>Définir mon mot de passe</AuthHeading>
+      <AuthHeading>{t("auth.passwordTitle")}</AuthHeading>
       {params.error && (
-        <AuthMessage error>
-          Le mot de passe n’a pas pu être enregistré.
-        </AuthMessage>
+        <AuthMessage error>{t("auth.passwordError")} </AuthMessage>
       )}
       <form action={password}>
-        <label htmlFor="password">Nouveau mot de passe</label>
-        <p id="hint">Au moins 12 caractères.</p>
+        <label htmlFor="password">{t("auth.newPassword")} </label>
+        <p id="hint">{t("auth.passwordHint")} </p>
         <input
           id="password"
           name="password"
@@ -27,7 +27,7 @@ export default async function Password({
           minLength={12}
           required
         />
-        <button type="submit">Enregistrer</button>
+        <button type="submit">{t("auth.passwordSubmit")} </button>
       </form>
     </main>
   );

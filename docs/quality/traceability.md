@@ -34,3 +34,7 @@ La fiche référence les fichiers/tests précis ; le bilan PR identifie les IDs 
 Pour un bug : reproduire → retrouver le contrat → test de régression si faisable → correction minimale → tests ciblés → validations pertinentes. Modifier le contrat documentaire uniquement si le comportement attendu change réellement et a été approuvé.
 
 En 2bis-A, ces conventions et [templates](../kb/README.md) sont établis ; la population détaillée et les validations automatiques de graphe documentaire seront traitées dans les checkpoints autorisés. Aucun parseur ni dépendance n'est ajouté ici.
+
+## Chaîne 2bis-C implémentée
+
+Autorisation Patrick C / Livre §51 ↔ [feature.language-preferences](../kb/business/language-preferences.md) ↔ [technical.internationalisation](../kb/technical/internationalisation.md) ↔ droits own-profile/configuration/catalogue ↔ module locales et migration additive ↔ tests unitaires/SQL/adaptateurs/E2E ↔ audit transactionnel (aucun nouvel analytics/log) ↔ [ADR-010](../architecture-decisions/010-internationalisation-locales.md). [Preuves réelles et exceptions](phase-2bis-c-report.md).

@@ -1,0 +1,20 @@
+{
+  "skip": "Skip to content",
+  "home": "Home",
+  "homeLabel": "ActiCiv — home",
+  "description": "Citizens report. The right team acts.",
+  "tagline": "See. Report. Act.",
+  "loading": "Loading the page…",
+  "errorTitle": "The page could not be displayed.",
+  "errorBody": "You can try again.",
+  "retry": "Try again",
+  "denied": "Access denied",
+  "originDenied": "Origin denied",
+  "invalidOperation": "Operation denied or invalid data",
+  "localeLabel": "Interface language",
+  "inherit": "Organisation default",
+  "localeSaved": "Language saved.",
+  "localeFailed": "The language could not be saved. Try again.",
+  "localeSaving": "Saving…",
+  "notFound": "Page not found"
+}

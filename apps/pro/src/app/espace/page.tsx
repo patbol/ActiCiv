@@ -1,32 +1,31 @@
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { getProfessionalContext, supabaseContext } from "@acticiv/backend";
 import { professionalClient } from "../../lib/auth";
 import { logout } from "../auth/actions";
 import { AuthHeading } from "../../components/auth-feedback";
 export default async function Space() {
+  const t = await getTranslations("auth");
   const context = await getProfessionalContext(
     supabaseContext(await professionalClient()),
   );
   return (
     <main id="main" className="shell">
-      <AuthHeading>Mon espace professionnel</AuthHeading>
+      <AuthHeading>{t("spaceTitle")}</AuthHeading>
       {context ? (
         <>
-          <p>Votre accès professionnel est actif.</p>
-          <p>
-            Les outils de traitement seront disponibles dans les prochaines
-            étapes.
-          </p>
+          <p>{t("spaceActive")} </p>
+          <p>{t("spaceFuture")} </p>
         </>
       ) : (
         <p>
-          Aucun accès professionnel actif.{" "}
-          <Link href="/auth/accept">Vérifier mon invitation</Link> ou{" "}
-          <Link href="/auth/login">me connecter</Link>.
+          {t("spaceInactive")}{" "}
+          <Link href="/auth/accept">{t("checkInvite")} </Link> {t("or")}{" "}
+          <Link href="/auth/login">{t("signInLink")} </Link>.
         </p>
       )}
       <form action={logout}>
-        <button type="submit">Se déconnecter</button>
+        <button type="submit">{t("logout")} </button>
       </form>
     </main>
   );

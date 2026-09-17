@@ -1,3 +1,5 @@
+import { saveCatalogTranslation } from "../modules/locales/application/translations";
+import { translationWriter } from "../modules/locales/infrastructure/translations";
 import "server-only";
 import { z } from "zod";
 import { priorities } from "../modules/catalog/domain/category";
@@ -19,6 +21,13 @@ import { organizationPlatform } from "../modules/organizations/infrastructure/pl
 const uuid = z.guid(),
   text = z.string().trim().min(1).max(200);
 const schema = z.discriminatedUnion("action", [
+  z.strictObject({
+    action: z.literal("translation.catalog"),
+    kind: z.enum(["vertical", "category"]),
+    entityId: uuid,
+    locale: z.enum(["fr-FR", "en-GB"]),
+    label: text,
+  }),
   z.object({
     action: z.literal("organization.save"),
     code: text,
@@ -93,6 +102,7 @@ export async function platformAdministration(
     .eq("active", true)
     .maybeSingle();
   const capabilities: Record<typeof value.action, string> = {
+    "translation.catalog": "catalog.manage",
     "organization.save": "organizations.manage",
     "organization.recover": "organizations.recover",
     "vertical.save": "catalog.manage",
@@ -109,6 +119,15 @@ export async function platformAdministration(
     capabilities: platform.capabilities as string[],
   };
   switch (value.action) {
+    case "translation.catalog":
+      return saveCatalogTranslation(
+        context,
+        value.kind,
+        value.entityId,
+        value.locale,
+        value.label,
+        translationWriter(client),
+      );
     case "organization.save":
       return saveOrganization(context, value, organizationPlatform(client));
     case "organization.recover":

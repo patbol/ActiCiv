@@ -1,0 +1,20 @@
+{
+  "skip": "Aller au contenu",
+  "home": "Accueil",
+  "homeLabel": "ActiCiv — accueil",
+  "description": "Le citoyen signale. Le bon acteur agit.",
+  "tagline": "Voir. Signaler. Agir.",
+  "loading": "Chargement de la page…",
+  "errorTitle": "La page n’a pas pu s’afficher.",
+  "errorBody": "Vous pouvez réessayer.",
+  "retry": "Réessayer",
+  "denied": "Accès refusé",
+  "originDenied": "Origine refusée",
+  "invalidOperation": "Opération refusée ou données invalides",
+  "localeLabel": "Langue de l’interface",
+  "inherit": "Défaut de l’organisation",
+  "localeSaved": "Langue enregistrée.",
+  "localeFailed": "La langue n’a pas pu être enregistrée. Réessayez.",
+  "localeSaving": "Enregistrement…",
+  "notFound": "Page introuvable"
+}

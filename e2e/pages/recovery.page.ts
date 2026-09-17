@@ -5,22 +5,26 @@ import {
   proOrigin,
 } from "../helpers/ui";
 export class RecoveryPage {
-  constructor(private readonly page: Page) {}
+  constructor(
+    private readonly page: Page,
+    private readonly locale: "fr-FR" | "en-GB" = "fr-FR",
+  ) {}
   get heading() {
     return this.page.getByRole("heading", {
-      name: "Récupérer mon accès",
+      name:
+        this.locale === "fr-FR" ? "Récupérer mon accès" : "Recover my access",
       exact: true,
     });
   }
   get email() {
     return this.page.getByRole("textbox", {
-      name: "Adresse email",
+      name: this.locale === "fr-FR" ? "Adresse email" : "Email address",
       exact: true,
     });
   }
   get submitButton() {
     return this.page.getByRole("button", {
-      name: "Recevoir un lien",
+      name: this.locale === "fr-FR" ? "Recevoir un lien" : "Send me a link",
       exact: true,
     });
   }

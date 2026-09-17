@@ -3,8 +3,10 @@ import { useEffect, useRef, type ReactNode } from "react";
 export function AuthHeading({ children }: { children: string }) {
   const ref = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
-    ref.current?.focus();
-  }, [children]);
+    // A late mount after an RSC refresh must not steal locale-control focus.
+    if (document.activeElement?.id !== "locale-preference")
+      ref.current?.focus();
+  }, []);
   return (
     <h1 ref={ref} tabIndex={-1}>
       {children}
@@ -20,8 +22,10 @@ export function AuthMessage({
 }) {
   const ref = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
-    ref.current?.focus();
-  }, [children]);
+    // A late mount after an RSC refresh must not steal locale-control focus.
+    if (document.activeElement?.id !== "locale-preference")
+      ref.current?.focus();
+  }, [error]);
   return (
     <p
       id={error ? "auth-error" : "auth-status"}

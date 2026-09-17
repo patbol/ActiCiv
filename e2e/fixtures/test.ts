@@ -17,6 +17,7 @@ type Fixtures = {
   supabase: SupabaseFixture;
   recoveryAccount: TestAccount;
   loginAccount: TestAccount;
+  localeAccount: TestAccount;
   adminAccount: TestAccount;
 };
 export const test = base.extend<Fixtures>({
@@ -46,6 +47,15 @@ export const test = base.extend<Fixtures>({
   },
   loginAccount: async ({ supabase }, provide) => {
     await provide(await supabase.account("login"));
+  },
+  localeAccount: async ({ supabase }, provide) => {
+    const account = await supabase.account("locale");
+    await supabase.resetLocale(account);
+    try {
+      await provide(account);
+    } finally {
+      await supabase.resetLocale(account);
+    }
   },
   adminAccount: async ({ supabase }, provide) => {
     await provide(await supabase.account("admin"));

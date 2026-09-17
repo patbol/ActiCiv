@@ -17,10 +17,5 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 export const config = {
-  matcher: [
-    "/auth/:path*",
-    "/espace/:path*",
-    "/api/configuration/:path*",
-    "/api/platform/:path*",
-  ],
+  matcher: ["/((?!_next/static|_next/image|api/health|brand.svg|icon.svg).*)"],
 };

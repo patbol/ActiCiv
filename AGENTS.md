@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoint **2bis-A CLOSED / APPROVED** par Patrick, commit `be191f56109ea6380ccbd520ed49eb8a6074a9c0`. Checkpoint actif et seul autorisé : **2bis-B — POM, fixtures, tagging et conventions exécutables**. Les sections ci-dessous décrivent aussi des cibles futures ; elles n'autorisent pas leur implémentation maintenant. **STOP après 2bis-B pour revue de Patrick ; aucun 2bis-C sans validation explicite.**
+Checkpoints **2bis-A et 2bis-B CLOSED / APPROVED** par Patrick ; ADR-008 et ADR-009 approuvées. Baseline de 2bis-C : `7d43c1b8b3ece14cb6df03f4a445030cbbec326b`. Checkpoint actif et seul autorisé : **2bis-C — internationalisation, locales, préférences et traductions**. Les cibles futures ci-dessous ne sont pas autorisées maintenant. **STOP après 2bis-C pour revue de Patrick ; aucun 2bis-D sans validation explicite.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 
@@ -915,7 +915,7 @@ Ne jamais démarrer le checkpoint suivant sans validation explicite de Patrick l
 
 En 2bis-A, seuls les index, règles, DoD/checklist/traçabilité, structures/templates KB et catalogue Skills sont réalisés. POM, tagging, i18n, migrations, coverage, snapshots/gates, scanners, analytics/logger et Quality Center restent non commencés. Les playbooks Skills complets relèvent de 2bis-G, sauf autorisation ultérieure ciblée.
 
-Cette description de 2bis-A reste historique. Patrick a ensuite approuvé A et autorisé B : extraction E2E et premiers garde-fous uniquement. i18n/2bis-C et les autres checkpoints restent non commencés. Les mises à jour de Skills en B documentent les mécanismes disponibles, sans anticiper les quinze playbooks de G.
+Cette description de 2bis-A reste historique. Patrick a ensuite approuvé A et autorisé B : extraction E2E et premiers garde-fous uniquement. Patrick a ensuite approuvé B et autorisé C uniquement ; i18n est en cours, D et les suivants ne sont pas commencés. Les mises à jour de Skills en B documentent les mécanismes disponibles, sans anticiper les quinze playbooks de G.
 
 ---
 

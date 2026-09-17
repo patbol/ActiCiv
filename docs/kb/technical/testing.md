@@ -30,7 +30,7 @@ related_docs:
 
 ## État et responsabilités
 
-2bis-B conserve les 13 scénarios de Phase 2, soit 26 exécutions desktop/mobile. POM et tagging sont implémentés ; i18n, couverture et snapshots/gates complets ne le sont pas.
+2bis-B conserve les 13 scénarios de Phase 2, soit 26 exécutions desktop/mobile. POM et tagging sont implémentés. 2bis-C ajoute les scénarios de locale décrits dans la [KB i18n](internationalisation.md) ; couverture et snapshots/gates complets restent hors périmètre.
 
 - `e2e/pages/` : six objets sans classe de base ; navigation, locators et actions réutilisables.
 - `e2e/components/dialog.ts` : dialogue réellement partagé par Citizen/Pro.
@@ -103,3 +103,7 @@ Aucun reset nécessaire pour ce refactor. Les invitations synthétiques créées
 Le nombre d'analyses axe et les matchers par scénario ont été comparés à la baseline A. L'automatisation ne remplace pas VoiceOver/TalkBack ; aucun changement UI produit n'est introduit ici. Aucun nouveau résultat manuel n'est prétendu. Aucun Quality Snapshot, coverage, scanner PROD complet ou logger ajouté.
 
 Références : [ADR-009](../../architecture-decisions/009-e2e-conventions.md), [DoD](../../quality/definition-of-done.md), [traçabilité](../../quality/traceability.md), [règles persistantes](../../../AGENTS.md).
+
+## Complément 2bis-C
+
+La locale des 13 scénarios historiques est explicitement `fr-FR`. Le Component Object `e2e/components/locale-control.ts` porte les actions du sélecteur partagé ; `e2e/locale.spec.ts` exerce aussi l’anglais, SSR, persistance, focus et erreurs. Les comptes dédiés au test de préférence sont remis à NULL avant/après usage, sans modifier les droits ni les assertions des scénarios historiques.

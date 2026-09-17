@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./locale": "./src/locale.ts",
+    "./messages": "./src/messages/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

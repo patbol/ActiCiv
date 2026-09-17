@@ -1,0 +1,9 @@
+{
+  "trigger": "Discover the project",
+  "title": "A more accessible city",
+  "description": "The service is in preparation. This preview introduces its foundations; reports cannot be sent yet.",
+  "inputLabel": "Demo text",
+  "placeholder": "Try typing here",
+  "help": "Demo field. Your input is neither saved nor sent.",
+  "close": "Close"
+}

@@ -46,3 +46,20 @@ begin
   insert into public.hold_reasons(organization_id,code,label) values(org,'external','Attente d’un tiers');
  end loop;
 end $$;
+
+-- Synthetic reference translations only; IDs and business codes stay unchanged.
+insert into public.vertical_translations(vertical_id,locale,label)
+select id,'en-GB','Accessibility' from public.verticals where code='accessibility' and name='Accessibilité'
+on conflict(vertical_id,locale) do update set label=excluded.label;
+insert into public.category_translations(category_id,locale,label)
+select c.id,'en-GB',t.label from public.categories c join (values
+ ('blocked_access','Blocked access or ramp'),
+ ('occupied_accessible_parking','Occupied accessible parking space'),
+ ('unavailable_accessibility_equipment','Unavailable lift or accessibility equipment'),
+ ('unsafe_path','Dangerous or obstructed pathway'),
+ ('other_accessibility','Other accessibility issue')
+) t(code,label) on t.code=c.code join public.verticals v on v.id=c.vertical_id and v.code='accessibility'
+on conflict(category_id,locale) do update set label=excluded.label;
+insert into public.hold_reason_translations(organization_id,hold_reason_id,locale,label)
+select organization_id,id,'en-GB','Awaiting a third party' from public.hold_reasons where code='external' and label='Attente d’un tiers'
+on conflict(hold_reason_id,locale) do update set label=excluded.label;

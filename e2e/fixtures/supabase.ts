@@ -49,13 +49,17 @@ export class SupabaseFixture {
     const text = await response.text();
     return (text ? JSON.parse(text) : null) as T;
   }
-  async account(purpose: "recovery" | "login" | "admin"): Promise<TestAccount> {
+  async account(
+    purpose: "recovery" | "login" | "admin" | "locale",
+  ): Promise<TestAccount> {
     const n =
       purpose === "recovery"
         ? 1
-        : purpose === "login"
-          ? 3
-          : this.organizationNumber;
+        : purpose === "locale"
+          ? 2
+          : purpose === "login"
+            ? 3
+            : this.organizationNumber;
     const role = purpose === "admin" ? "client_admin" : this.role;
     const account = {
       email: `${role}${n}@example.test`,
@@ -69,6 +73,18 @@ export class SupabaseFixture {
       "PUT",
     );
     return account;
+  }
+  async resetLocale(account: TestAccount) {
+    const session = await this.request<{ access_token: string }>(
+      "/auth/v1/token?grant_type=password",
+      { email: account.email, password: account.password },
+      this.anon,
+    );
+    await this.request(
+      "/rest/v1/rpc/set_preferred_locale",
+      { p_locale: null },
+      session.access_token,
+    );
   }
   async recoveryToken(email: string) {
     const link = await this.request<{ hashed_token: string }>(

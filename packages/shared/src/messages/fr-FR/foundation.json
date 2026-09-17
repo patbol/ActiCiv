@@ -1,0 +1,21 @@
+{
+  "citizenStatus": "Espace citoyen · En préparation",
+  "proStatus": "Espace professionnel · En préparation",
+  "citizenTitle": "Un petit geste.",
+  "citizenEmphasis": "Un accès pour tous.",
+  "proTitle": "Sur le terrain.",
+  "proEmphasis": "Du côté de l’action.",
+  "citizenLead": "Vous voyez un obstacle à l’accessibilité ? Notre ambition : vous permettre de le signaler simplement, et de le transmettre au bon acteur.",
+  "proLead": "Un espace commun pour les équipes qui rendent les lieux plus accessibles. Les outils de traitement seront disponibles dans les prochaines étapes.",
+  "notice": "Aperçu de développement · Aucun signalement envoyé",
+  "sceneLabel": "L’accessibilité commence ici",
+  "sceneTitle": "Des lieux ouverts à chacun.",
+  "sceneBody": "Une attention. Un geste. Un passage libéré.",
+  "principles": "Nos engagements",
+  "simpleTitle": "Simple, dès le départ",
+  "simpleBody": "Une expérience pensée pour le quotidien, sur mobile et sur le terrain.",
+  "safetyTitle": "Votre sécurité d’abord",
+  "safetyBody": "Aucun signalement ne mérite de vous mettre en danger.",
+  "accessibleTitle": "Accessible par conception",
+  "accessibleBody": "Des interfaces lisibles, utilisables au clavier et attentives à chacun."
+}

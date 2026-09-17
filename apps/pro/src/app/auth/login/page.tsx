@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { AuthHeading, AuthMessage } from "../../../components/auth-feedback";
 import Link from "next/link";
 import { login } from "../actions";
@@ -7,17 +8,14 @@ export default async function Login({
   searchParams: Promise<{ error?: string }>;
 }) {
   const params = await searchParams;
+  const t = await getTranslations();
   return (
     <main id="main" className="shell">
-      <AuthHeading>Connexion professionnelle</AuthHeading>
-      <p>Accès réservé aux professionnels invités.</p>
-      {params.error && (
-        <AuthMessage error>
-          Connexion impossible. Vérifiez vos identifiants.
-        </AuthMessage>
-      )}
+      <AuthHeading>{t("auth.loginTitle")}</AuthHeading>
+      <p>{t("auth.loginIntro")} </p>
+      {params.error && <AuthMessage error>{t("auth.loginError")} </AuthMessage>}
       <form action={login}>
-        <label htmlFor="email">Adresse email</label>
+        <label htmlFor="email">{t("auth.email")} </label>
         <input
           id="email"
           name="email"
@@ -27,7 +25,7 @@ export default async function Login({
           aria-describedby={params.error ? "auth-error" : undefined}
           required
         />
-        <label htmlFor="password">Mot de passe</label>
+        <label htmlFor="password">{t("auth.password")} </label>
         <input
           id="password"
           name="password"
@@ -37,12 +35,12 @@ export default async function Login({
           aria-describedby={params.error ? "auth-error" : undefined}
           required
         />
-        <button type="submit">Se connecter</button>
+        <button type="submit">{t("auth.loginSubmit")} </button>
       </form>
       <p>
-        <Link href="/auth/recover">Mot de passe oublié</Link>
+        <Link href="/auth/recover">{t("auth.forgot")} </Link>
       </p>
-      <Link href="/">Accueil</Link>
+      <Link href="/">{t("common.home")} </Link>
     </main>
   );
 }

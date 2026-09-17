@@ -11,3 +11,5 @@ Le rangement manuel approuvé est conservé. Les journaux/captures Phase 1 déj�
 Les résultats des postmortems ne sont pas réécrits pour refléter une clôture ultérieure. Les destinations de liens peuvent être corrigées après un déplacement, avec inventaire. Les documents originaux restent consultables au SHA de leur époque ; les journaux bruts, livres et manifestes conservent leurs octets.
 
 Une preuve contient commande/contexte, SHA, environnement, résultat réel et limites. Aucun secret, token ou credential de session. Une absence environnementale reste DEFERRED, jamais PASS implicite. Voir la [politique documentaire](../quality/documentation-policy.md).
+
+- [Rapport 2bis-C](../quality/phase-2bis-c-report.md) : arbre local d’implémentation, résultats et limites ; [journal verify:full](phase2bis/2bis-c-validation.txt), [reconstruction DB](phase2bis/2bis-c-db-reset.txt). Ces fichiers ne constituent pas une attestation de release ou de validation manuelle.

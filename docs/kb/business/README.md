@@ -12,3 +12,5 @@ Aucune fiche métier détaillée n'est déclarée active en 2bis-A. Cet index id
 | Audit métier                           | [ADR 007](../../architecture-decisions/007-transactional-audit.md)                                           | [Audit SQL](../../../supabase/migrations/20260916000300_audit.sql), [corrélation](../../../supabase/migrations/20260917000100_closure_hardening.sql)                                                            |
 
 Employer le [modèle métier](../templates/business-feature.md) et la [traçabilité](../../quality/traceability.md). Nommer les capacités précisément : agent, supervisor, client_admin et plateforme ne sont pas interchangeables. Une ancienne proposition ne prime pas sur une décision validée ultérieure.
+
+Fiche active ajoutée en 2bis-C : [choisir sa langue d’interface](language-preferences.md).

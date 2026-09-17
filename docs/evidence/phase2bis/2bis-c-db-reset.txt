@@ -1,0 +1,1 @@
+{"target":"local","version":"","message":"Reset local database."}

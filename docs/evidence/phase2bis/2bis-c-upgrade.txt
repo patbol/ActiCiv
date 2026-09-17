@@ -1,0 +1,8 @@
+2bis-C final migration compatibility check, local database only
+
+pnpm exec supabase db reset --local --no-seed --version 20260917000100
+{"target":"local","version":"20260917000100","message":"Reset local database."}
+
+pnpm exec supabase migration up --local
+{"applied":["/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/migrations/20260918000100_locales.sql"],"message":"Migrations applied"}
+PASS: exact historical data preserved and 250-character French label backfilled without truncation.

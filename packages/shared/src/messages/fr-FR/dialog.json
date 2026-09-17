@@ -1,0 +1,9 @@
+{
+  "trigger": "Découvrir le projet",
+  "title": "Une ville plus accessible",
+  "description": "Le service est en préparation. Ce premier aperçu présente ses fondations ; aucun signalement ne peut encore être envoyé.",
+  "inputLabel": "Texte de démonstration",
+  "placeholder": "Essayez la saisie",
+  "help": "Champ de démonstration. Cette saisie n’est ni enregistrée ni envoyée.",
+  "close": "Fermer"
+}

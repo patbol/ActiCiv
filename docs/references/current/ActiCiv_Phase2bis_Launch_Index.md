@@ -65,10 +65,14 @@ Before technical checkpoint 2bis-B:
 
 No Phase 3 behavior is authorized.
 
-## Current authorization — 2bis-B
+## Previous authorization — 2bis-B
 
-Patrick approved 2bis-A and explicitly authorized POM/Component Objects, reusable fixtures, test metadata and the first executable conventions without product changes. See [E2E conventions ADR](../../architecture-decisions/009-e2e-conventions.md), [testing KB](../../kb/technical/testing.md) and [checkpoint report](../../quality/phase-2bis-b-report.md). No i18n/2bis-C or later checkpoint is authorized.
+Patrick approved 2bis-A and explicitly authorized POM/Component Objects, reusable fixtures, test metadata and the first executable conventions without product changes. See [E2E conventions ADR](../../architecture-decisions/009-e2e-conventions.md), [testing KB](../../kb/technical/testing.md) and [checkpoint report](../../quality/phase-2bis-b-report.md). This historical authorization was limited to B.
 
 ## 2bis-A documentary correction record
 
 The remaining v1.3 mention in Master Prompt §56 is corrected to v1.4. The current source index is aligned with Patrick's approved directory roles. Historical matrices remain unchanged; only broken Markdown destinations caused by relocation are repaired. The detailed [checkpoint report](../../quality/phase-2bis-a-report.md) records changes and actual checks. This does not implement any later checkpoint.
+
+## Current authorization — 2bis-C
+
+Patrick approved B and ADR-008/009, then explicitly authorized internationalisation, locale preferences and reference translations only. See [ADR-010](../../architecture-decisions/010-internationalisation-locales.md), [KB](../../kb/technical/internationalisation.md) and [C report](../../quality/phase-2bis-c-report.md). STOP before D; no Phase 3.

@@ -1,0 +1,212 @@
+$ pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm audit --audit-level high && pnpm secrets:check
+$ pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ eslint . --max-warnings 0
+$ pnpm -r typecheck && tsc -p tsconfig.tools.json
+Scope: 6 of 7 workspace projects
+packages/shared typecheck$ tsc --noEmit
+packages/types typecheck$ tsc --noEmit
+packages/ui typecheck$ tsc --noEmit
+packages/types typecheck: Done
+packages/shared typecheck: Done
+packages/ui typecheck: Done
+packages/backend typecheck$ tsc --noEmit
+packages/backend typecheck: Done
+apps/citizen typecheck$ next typegen && tsc --noEmit
+apps/pro typecheck$ next typegen && tsc --noEmit
+apps/citizen typecheck: Generating route types...
+apps/pro typecheck: Generating route types...
+apps/citizen typecheck: ✓ Types generated successfully
+apps/pro typecheck: ✓ Types generated successfully
+apps/citizen typecheck: Done
+apps/pro typecheck: Done
+$ vitest run
+
+ RUN  v4.1.11 /Users/patrickmoreno/ActiCiv/dev/acticiv
+
+
+ Test Files  16 passed (16)
+      Tests  98 passed (98)
+   Start at  23:41:28
+   Duration  1.74s (transform 483ms, setup 0ms, import 1.08s, tests 2.90s, environment 1ms)
+
+$ pnpm --filter @acticiv/citizen build && pnpm --filter @acticiv/pro build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 29ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 521ms
+  Running TypeScript ...
+  Finished TypeScript in 1517ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/8) ...
+  Generating static pages using 7 workers (2/8) 
+  Generating static pages using 7 workers (4/8) 
+  Generating static pages using 7 workers (6/8) 
+✓ Generating static pages using 7 workers (8/8) in 127ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/health
+├ ƒ /api/locale
+├ ƒ /brand.svg
+├ ○ /icon.svg
+└ ƒ /manifest.webmanifest
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 26ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 575ms
+  Running TypeScript ...
+  Finished TypeScript in 1612ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/16) ...
+  Generating static pages using 7 workers (4/16) 
+  Generating static pages using 7 workers (8/16) 
+  Generating static pages using 7 workers (12/16) 
+✓ Generating static pages using 7 workers (16/16) in 130ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/configuration
+├ ƒ /api/health
+├ ƒ /api/locale
+├ ƒ /api/platform
+├ ƒ /auth/accept
+├ ƒ /auth/callback
+├ ƒ /auth/confirm
+├ ƒ /auth/login
+├ ƒ /auth/password
+├ ƒ /auth/recover
+├ ƒ /brand.svg
+├ ƒ /espace
+└ ○ /icon.svg
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+$ node scripts/check-client-bundles.mjs
+Frontières des bundles clients vérifiées.
+$ node scripts/check-db-tests.mjs
+Connecting to local database...
+psql:/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2.sql:2: NOTICE:  extension "pgtap" already exists, skipping
+/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2.sql ............. ok
+/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2_closure.sql ..... ok
+psql:/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2_edge_cases.sql:8: NOTICE:  Self-intersection at or near point 1 1
+/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2_edge_cases.sql .. ok
+/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2bis_locale.sql ... ok
+All tests successful.
+Files=4, Tests=126,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.02 cusr  0.01 csys =  0.06 CPU)
+Result: PASS
+$ node --test --test-concurrency=1 integration/*.test.mjs && vitest run --config vitest.integration.config.ts
+✔ last active administrator: real concurrent demote with independent actors (631.733458ms)
+✔ last active administrator: real concurrent membership_inactive with independent actors (568.669417ms)
+✔ last active administrator: real concurrent profile_inactive with independent actors (555.220291ms)
+✔ last active administrator: real concurrent delete with independent actors (617.644333ms)
+✔ real JWTs enforce tenant/service access and stale identity revocation (857.534ms)
+✔ signup is disabled and unauthenticated data is inaccessible (6.94275ms)
+✔ concurrent demotions cannot remove every administrator (311.318333ms)
+✔ invitations survive partial failure, are idempotent, and grant rights only after acceptance (728.294292ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5849.084542
+
+ RUN  v4.1.11 /Users/patrickmoreno/ActiCiv/dev/acticiv
+
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  23:41:48
+   Duration  7.83s (transform 95ms, setup 0ms, import 1.72s, tests 5.93s, environment 0ms)
+
+$ playwright test
+[WebServer] (node:97464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3000
+[WebServer] (node:97487) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:97496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3001
+[WebServer] (node:97527) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 38 tests using 2 workers
+
+(node:97576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97575) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › e2e/auth.spec.ts:79:5 › professional session › login rejects wrong credentials and exposes a focused accessible error @route:auth @component:login @high @type:security @type:a11y (824ms)
+  ✓   3 [desktop] › e2e/auth.spec.ts:99:5 › professional session › professional login, accessible form and logout use real Supabase @route:auth @component:login @critical @type:a11y @type:smoke (1.7s)
+  ✓   2 [desktop] › e2e/auth.spec.ts:14:5 › recover access › recovery validates errors, keyboard focus, new password and a fresh login @route:auth @component:recovery @critical @type:security @type:a11y (3.8s)
+  ✓   4 [desktop] › e2e/auth.spec.ts:123:5 › invitation › unavailable invitation remains accessible without granting any membership @route:auth @component:invitation @critical @type:security @type:a11y (1.7s)
+  ✓   6 [desktop] › e2e/auth.spec.ts:187:5 › callback › invalid callbacks cannot redirect off site @route:auth @component:callback @critical @type:security @type:a11y (450ms)
+  ✓   7 [desktop] › e2e/auth.spec.ts:209:5 › organization configuration › client administrator uses the protected configuration entrypoint @route:admin-pro @component:configuration @critical @type:security (997ms)
+  ✓   8 [desktop] › e2e/foundation.spec.ts:9:7 › surface 3000 › surface 3000: renders and passes automatic accessibility checks @route:foundation @component:foundation @medium @type:a11y @type:smoke (574ms)
+  ✓   9 [desktop] › e2e/foundation.spec.ts:26:9 › surface 3000 › shared dialog › surface 3000: keyboard dialog focus and persistent labels @route:foundation @component:foundation @component:dialog @high @type:a11y (499ms)
+  ✓  10 [desktop] › e2e/foundation.spec.ts:44:7 › surface 3000 › surface 3000: skip link and reduced motion @route:foundation @component:foundation @medium @type:a11y (173ms)
+  ✓   5 [desktop] › e2e/auth.spec.ts:144:5 › invitation › invited professional sets a password and activates membership @route:auth @component:invitation @critical @type:security @type:a11y (3.5s)
+  ✓  11 [desktop] › e2e/foundation.spec.ts:9:7 › surface 3001 › surface 3001: renders and passes automatic accessibility checks @route:foundation @component:foundation @medium @type:a11y @type:smoke (508ms)
+  ✓  13 [desktop] › e2e/foundation.spec.ts:44:7 › surface 3001 › surface 3001: skip link and reduced motion @route:foundation @component:foundation @medium @type:a11y (213ms)
+  ✓  12 [desktop] › e2e/foundation.spec.ts:26:9 › surface 3001 › shared dialog › surface 3001: keyboard dialog focus and persistent labels @route:foundation @component:foundation @component:dialog @high @type:a11y (547ms)
+  ✓  14 [desktop] › e2e/locale.spec.ts:13:5 › locale persistence › Citizen switches without changing URL, persists and keeps keyboard focus @route:foundation @component:locale-selector @high @type:a11y (725ms)
+  ✓  16 [desktop] › e2e/locale.spec.ts:65:5 › locale persistence › SSR negotiates independent requests and invalid cookies fall back @route:foundation @component:locale-selector @high @type:regression (116ms)
+  ✓  15 [desktop] › e2e/locale.spec.ts:43:5 › locale persistence › failed preference save announces an error and can be retried @route:foundation @component:locale-selector @high @type:a11y @type:regression (713ms)
+  ✓  18 [desktop] › e2e/locale.spec.ts:168:5 › professional locale › invited identity can change interface language without acquiring business access @route:auth @component:locale-selector @critical @type:security @type:a11y (1.3s)
+  ✓  17 [desktop] › e2e/locale.spec.ts:130:5 › professional locale › anonymous switch preserves login input, error focus and Auth navigation @route:auth @component:locale-selector @high @type:a11y (1.4s)
+(node:97720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  19 [desktop] › e2e/locale.spec.ts:189:5 › professional locale › professional choice survives login and reset restores organization inheritance @route:auth @component:locale-selector @critical @type:security @type:a11y (2.5s)
+(node:97746) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  21 [mobile] › e2e/auth.spec.ts:79:5 › professional session › login rejects wrong credentials and exposes a focused accessible error @route:auth @component:login @high @type:security @type:a11y (672ms)
+  ✓  20 [mobile] › e2e/auth.spec.ts:14:5 › recover access › recovery validates errors, keyboard focus, new password and a fresh login @route:auth @component:recovery @critical @type:security @type:a11y (3.6s)
+  ✓  22 [mobile] › e2e/auth.spec.ts:99:5 › professional session › professional login, accessible form and logout use real Supabase @route:auth @component:login @critical @type:a11y @type:smoke (1.7s)
+  ✓  23 [mobile] › e2e/auth.spec.ts:123:5 › invitation › unavailable invitation remains accessible without granting any membership @route:auth @component:invitation @critical @type:security @type:a11y (1.8s)
+  ✓  25 [mobile] › e2e/auth.spec.ts:187:5 › callback › invalid callbacks cannot redirect off site @route:auth @component:callback @critical @type:security @type:a11y (469ms)
+  ✓  26 [mobile] › e2e/auth.spec.ts:209:5 › organization configuration › client administrator uses the protected configuration entrypoint @route:admin-pro @component:configuration @critical @type:security (934ms)
+  ✓  27 [mobile] › e2e/foundation.spec.ts:9:7 › surface 3000 › surface 3000: renders and passes automatic accessibility checks @route:foundation @component:foundation @medium @type:a11y @type:smoke (633ms)
+  ✓  28 [mobile] › e2e/foundation.spec.ts:26:9 › surface 3000 › shared dialog › surface 3000: keyboard dialog focus and persistent labels @route:foundation @component:foundation @component:dialog @high @type:a11y (513ms)
+  ✓  24 [mobile] › e2e/auth.spec.ts:144:5 › invitation › invited professional sets a password and activates membership @route:auth @component:invitation @critical @type:security @type:a11y (3.4s)
+  ✓  29 [mobile] › e2e/foundation.spec.ts:44:7 › surface 3000 › surface 3000: skip link and reduced motion @route:foundation @component:foundation @medium @type:a11y (254ms)
+  ✓  30 [mobile] › e2e/foundation.spec.ts:9:7 › surface 3001 › surface 3001: renders and passes automatic accessibility checks @route:foundation @component:foundation @medium @type:a11y @type:smoke (712ms)
+  ✓  31 [mobile] › e2e/foundation.spec.ts:26:9 › surface 3001 › shared dialog › surface 3001: keyboard dialog focus and persistent labels @route:foundation @component:foundation @component:dialog @high @type:a11y (569ms)
+  ✓  32 [mobile] › e2e/foundation.spec.ts:44:7 › surface 3001 › surface 3001: skip link and reduced motion @route:foundation @component:foundation @medium @type:a11y (272ms)
+  ✓  33 [mobile] › e2e/locale.spec.ts:13:5 › locale persistence › Citizen switches without changing URL, persists and keeps keyboard focus @route:foundation @component:locale-selector @high @type:a11y (658ms)
+  ✓  35 [mobile] › e2e/locale.spec.ts:65:5 › locale persistence › SSR negotiates independent requests and invalid cookies fall back @route:foundation @component:locale-selector @high @type:regression (86ms)
+  ✓  34 [mobile] › e2e/locale.spec.ts:43:5 › locale persistence › failed preference save announces an error and can be retried @route:foundation @component:locale-selector @high @type:a11y @type:regression (601ms)
+  ✓  36 [mobile] › e2e/locale.spec.ts:130:5 › professional locale › anonymous switch preserves login input, error focus and Auth navigation @route:auth @component:locale-selector @high @type:a11y (1.8s)
+  ✓  37 [mobile] › e2e/locale.spec.ts:168:5 › professional locale › invited identity can change interface language without acquiring business access @route:auth @component:locale-selector @critical @type:security @type:a11y (2.0s)
+  ✓  38 [mobile] › e2e/locale.spec.ts:189:5 › professional locale › professional choice survives login and reset restores organization inheritance @route:auth @component:locale-selector @critical @type:security @type:a11y (2.5s)
+
+  38 passed (29.1s)
+No known vulnerabilities found
+$ node scripts/check-secrets.mjs
+Gitleaks 8.30.1, archive SHA-256 b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5
+Detector positive/negative controls passed (credential values withheld).
+11:42PM INF 9 commits scanned.
+11:42PM INF scanned ~1258470 bytes (1.26 MB) in 308ms
+11:42PM INF no leaks found
+SECRET_SCAN_SHA=7d43c1b8b3ece14cb6df03f4a445030cbbec326b
