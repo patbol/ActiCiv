@@ -1,4 +1,4 @@
-> Stratégie historique Phase 1, désormais clôturée : VoiceOver Safari validé sur Citizen et Pro, TalkBack différé. Pour les tests métier, RLS et Auth implémentés en Phase 2, voir [la procédure courante](../phase-2.md).
+> Stratégie historique Phase 1, désormais clôturée : VoiceOver Safari validé sur Citizen et Pro, TalkBack différé. Pour les tests métier, RLS et Auth implémentés en Phase 2, voir [la procédure courante](../references/historical/ActiCiv_Phase2_Implementation_Reference_HISTORICAL.md).
 
 # Vérification de phase 1
 

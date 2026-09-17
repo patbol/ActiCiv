@@ -41,4 +41,4 @@ Le navigateur standard Playwright Chromium est utilisé. Les tests axe/clavier n
 
 ## Passe de clôture renforcée du 17 septembre 2026
 
-Le rapport de référence est désormais [le postmortem complet et sa matrice](../../doc/ActiCiv_Phase2_Postmortem.md). Les scénarios supplémentaires et leurs résultats sont décrits là : 25 unités, 84 assertions SQL, 8 intégrations Node, 4 intégrations avec vrais adaptateurs et 26 E2E sans retry. Les résultats exacts du candidat final restent soumis à release:verify, CI et au contrôle VoiceOver. L’existence de ces tests ne vaut pas une clôture anticipée.
+Le rapport de référence est désormais [le postmortem complet et sa matrice](../evidence/phase2/ActiCiv_Phase2_Postmortem_HISTORICAL.md). Les scénarios supplémentaires et leurs résultats sont décrits là : 25 unités, 84 assertions SQL, 8 intégrations Node, 4 intégrations avec vrais adaptateurs et 26 E2E sans retry. Les résultats exacts du candidat final restent soumis à release:verify, CI et au contrôle VoiceOver. L’existence de ces tests ne vaut pas une clôture anticipée.

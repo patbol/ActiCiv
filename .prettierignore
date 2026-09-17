@@ -5,3 +5,10 @@ playwright-report
 test-results
 docs/references
 docs/quality/commands/
+
+# Frozen evidence: preserve historical formatting and results after relocation.
+# Indexes and new checkpoint reports remain checked normally.
+docs/evidence/phase1/ActiCiv_Phase1_Postmortem.md
+docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md
+docs/evidence/phase2/ActiCiv_Phase2_Postmortem_Audit_e389396.md
+docs/evidence/phase2/ActiCiv_Phase2_Postmortem_HISTORICAL.md

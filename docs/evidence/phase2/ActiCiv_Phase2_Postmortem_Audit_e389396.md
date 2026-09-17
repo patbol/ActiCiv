@@ -6,7 +6,7 @@ Audit et rédaction : 16–17 septembre 2026. État du code : commit conservé l
 
 **État : Phase 2 implémentée, validation locale réussie, clôture non acquise.** Le commit conservé est `e389396945ac869ce6c342678d18577693fc2c96`. Il reste local, sans publication ni modification de son contenu pendant cet audit. Aucune Phase 3 n'a été commencée.
 
-Ce rapport confronte la checklist transmise par Patrick, les décisions versionnées et les fichiers/tests réellement présents. Il corrige la portée trop générale de certaines affirmations du [rapport d'implémentation](../docs/quality/phase-2-report.md). Les 17 tests unitaires, 69 assertions SQL, quatre scénarios d'intégration et 20 tests Playwright ont réussi sur ce SHA ; ils ne couvrent pas tous les critères demandés.
+Ce rapport confronte la checklist transmise par Patrick, les décisions versionnées et les fichiers/tests réellement présents. Il corrige la portée trop générale de certaines affirmations du [rapport d'implémentation](../../quality/phase-2-report.md). Les 17 tests unitaires, 69 assertions SQL, quatre scénarios d'intégration et 20 tests Playwright ont réussi sur ce SHA ; ils ne couvrent pas tous les critères demandés.
 
 Les écarts principaux sont : protection du dernier administrateur insuffisamment éprouvée sous concurrence ; contrôle automatique des dépendances HTTP absent ; séparation hexagonale incomplète de certaines opérations critiques ; absence d'identifiant de corrélation de requête dans l'audit ; tests incomplets des pannes d'invitation, de récupération du mot de passe et de publication successive des SLA ; accessibilité partiellement vérifiée. Les preuves CI, reconstruction complète rattachée au SHA et livraison finale restent à obtenir.
 
@@ -16,21 +16,21 @@ Les trois pièces suivantes accompagnent ce document sans modifier le commit aud
 
 | Référence | Preuve et limites                                                                                                                                                                                                                                                                                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| L         | [Journal intégral `release:verify`](preuves/phase2-e389396-release-verify.log), copie textuelle normalisée de `/private/tmp/acticiv-phase2-e389396-local.log`, avec marqueur `LOCAL_VALIDATED_SHA`. SHA-256 du journal brut original : `5d63953556511208c32e8feeb34727b93284cf665d9f96728377ea9823309566`. Le journal ne contient pas de démarrage depuis une base vide ni de reset. |
-| D         | [Métadonnées de la base locale](preuves/phase2-database-metadata.txt), relevées en lecture seule pendant l'audit : versions, migrations appliquées, policies, RLS, unicités, présence des triggers. Elles décrivent la base observée, sans remplacer une reconstruction.                                                                                                             |
-| R         | [Runtime, Git et sondes ESLint](preuves/phase2-audit-runtime.txt), relevés avant création du rapport. Les sondes utilisent `ESLint.lintText` en mémoire, sans ajouter de fichier source.                                                                                                                                                                                             |
+| L         | [Journal intégral `release:verify`](raw/phase2-e389396-release-verify.log), copie textuelle normalisée de `/private/tmp/acticiv-phase2-e389396-local.log`, avec marqueur `LOCAL_VALIDATED_SHA`. SHA-256 du journal brut original : `5d63953556511208c32e8feeb34727b93284cf665d9f96728377ea9823309566`. Le journal ne contient pas de démarrage depuis une base vide ni de reset. |
+| D         | [Métadonnées de la base locale](raw/phase2-database-metadata.txt), relevées en lecture seule pendant l'audit : versions, migrations appliquées, policies, RLS, unicités, présence des triggers. Elles décrivent la base observée, sans remplacer une reconstruction.                                                                                                             |
+| R         | [Runtime, Git et sondes ESLint](raw/phase2-audit-runtime.txt), relevés avant création du rapport. Les sondes utilisent `ESLint.lintText` en mémoire, sans ajouter de fichier source.                                                                                                                                                                                             |
 
 Les sorties jointes ont uniquement leurs fins de ligne et espaces terminaux normalisés pour éviter les défauts de whitespace Git ; aucun résultat ni valeur n’a été retiré. SHA-256 du journal L joint après cette normalisation : `aecd1564f6ac2a2c73a57f12fa558932b47f57a29b99edda536c20c719cb8da5`. Le journal brut original reste inchangé hors dépôt.
 
-Les preuves de tests citées plus bas sont les sources au SHA audité, avec leur succès d'exécution dans L : [SQL principal](../supabase/tests/phase2.sql) (« S1 »), [SQL limites](../supabase/tests/phase2_edge_cases.sql) (« S2 »), [intégration réelle](../integration/security.test.mjs) (« I »), [E2E Auth](../e2e/auth.spec.ts) (« E »), [E2E Phase 1](../e2e/foundation.spec.ts) (« E1 »). Les chemins indiqués dans les tableaux sont relatifs à la racine du dépôt. Les migrations M1 à M8 sont identifiées en section 6.
+Les preuves de tests citées plus bas sont les sources au SHA audité, avec leur succès d'exécution dans L : [SQL principal](../../../supabase/tests/phase2.sql) (« S1 »), [SQL limites](../../../supabase/tests/phase2_edge_cases.sql) (« S2 »), [intégration réelle](../../../integration/security.test.mjs) (« I »), [E2E Auth](../../../e2e/auth.spec.ts) (« E »), [E2E Phase 1](../../../e2e/foundation.spec.ts) (« E1 »). Les chemins indiqués dans les tableaux sont relatifs à la racine du dépôt. Les migrations M1 à M8 sont identifiées en section 6.
 
 ## 2. Objectifs Phase 2
 
 La Phase 2 construit les fondations Core Data & Security du monolithe : professionnels, organisations, services, autorisations, catalogue, contrats et territoires, horaires/SLA versionnés, Auth sur invitation et audit transactionnel. Elle ne construit aucun workflow de signalement.
 
-Les arbitrages de [ActiCiv_Phase2_Decisions.md](../docs/references/ActiCiv_Phase2_Decisions.md) restent verrouillés : un professionnel appartient à une organisation, plusieurs services possibles, rôles distincts, supervision portée par `service_memberships`, contrats contrôlés par la plateforme, quatre scopes SLA et ordre de spécificité futur, horaires explicites et conventions DST. Il n'est pas demandé de réarbitrer ces règles.
+Les arbitrages de [ActiCiv_Phase2_Decisions.md](../../references/historical/ActiCiv_Phase2_Decisions.md) restent verrouillés : un professionnel appartient à une organisation, plusieurs services possibles, rôles distincts, supervision portée par `service_memberships`, contrats contrôlés par la plateforme, quatre scopes SLA et ordre de spécificité futur, horaires explicites et conventions DST. Il n'est pas demandé de réarbitrer ces règles.
 
-Les précisions finales approuvées imposent l'unicité réelle des scopes nullable, l'absence de table de supervision séparée et l'atomicité mutation/audit. La discipline du [postmortem Phase 1](../docs/references/ActiCiv_Phase1_Postmortem.md) exige le même commit propre validé localement, dans les deux jobs CI et utilisé pour l'artefact.
+Les précisions finales approuvées imposent l'unicité réelle des scopes nullable, l'absence de table de supervision séparée et l'atomicité mutation/audit. La discipline du [postmortem Phase 1](../phase1/ActiCiv_Phase1_Postmortem.md) exige le même commit propre validé localement, dans les deux jobs CI et utilisé pour l'artefact.
 
 ## 3. Résultat final
 
@@ -83,14 +83,14 @@ Liste exacte, dans l'ordre observé dans `supabase_migrations.schema_migrations`
 
 | ID  | Fichier                                                                                                   | Tables créées / responsabilité                                                                                   |
 | --- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| M1  | [20260916000100_security.sql](../supabase/migrations/20260916000100_security.sql)                         | Schéma privé, PostGIS, révocation des privilèges par défaut, helper de sécurisation                              |
-| M2  | [20260916000200_organizations.sql](../supabase/migrations/20260916000200_organizations.sql)               | `organizations`, `organization_settings`, `professional_profiles`, `organization_memberships`, `platform_admins` |
-| M3  | [20260916000300_audit.sql](../supabase/migrations/20260916000300_audit.sql)                               | `audit_events`, immutabilité, fonction d'audit et premiers triggers                                              |
-| M4  | [20260916000400_services_invitations.sql](../supabase/migrations/20260916000400_services_invitations.sql) | `services`, `service_memberships`, `professional_invitations`, `invitation_services`, garde dernier admin, RPC   |
-| M5  | [20260916000500_catalog.sql](../supabase/migrations/20260916000500_catalog.sql)                           | `verticals`, `categories`, `organization_categories`                                                             |
-| M6  | [20260916000600_coverage.sql](../supabase/migrations/20260916000600_coverage.sql)                         | `territories`, `contracts`, `contract_scopes`, `contract_scope_categories`, `contract_scope_services`            |
-| M7  | [20260916000700_schedules.sql](../supabase/migrations/20260916000700_schedules.sql)                       | `service_schedules`, `service_schedule_versions`, `service_schedule_days`, `service_schedule_windows`            |
-| M8  | [20260916000800_sla.sql](../supabase/migrations/20260916000800_sla.sql)                                   | `sla_policies`, `sla_policy_versions`, `sla_targets`, `hold_reasons`, `sla_pause_rules`                          |
+| M1  | [20260916000100_security.sql](../../../supabase/migrations/20260916000100_security.sql)                         | Schéma privé, PostGIS, révocation des privilèges par défaut, helper de sécurisation                              |
+| M2  | [20260916000200_organizations.sql](../../../supabase/migrations/20260916000200_organizations.sql)               | `organizations`, `organization_settings`, `professional_profiles`, `organization_memberships`, `platform_admins` |
+| M3  | [20260916000300_audit.sql](../../../supabase/migrations/20260916000300_audit.sql)                               | `audit_events`, immutabilité, fonction d'audit et premiers triggers                                              |
+| M4  | [20260916000400_services_invitations.sql](../../../supabase/migrations/20260916000400_services_invitations.sql) | `services`, `service_memberships`, `professional_invitations`, `invitation_services`, garde dernier admin, RPC   |
+| M5  | [20260916000500_catalog.sql](../../../supabase/migrations/20260916000500_catalog.sql)                           | `verticals`, `categories`, `organization_categories`                                                             |
+| M6  | [20260916000600_coverage.sql](../../../supabase/migrations/20260916000600_coverage.sql)                         | `territories`, `contracts`, `contract_scopes`, `contract_scope_categories`, `contract_scope_services`            |
+| M7  | [20260916000700_schedules.sql](../../../supabase/migrations/20260916000700_schedules.sql)                       | `service_schedules`, `service_schedule_versions`, `service_schedule_days`, `service_schedule_windows`            |
+| M8  | [20260916000800_sla.sql](../../../supabase/migrations/20260916000800_sla.sql)                                   | `sla_policies`, `sla_policy_versions`, `sla_targets`, `hold_reasons`, `sla_pause_rules`                          |
 
 Total : **27 tables métier dans `public`**, chacune avec RLS. PostGIS installé : `3.3.7` ; PostgreSQL observé : `17.6`. pgTAP est chargé par le banc de tests ; son absence du relevé persistant des extensions après rollback des tests ne constitue pas un échec des 69 assertions exécutées.
 
@@ -196,7 +196,7 @@ Les horaires utilisent des secondes depuis minuit, `0 <= start < end <= 86400`, 
 
 S2 publie réellement des segments dimanche/lundi avec adjacence ; les tests domaine vérifient plusieurs créneaux, jours fermés et bornes. **Il manque un test calculant les fenêtres datées de part et d'autre d'un dimanche→lundi et comparant leur continuité.** Le stockage de ces segments est prouvé, leur résolution hebdomadaire à cette frontière ne l'est pas.
 
-Le runtime R retourne `typeof globalThis.Temporal === "undefined"` sous Node `v24.21.0`. `@js-temporal/polyfill@0.5.1` est donc justifié pour l'adaptateur `ZonedTime`, encapsulé dans `schedules/infrastructure/temporal.ts`. Les modules domain/application ne l'importent pas. Les tests [schedule.test.ts](../packages/backend/src/modules/schedules/domain/schedule.test.ts), réussis dans L, prouvent :
+Le runtime R retourne `typeof globalThis.Temporal === "undefined"` sous Node `v24.21.0`. `@js-temporal/polyfill@0.5.1` est donc justifié pour l'adaptateur `ZonedTime`, encapsulé dans `schedules/infrastructure/temporal.ts`. Les modules domain/application ne l'importent pas. Les tests [schedule.test.ts](../../../packages/backend/src/modules/schedules/domain/schedule.test.ts), réussis dans L, prouvent :
 
 - Paris, 29 mars 2026 : 02:30 inexistante → `01:00Z`, donc 03:00 locale, pas 03:30 ;
 - Paris, 25 octobre 2026 : 02:30 ambiguë → `00:30Z`, première occurrence ;
@@ -240,7 +240,7 @@ Les logs techniques de `platform/logger.ts` sont distincts de l'audit métier et
 
 ## 13. Seeds
 
-[supabase/seed.sql](../supabase/seed.sql) contient uniquement des fixtures fictives locales/CI :
+[supabase/seed.sql](../../../supabase/seed.sql) contient uniquement des fixtures fictives locales/CI :
 
 | Contenu                       | Quantité / preuve                                                                                 |
 | ----------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -289,7 +289,7 @@ La commande `git diff b28160ca1b93c0ef9eb312c8456f8b95b9cc2763 HEAD -- e2e/found
 
 ## 15. Résultats verify / verify:full
 
-Les scripts réels de [package.json](../package.json) sont :
+Les scripts réels de [package.json](../../../package.json) sont :
 
 ```text
 verify = format:check → lint → typecheck → test → build → verify:bundles
@@ -299,13 +299,13 @@ release:verify = arbre propre → SHA/runtime → verify:full → même SHA/arbr
 
 Les commandes sont enchaînées avec arrêt sur erreur. `db:test` refuse l'absence de fichiers SQL, puis exécute `supabase test db`. Un environnement Supabase manquant ne produit pas un succès factice.
 
-Le [script de release](../scripts/verify-release.mjs) n'affiche `LOCAL_VALIDATED_SHA=e389396945ac869ce6c342678d18577693fc2c96` qu'après succès complet et contrôle Git final. Ce marqueur figure dans L. Il ne vérifie pas lui-même un run GitHub ni ne crée une archive ; sa dernière ligne rappelle ces exigences.
+Le [script de release](../../../scripts/verify-release.mjs) n'affiche `LOCAL_VALIDATED_SHA=e389396945ac869ce6c342678d18577693fc2c96` qu'après succès complet et contrôle Git final. Ce marqueur figure dans L. Il ne vérifie pas lui-même un run GitHub ni ne crée une archive ; sa dernière ligne rappelle ces exigences.
 
 Le relevé complémentaire R prouve Node/pnpm et le défaut HTTP sans modifier les sources. La mise en forme du présent rapport et son contrôle documentaire sont distincts de `verify:full`. Une nouvelle exécution de `release:verify` sur l'arbre actuel serait bloquée par les ajouts documentaires non commités, conformément à sa règle.
 
 ## 16. GitHub Actions / SHA exact
 
-Le workflow [Quality](../.github/workflows/ci.yml) contient deux jobs : `app` exécute `verify` ; `database-foundation` démarre Supabase, fait `db:reset`, installe Chromium et exécute `verify:full`, puis arrête Supabase. Le runtime vient de `.nvmrc`, l'installation utilise `--frozen-lockfile`.
+Le workflow [Quality](../../../.github/workflows/ci.yml) contient deux jobs : `app` exécute `verify` ; `database-foundation` démarre Supabase, fait `db:reset`, installe Chromium et exécute `verify:full`, puis arrête Supabase. Le runtime vient de `.nvmrc`, l'installation utilise `--frozen-lockfile`.
 
 **Aucun succès CI n'est attesté pour `e389396945ac869ce6c342678d18577693fc2c96`.** Le connecteur GitHub a retourné `workflow_runs: []` pour ce SHA pendant l'audit. Ce wrapper ne remonte que la première page des runs déclenchés par pull request : ce résultat seul ne prouverait pas l'absence de tous les runs push. Ici, aucune publication de ce commit n'a été effectuée et aucune URL de run réussi n'est disponible. L'existence du workflow ne vaut donc pas exécution.
 
@@ -383,7 +383,7 @@ Le gel Node/ICU/tz assure un environnement connu, mais ses mises à jour devront
 
 Les rôles, service memberships, scopes/précédence SLA, PostGIS/ST_Covers, conventions DST, immutabilité et audit atomique sont décidés. Les écarts d'implémentation/tests ne sont pas des arbitrages produit à rouvrir.
 
-Les questions futures de [open-questions.md](../docs/product-decisions/open-questions.md) concernent le routage de candidats non départageables, le payload public et la rétention, les seuils anti-abus, la fusion des doublons, la réouverture, les anciens signalements lors d'une nouvelle couverture et les comportements PWA. Les transferts inter-organisations restent hors MVP. Aucun de ces sujets n'autorise une implémentation Phase 3 maintenant.
+Les questions futures de [open-questions.md](../../product-decisions/open-questions.md) concernent le routage de candidats non départageables, le payload public et la rétention, les seuils anti-abus, la fusion des doublons, la réouverture, les anciens signalements lors d'une nouvelle couverture et les comportements PWA. Les transferts inter-organisations restent hors MVP. Aucun de ces sujets n'autorise une implémentation Phase 3 maintenant.
 
 Les étapes de clôture encore à organiser sont la correction des FAIL, la validation VoiceOver des nouvelles pages, la preuve de reconstruction et la publication/CI du candidat final lorsqu'elle sera autorisée. TalkBack reste différé faute d'environnement. L'identifiant de corrélation demandé ne doit pas être remplacé sans justification par le seul identifiant de transaction existant.
 

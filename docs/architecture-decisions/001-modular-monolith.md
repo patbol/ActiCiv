@@ -12,4 +12,4 @@ Conséquences : deux builds consomment la même logique. Les modules auth, organ
 
 ## Complément Phase 2 approuvé
 
-Architecture hexagonale pragmatique pour authorization, organizations, auth/invitations, coverage, schedules et SLA. Domaine indépendant des frameworks ; cas d'usage et ports uniquement aux frontières utiles ; adaptateurs Supabase/PostGIS/Temporal. Composition serveur dans packages/backend. La [cartographie concrète](../phase-2.md) décrit les entrées. Pas de couches vides pour le catalogue, les réglages ou la marque. Les imports de domaine/application sont contrôlés par ESLint et tests.
+Architecture hexagonale pragmatique pour authorization, organizations, auth/invitations, coverage, schedules et SLA. Domaine indépendant des frameworks ; cas d'usage et ports uniquement aux frontières utiles ; adaptateurs Supabase/PostGIS/Temporal. Composition serveur dans packages/backend. La [cartographie concrète](../references/historical/ActiCiv_Phase2_Implementation_Reference_HISTORICAL.md) décrit les entrées. Pas de couches vides pour le catalogue, les réglages ou la marque. Les imports de domaine/application sont contrôlés par ESLint et tests.

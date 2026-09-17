@@ -14,7 +14,7 @@ Convention : PASS = preuve citée et réellement observée ; FAIL = exigence non
 
 Construire les fondations Core Data & Security : professionnels, organisations/services, RBAC/RLS, catalogue, contrats/territoires, horaires/SLA versionnés, Auth sur invitation et audit atomique. La passe de clôture complète architecture, garde réseau, concurrence, pannes/reprises, corrélation, accessibilité et discipline de livraison.
 
-Références : [décisions verrouillées](../docs/references/ActiCiv_Phase2_Decisions.md), [prompt HEX](../docs/references/ActiCiv_Prompt_Astra_Phase2_v1.1_HEX.md), [proposition approuvée](../docs/references/ActiCiv_Phase2_Proposition_Architecture.md), [livre v1.1](../docs/references/ActiCiv_Livre_Produit_Technique_v1.1_FINAL_A4.docx), [postmortem Phase 1](../docs/references/ActiCiv_Phase1_Postmortem.md). Aucune Phase 3 autorisée.
+Références : [décisions verrouillées](../../references/historical/ActiCiv_Phase2_Decisions.md), [prompt HEX](../../references/historical/ActiCiv_Prompt_Astra_Phase2_v1.1_HEX.md), [proposition approuvée](../../references/historical/ActiCiv_Phase2_Proposition_Architecture.md), [livre v1.1](../../references/historical/ActiCiv_Livre_Produit_Technique_v1.1_FINAL_A4.docx), [postmortem Phase 1](../phase1/ActiCiv_Phase1_Postmortem.md). Aucune Phase 3 autorisée.
 
 ## 3. Résultat final
 
@@ -55,15 +55,15 @@ M1–M8 sont conservées ; M9 complète le schéma sans réécrire les migration
 
 | ID  | Fichier                                                                                                   | Tables créées / responsabilité                                                                                   |
 | --- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| M1  | [20260916000100_security.sql](../supabase/migrations/20260916000100_security.sql)                         | Schéma privé, PostGIS, révocation des privilèges par défaut, helper de sécurisation                              |
-| M2  | [20260916000200_organizations.sql](../supabase/migrations/20260916000200_organizations.sql)               | `organizations`, `organization_settings`, `professional_profiles`, `organization_memberships`, `platform_admins` |
-| M3  | [20260916000300_audit.sql](../supabase/migrations/20260916000300_audit.sql)                               | `audit_events`, immutabilité, fonction d'audit et premiers triggers                                              |
-| M4  | [20260916000400_services_invitations.sql](../supabase/migrations/20260916000400_services_invitations.sql) | `services`, `service_memberships`, `professional_invitations`, `invitation_services`, garde dernier admin, RPC   |
-| M5  | [20260916000500_catalog.sql](../supabase/migrations/20260916000500_catalog.sql)                           | `verticals`, `categories`, `organization_categories`                                                             |
-| M6  | [20260916000600_coverage.sql](../supabase/migrations/20260916000600_coverage.sql)                         | `territories`, `contracts`, `contract_scopes`, `contract_scope_categories`, `contract_scope_services`            |
-| M7  | [20260916000700_schedules.sql](../supabase/migrations/20260916000700_schedules.sql)                       | `service_schedules`, `service_schedule_versions`, `service_schedule_days`, `service_schedule_windows`            |
-| M8  | [20260916000800_sla.sql](../supabase/migrations/20260916000800_sla.sql)                                   | `sla_policies`, `sla_policy_versions`, `sla_targets`, `hold_reasons`, `sla_pause_rules`                          |
-| M9  | [20260917000100_closure_hardening.sql](../supabase/migrations/20260917000100_closure_hardening.sql)       | correlation_id de commande, reprise en acceptation et contrôle de cycle avant contenance ; aucune nouvelle table |
+| M1  | [20260916000100_security.sql](../../../supabase/migrations/20260916000100_security.sql)                         | Schéma privé, PostGIS, révocation des privilèges par défaut, helper de sécurisation                              |
+| M2  | [20260916000200_organizations.sql](../../../supabase/migrations/20260916000200_organizations.sql)               | `organizations`, `organization_settings`, `professional_profiles`, `organization_memberships`, `platform_admins` |
+| M3  | [20260916000300_audit.sql](../../../supabase/migrations/20260916000300_audit.sql)                               | `audit_events`, immutabilité, fonction d'audit et premiers triggers                                              |
+| M4  | [20260916000400_services_invitations.sql](../../../supabase/migrations/20260916000400_services_invitations.sql) | `services`, `service_memberships`, `professional_invitations`, `invitation_services`, garde dernier admin, RPC   |
+| M5  | [20260916000500_catalog.sql](../../../supabase/migrations/20260916000500_catalog.sql)                           | `verticals`, `categories`, `organization_categories`                                                             |
+| M6  | [20260916000600_coverage.sql](../../../supabase/migrations/20260916000600_coverage.sql)                         | `territories`, `contracts`, `contract_scopes`, `contract_scope_categories`, `contract_scope_services`            |
+| M7  | [20260916000700_schedules.sql](../../../supabase/migrations/20260916000700_schedules.sql)                       | `service_schedules`, `service_schedule_versions`, `service_schedule_days`, `service_schedule_windows`            |
+| M8  | [20260916000800_sla.sql](../../../supabase/migrations/20260916000800_sla.sql)                                   | `sla_policies`, `sla_policy_versions`, `sla_targets`, `hold_reasons`, `sla_pause_rules`                          |
+| M9  | [20260917000100_closure_hardening.sql](../../../supabase/migrations/20260917000100_closure_hardening.sql)       | correlation_id de commande, reprise en acceptation et contrôle de cycle avant contenance ; aucune nouvelle table |
 
 Les 27 tables conservent leurs policies et leurs FK composites. Les contraintes `UNIQUE NULLS NOT DISTINCT` sur scopes SLA et calendriers nullable restent en place. PostGIS 3.3.7 / PostgreSQL 17.6 ont été observés localement ; pgTAP charge les assertions dans des transactions rollbackées.
 
@@ -166,7 +166,7 @@ Les mots de passe de fixtures sont générés en mémoire. Les tests ajoutent le
 
 ## 14. Tests réellement exécutés
 
-Références : S1 = [phase2.sql](../supabase/tests/phase2.sql), S2 = [phase2_edge_cases.sql](../supabase/tests/phase2_edge_cases.sql), S3 = [phase2_closure.sql](../supabase/tests/phase2_closure.sql), I = [security.test.mjs](../integration/security.test.mjs), IC = [last-admin.test.mjs](../integration/last-admin.test.mjs), IA = [invitations.integration.ts](../packages/backend/integration/invitations.integration.ts), E = [auth.spec.ts](../e2e/auth.spec.ts), E1 = [foundation.spec.ts](../e2e/foundation.spec.ts). M1–M9 sont les migrations listées. D et R désignent les [métadonnées initiales](preuves/phase2-database-metadata.txt) et [runtime initial](preuves/phase2-audit-runtime.txt), seulement pour les propriétés restées inchangées. Les mentions L de la matrice renvoient aux campagnes locales citées ici ; le journal final du nouveau SHA reste à joindre.
+Références : S1 = [phase2.sql](../../../supabase/tests/phase2.sql), S2 = [phase2_edge_cases.sql](../../../supabase/tests/phase2_edge_cases.sql), S3 = [phase2_closure.sql](../../../supabase/tests/phase2_closure.sql), I = [security.test.mjs](../../../integration/security.test.mjs), IC = [last-admin.test.mjs](../../../integration/last-admin.test.mjs), IA = [invitations.integration.ts](../../../packages/backend/integration/invitations.integration.ts), E = [auth.spec.ts](../../../e2e/auth.spec.ts), E1 = [foundation.spec.ts](../../../e2e/foundation.spec.ts). M1–M9 sont les migrations listées. D et R désignent les [métadonnées initiales](raw/phase2-database-metadata.txt) et [runtime initial](raw/phase2-audit-runtime.txt), seulement pour les propriétés restées inchangées. Les mentions L de la matrice renvoient aux campagnes locales citées ici ; le journal final du nouveau SHA reste à joindre.
 
 | Contrôle                               | Résultat local observé           | Preuve                                                                  |
 | -------------------------------------- | -------------------------------- | ----------------------------------------------------------------------- |
@@ -233,7 +233,7 @@ Pas de transfert silencieux d'un FAIL Phase2 à Phase3. Restent les limites conn
 
 ## 21. Questions encore ouvertes
 
-Les décisions rôles/supervision, mono-organisation, SLA/scopes/DST, géographie/contrats et audit atomique sont verrouillées. Les seuls sujets produit ouverts sont ceux de [open-questions.md](../docs/product-decisions/open-questions.md), pour leurs phases futures : routage non départageable, suivi public, rétention, anti-abus, fusion, réouverture et PWA. Aucun n'est implémenté ici.
+Les décisions rôles/supervision, mono-organisation, SLA/scopes/DST, géographie/contrats et audit atomique sont verrouillées. Les seuls sujets produit ouverts sont ceux de [open-questions.md](../../product-decisions/open-questions.md), pour leurs phases futures : routage non départageable, suivi public, rétention, anti-abus, fusion, réouverture et PWA. Aucun n'est implémenté ici.
 
 ## 22. Ce qui a bien fonctionné
 

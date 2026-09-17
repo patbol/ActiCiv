@@ -4,7 +4,7 @@ Implémentation de la proposition A–I approuvée par Patrick le 16 septembre 2
 
 ## Références
 
-Décisions explicites récentes > [Livre v1.1](references/ActiCiv_Livre_Produit_Technique_v1.1_FINAL_A4.docx) > [prompt Phase 2](references/ActiCiv_Prompt_Astra_Phase2_v1.1_HEX.md) > prompt initial. Les [décisions](references/ActiCiv_Phase2_Decisions.md) précisent les arbitrages. Le [postmortem](references/ActiCiv_Phase1_Postmortem.md) impose les règles de livraison. L'ancienne proposition est historique là où les décisions l'ont remplacée.
+Décisions explicites récentes > [Livre v1.1](ActiCiv_Livre_Produit_Technique_v1.1_FINAL_A4.docx) > [prompt Phase 2](ActiCiv_Prompt_Astra_Phase2_v1.1_HEX.md) > prompt initial. Les [décisions](ActiCiv_Phase2_Decisions.md) précisent les arbitrages. Le [postmortem](../../evidence/phase1/ActiCiv_Phase1_Postmortem.md) impose les règles de livraison. L'ancienne proposition est historique là où les décisions l'ont remplacée.
 
 ## Base et invariants
 

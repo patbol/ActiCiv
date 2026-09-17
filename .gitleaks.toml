@@ -1,0 +1,13 @@
+# Preserve all default detectors. This public Git SHA is evidence, not a secret.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Official Phase 2 Git SHA recorded by the secret scanner"
+condition = "AND"
+paths = ['''(^|/)docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8\.md$''']
+regexTarget = "secret"
+regexes = ['''^fac0fc8663d1f32b09b720fddffd46f0829c8a6a$''']

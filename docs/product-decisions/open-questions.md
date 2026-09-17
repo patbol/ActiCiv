@@ -1,6 +1,6 @@
 # Décisions produit ouvertes — phases futures
 
-Les décisions Phase 2 sont verrouillées dans [Phase 2 Decisions](../references/ActiCiv_Phase2_Decisions.md) et complétées par les précisions d'implémentation approuvées. Mono-organisation, multi-services, rôles exclusifs, périmètre de supervision, PostGIS/frontières, contrats, scopes SLA, pauses, versionnement et DST ne sont plus ouverts.
+Les décisions Phase 2 sont verrouillées dans [Phase 2 Decisions](../references/historical/ActiCiv_Phase2_Decisions.md) et complétées par les précisions d'implémentation approuvées. Mono-organisation, multi-services, rôles exclusifs, périmètre de supervision, PostGIS/frontières, contrats, scopes SLA, pauses, versionnement et DST ne sont plus ouverts.
 
 | Sujet                                                     | Échéance                |
 | --------------------------------------------------------- | ----------------------- |
