@@ -14,6 +14,11 @@ async function submitByKeyboard(page: Page, button: string) {
   await page.getByRole("button", { name: button, exact: true }).focus();
   await page.keyboard.press("Enter");
 }
+async function expectConfirmationSession(page: Page, url: string) {
+  const response = await page.request.get(url, { maxRedirects: 0 });
+  expect(response.status()).toBe(307);
+  expect(response.headers()["set-cookie"]).toContain("sb-");
+}
 test("recovery validates errors, keyboard focus, new password and a fresh login", async ({
   page,
 }, testInfo) => {
@@ -69,9 +74,11 @@ test("recovery validates errors, keyboard focus, new password and a fresh login"
   });
   expect(response.ok).toBe(true);
   const link = await response.json();
-  await page.goto(
+  await expectConfirmationSession(
+    page,
     `http://127.0.0.1:3001/auth/confirm?token_hash=${encodeURIComponent(link.hashed_token)}&type=recovery`,
   );
+  await page.goto("http://127.0.0.1:3001/auth/password");
   await expect(
     page.getByRole("heading", { name: "Définir mon mot de passe" }),
   ).toBeFocused();
@@ -128,6 +135,9 @@ test("unavailable invitation remains accessible without granting any membership"
 }) => {
   await page.goto("http://127.0.0.1:3001/auth/accept?error=1");
   await expect(page.locator("#auth-error")).toBeFocused();
+  await expect(page.locator("#auth-error")).toContainText(
+    "Aucune invitation à activer.",
+  );
   await expect(page.getByText("Aucune invitation à activer.")).toBeVisible();
   await accessible(page);
   await page.keyboard.press("Tab");
@@ -279,9 +289,11 @@ test("invited professional sets a password and activates membership", async ({
     type: "invite",
     email,
   });
-  await page.goto(
+  await expectConfirmationSession(
+    page,
     `http://127.0.0.1:3001/auth/confirm?token_hash=${encodeURIComponent(link.hashed_token)}&type=invite`,
   );
+  await page.goto("http://127.0.0.1:3001/auth/password");
   await expect(
     page.getByRole("heading", { name: "Définir mon mot de passe" }),
   ).toBeVisible();

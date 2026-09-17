@@ -4,7 +4,7 @@ Date : 17 septembre 2026. Périmètre exclusif : Phase 2.
 
 ## 1. Synthèse
 
-Les écarts techniques du premier audit ont été corrigés et leurs tests de non-régression exécutés. La clôture finale reste soumise au retour VoiceOver, au commit propre, à la reconstruction locale et aux deux jobs GitHub Actions sur ce même SHA, puis à l'artefact issu de ce commit. Ce document ne déclare pas ces étapes réussies avant leurs preuves.
+Les écarts techniques du premier audit ont été corrigés et leurs tests de non-régression exécutés. Le contrôle VoiceOver a été réalisé et validé. La clôture finale reste soumise au commit propre, à la reconstruction locale et aux deux jobs GitHub Actions sur ce même SHA, puis à l'artefact issu de ce commit. Ce document ne déclare pas ces étapes réussies avant leurs preuves.
 
 Le [premier audit du commit e389396](ActiCiv_Phase2_Postmortem_Audit_e389396.md) est conservé intégralement : 228 PASS, 23 FAIL, 10 DEFERRED à cette date. La présente matrice remplace sa conclusion pour l'état renforcé ; l'audit historique n'est pas effacé.
 
@@ -20,7 +20,7 @@ Références : [décisions verrouillées](../docs/references/ActiCiv_Phase2_Deci
 
 État de consolidation : code renforcé et campagnes ciblées réussies ; livraison finale encore en préparation. Les résultats observés sont 25 tests unitaires, 84 assertions SQL, 8 scénarios Node d'intégration, 4 scénarios Vitest avec adaptateurs réels et 26 tests navigateur sans retry. Les comptes de tests ne valent pas à eux seuls validation de la livraison.
 
-L'architecture et les contrôles nouveaux sont décrits ci-dessous ; les 261 critères sont repris en section 27. Le code Pro soumis à VoiceOver est identifié par son empreinte de sources, distincte du SHA Git final.
+L'architecture et les contrôles nouveaux sont décrits ci-dessous ; les 261 critères sont repris en section 27. Le code Pro contrôlé avec VoiceOver est identifié par son empreinte de sources, distincte du SHA Git final.
 
 ## 4. SHA final / branche / état Git
 
@@ -198,32 +198,34 @@ Le workflow Quality conserve app et database-foundation. Checkout récupère l'h
 
 Les incidents initiaux B1–B8 restent détaillés dans l'audit historique. Les défauts de cette passe sont : frontières critiques incomplètes ; garde réseau absent ; couverture concurrente et invitations trop partielle ; absence de correlation_id ; scénarios SQL/SLA/géographie/accessibilité manquants ; documentation navigateur ambiguë.
 
-Pendant les nouveaux tests, une assertion pgTAP avait un type polymorphique non déterminable : ses arguments ont été typés. Le test négatif d'invitation attendait une redirection que le produit ne spécifie pas : il vérifie désormais l'état sans accès et le refus API403. Le contrôle positif initial du scanner utilisait une valeur aléatoire non garantie détectable ; il est désormais déterministe. Docker s'est arrêté entre deux sessions et a été relancé. Une limite d'usage a temporairement bloqué l'autorisation d'exécution, puis sa levée a été vérifiée avant reprise.
+Pendant les nouveaux tests, une assertion pgTAP avait un type polymorphique non déterminable : ses arguments ont été typés. Le test négatif d'invitation attendait une redirection que le produit ne spécifie pas : il vérifie désormais l'état sans accès et le refus API403. Le contrôle positif initial du scanner utilisait une valeur aléatoire non garantie détectable ; il est désormais déterministe. VoiceOver a révélé que la session issue de confirmation dépendait d'une mutation implicite de cookie et que l'absence d'invitation n'était pas dans l'alerte annoncée. Docker s'est arrêté entre deux sessions et a été relancé. Une limite d'usage a temporairement bloqué l'autorisation d'exécution, puis sa levée a été vérifiée avant reprise.
 
 ## 18. Pour chaque bug : cause + correctif + test de non-régression
 
-| Défaut                                 | Cause                             | Correctif                                                         | Non-régression                                                                               |
-| -------------------------------------- | --------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Orchestrations critiques couplées      | SDK/RPC dans actions/composition  | ProfessionalSession, CoverageAdministration, OrganizationPlatform | Tests session/administration refusant les appels non autorisés/incohérents avant adaptateurs |
-| Réseau autorisé dans domaine           | Patterns incomplets               | Règles imports/globals/syntaxes, ports réseau dans infrastructure | architecture.test.ts injecte chaque forme interdite et un cas autorisé en adaptateur         |
-| Preuve dernier admin insuffisante      | Même JWT et une seule opération   | Deux acteurs/transactions, barrière SQL                           | IC : quatre courses, erreur invariant exacte et admin restant                                |
-| Pannes invitation seulement simulées   | Mock et arrêt entre étapes        | Injection réelle dans Auth storage et bind SQL                    | IA : reprise réelle, même identité, zéro droits partiels, corrélation                        |
-| Anciennes SLA non comparées            | Tests négatifs/seed seuls         | Deux publications positives                                       | S3 compare version initiale et targets, contrôle nouveaux targets                            |
-| Dimanche/lundi non daté                | Segments stockés seulement        | Résolution de deux dates                                          | Unité normale/printemps/automne, instants jointifs et durée                                  |
-| Cycle masqué par géométrie             | Ordre des vérifications           | Graphe vérifié avant contenance                                   | S3 messages exacts distincts pour cycle et contenance                                        |
-| Nouvelle catégorie non testée          | Association implicite non exercée | Scénario plateforme + candidats                                   | S3 anciens liens/candidats stables, zéro extension                                           |
-| Corrélation absente                    | Seulement transaction_id          | UUID de commande persisté/propagé                                 | S3 + IA, acteur indépendant du correlation_id                                                |
-| Recovery vers acceptation systématique | Destination fixe                  | Retour espace pour profil/membership actifs                       | Unité session et E recovery/relogin complet                                                  |
-| Focus/erreurs incomplets               | Messages sans gestion de focus    | AuthHeading/AuthMessage et descriptions associées                 | E parcours/états successifs, clavier, focus, axe                                             |
-| Assertion pgTAP ambiguë                | Littéraux de type unknown         | Cast explicite text                                               | S3 s'exécute intégralement (84 assertions totales)                                           |
-| Mauvaise attente du test UI            | Hypothèse de redirection          | Assertion de l'état réel et API403                                | E négatif desktop/mobile réussi, contrôle renforcé                                           |
-| Contrôle positif secrets instable      | Fixture aléatoire                 | Fixture synthétique déterministe                                  | Gitleaks stdin doit refuser le positif et accepter le négatif avant scan                     |
+| Défaut                                 | Cause                                                      | Correctif                                                         | Non-régression                                                                                  |
+| -------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Orchestrations critiques couplées      | SDK/RPC dans actions/composition                           | ProfessionalSession, CoverageAdministration, OrganizationPlatform | Tests session/administration refusant les appels non autorisés/incohérents avant adaptateurs    |
+| Réseau autorisé dans domaine           | Patterns incomplets                                        | Règles imports/globals/syntaxes, ports réseau dans infrastructure | architecture.test.ts injecte chaque forme interdite et un cas autorisé en adaptateur            |
+| Preuve dernier admin insuffisante      | Même JWT et une seule opération                            | Deux acteurs/transactions, barrière SQL                           | IC : quatre courses, erreur invariant exacte et admin restant                                   |
+| Pannes invitation seulement simulées   | Mock et arrêt entre étapes                                 | Injection réelle dans Auth storage et bind SQL                    | IA : reprise réelle, même identité, zéro droits partiels, corrélation                           |
+| Anciennes SLA non comparées            | Tests négatifs/seed seuls                                  | Deux publications positives                                       | S3 compare version initiale et targets, contrôle nouveaux targets                               |
+| Dimanche/lundi non daté                | Segments stockés seulement                                 | Résolution de deux dates                                          | Unité normale/printemps/automne, instants jointifs et durée                                     |
+| Cycle masqué par géométrie             | Ordre des vérifications                                    | Graphe vérifié avant contenance                                   | S3 messages exacts distincts pour cycle et contenance                                           |
+| Nouvelle catégorie non testée          | Association implicite non exercée                          | Scénario plateforme + candidats                                   | S3 anciens liens/candidats stables, zéro extension                                              |
+| Corrélation absente                    | Seulement transaction_id                                   | UUID de commande persisté/propagé                                 | S3 + IA, acteur indépendant du correlation_id                                                   |
+| Recovery vers acceptation systématique | Destination fixe                                           | Retour espace pour profil/membership actifs                       | Unité session et E recovery/relogin complet                                                     |
+| Focus/erreurs incomplets               | Messages sans gestion de focus                             | AuthHeading/AuthMessage et descriptions associées                 | E parcours/états successifs, clavier, focus, axe                                                |
+| Assertion pgTAP ambiguë                | Littéraux de type unknown                                  | Cast explicite text                                               | S3 s'exécute intégralement (84 assertions totales)                                              |
+| Mauvaise attente du test UI            | Hypothèse de redirection                                   | Assertion de l'état réel et API403                                | E négatif desktop/mobile réussi, contrôle renforcé                                              |
+| Contrôle positif secrets instable      | Fixture aléatoire                                          | Fixture synthétique déterministe                                  | Gitleaks stdin doit refuser le positif et accepter le négatif avant scan                        |
+| Cookie de confirmation implicite       | Cookie SSR non porté explicitement par la réponse de route | Réponse `/auth/confirm` porte les cookies Auth                    | E vérifie `Set-Cookie`, recovery et invitation atteignent le mot de passe ; VO-05/VO-06 rejoués |
+| Absence d'invitation non annoncée      | Texte hors de la région d'alerte                           | Texte inclus dans l'alerte focalisée                              | E vérifie le contenu de `#auth-error` ; VO-07 rejoué                                            |
 
 ## 19. Écarts entre plan initial et résultat
 
 Les écarts techniques de l'audit initial ont des corrections et preuves correspondantes en section18. Les opérations triviales de catalogue ne reçoivent pas de couches artificielles. Une seule migration supplémentaire est ajoutée, sans table Phase3 ni réécriture des huit initiales.
 
-Les étapes encore en attente sont des preuves de clôture obligatoires, pas des arbitrages produit : VoiceOver, nouveau SHA propre, reconstruction/validation exacte local+CI et artefact. Aucun de ces éléments n'est assimilé à un PASS par anticipation.
+Les étapes encore en attente sont des preuves de clôture obligatoires, pas des arbitrages produit : nouveau SHA propre, reconstruction/validation exacte local+CI et artefact. Aucun de ces éléments n'est assimilé à un PASS par anticipation.
 
 ## 20. Dette technique restante
 
@@ -249,7 +251,7 @@ Aucun démarrage Phase3. Pour la suite autorisée seulement : maintenir matrice/
 
 Les tests E passent pour login, recovery, password, accept, espace, états d'erreur, confirmation et absence d'invitation : axe A/AA, labels, descriptions, clavier et focus. Ils ne prouvent pas VoiceOver.
 
-Patrick a accepté le contrôle manuel. [Protocole VO-01 à VO-08](ActiCiv_Phase2_VoiceOver.md) fourni ; session Pro active sur 3001. Empreinte des sources soumises : `a441ccf9f44e469a62913e86f4272a0fcc70308791e66d9eb2a7090ee9502772`. Retour manuel encore attendu. macOS a indiqué l'automatisation UI désactivée dans l'environnement agent ; aucun résultat de lecteur d'écran n'est inventé. TalkBack reste distinct, faute d'Android compatible validé.
+Patrick a réalisé le contrôle manuel VoiceOver/Safari le 17 septembre 2026 : VO-01 à VO-08 sont PASS. VO-05 et VO-06 ont été rejoués après la correction du cookie de confirmation ; VO-07 après l'ajout de l'absence d'invitation dans l'alerte. Environnement relevé : macOS 26.3.1 (25D2128), Safari 26.3.1 (21623.2.7.11.7). Empreinte des sources Auth/Pro contrôlées : `032507437226a9562307c33fc9c8897ea80f0994a3e0d19425ea5e1fea3c5e62`. macOS a indiqué l'automatisation UI désactivée dans l'environnement agent ; le contrôle humain est donc la preuve. TalkBack reste distinct, faute d'Android compatible validé.
 
 ## 26. Vulnérabilités / audit dépendances
 
@@ -259,7 +261,7 @@ Gitleaks [8.30.1 officiel](https://github.com/gitleaks/gitleaks/releases/tag/v8.
 
 ## 27. Critères d’acceptation Phase 2, un par un : PASS / FAIL / DEFERRED
 
-Matrice de consolidation : **246 PASS, 0 FAIL, 15 DEFERRED**. Les DEFERRED de livraison/VoiceOver sont obligatoires et bloquent encore la clôture ; seul TalkBack peut rester différé faute d'environnement. Les preuves finales ne sont pas anticipées.
+Matrice de consolidation : **247 PASS, 0 FAIL, 14 DEFERRED**. Les DEFERRED de livraison sont obligatoires et bloquent encore la clôture ; seul TalkBack peut rester différé faute d'environnement. Les preuves finales ne sont pas anticipées.
 
 **Git, release et architecture**
 
@@ -532,7 +534,7 @@ Matrice de consolidation : **246 PASS, 0 FAIL, 15 DEFERRED**. Les DEFERRED de li
 | A11Y-06 | Labels des formulaires password/accept/login                   | PASS     | E `getByLabel`, code des formulaires                                                                                                 |
 | A11Y-07 | Erreur callback annoncée par un alert                          | PASS     | E vérifie rôle et texte ; pas de validation lecteur d'écran                                                                          |
 | A11Y-08 | Toutes les erreurs des nouveaux formulaires accessibles        | PASS     | E : axe, ordre clavier, focus titre/erreur/confirmation, labels et descriptions sur login/recover/password/accept/espace et erreurs. |
-| A11Y-09 | VoiceOver Phase 2                                              | DEFERRED | Contrôle manuel accepté par Patrick ; protocole/session disponibles, retour attendu.                                                 |
+| A11Y-09 | VoiceOver Phase 2                                              | PASS     | Patrick : VO-01 à VO-08 validés le 17 septembre 2026, macOS/Safari 26.3.1 ; empreinte contrôlée section 25.                          |
 | A11Y-10 | TalkBack                                                       | DEFERRED | Aucun environnement Android/TalkBack compatible validé.                                                                              |
 | DOC-01  | Livre Produit & Technique v1.1 courant                         | PASS     | Fichier `docs/references/ActiCiv_Livre_Produit_Technique_v1.1_FINAL_A4.docx`, lien `docs/README.md`                                  |
 | DOC-02  | Master prompt conservé/référencé                               | PASS     | `docs/references/master-development-prompt.md`, index documentaire                                                                   |
@@ -568,4 +570,4 @@ Aucune Phase3 commencée : ni report citoyen, upload photo, tracking, smart queu
 
 ## 29. Conclusion et condition de passage Phase 3
 
-Les FAIL techniques sont résolus dans cette passe, mais la clôture attend les preuves obligatoires encore indiquées DEFERRED. La finalisation exige le retour VoiceOver, un arbre propre, les marqueurs locaux de reconstruction/validation, les deux jobs CI sur le même SHA et l'archive issue de ce SHA. Aucun passage Phase3 sans validation explicite de Patrick.
+Les FAIL techniques sont résolus dans cette passe, mais la clôture attend les preuves obligatoires encore indiquées DEFERRED. La finalisation exige un arbre propre, les marqueurs locaux de reconstruction/validation, les deux jobs CI sur le même SHA et l'archive issue de ce SHA. Aucun passage Phase3 sans validation explicite de Patrick.

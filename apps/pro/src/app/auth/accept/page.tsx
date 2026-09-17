@@ -13,11 +13,14 @@ export default async function Accept({
   return (
     <main id="main" className="shell">
       <AuthHeading>Activer mon accès professionnel</AuthHeading>
-      {params.error && (
+      {params.error ? (
         <AuthMessage error>
-          Invitation indisponible ou expirée. Contactez votre administrateur.
+          Invitation indisponible ou expirée. Aucune invitation à activer.
+          Contactez votre administrateur.
         </AuthMessage>
-      )}
+      ) : data?.length !== 1 ? (
+        <AuthMessage>Aucune invitation à activer.</AuthMessage>
+      ) : null}
       {data?.length === 1 ? (
         <form action={accept}>
           <label htmlFor="name">Nom d’affichage</label>
@@ -32,9 +35,7 @@ export default async function Accept({
           />
           <button type="submit">Accepter l’invitation</button>
         </form>
-      ) : (
-        <p>Aucune invitation à activer.</p>
-      )}
+      ) : null}
       <Link href="/espace">Accéder à mon espace</Link>
     </main>
   );
