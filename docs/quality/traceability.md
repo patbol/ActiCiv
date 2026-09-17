@@ -38,3 +38,7 @@ En 2bis-A, ces conventions et [templates](../kb/README.md) sont établis ; la po
 ## Chaîne 2bis-C implémentée
 
 Autorisation Patrick C / Livre §51 ↔ [feature.language-preferences](../kb/business/language-preferences.md) ↔ [technical.internationalisation](../kb/technical/internationalisation.md) ↔ droits own-profile/configuration/catalogue ↔ module locales et migration additive ↔ tests unitaires/SQL/adaptateurs/E2E ↔ audit transactionnel (aucun nouvel analytics/log) ↔ [ADR-010](../architecture-decisions/010-internationalisation-locales.md). [Preuves réelles et exceptions](phase-2bis-c-report.md).
+
+## Checkpoint 2bis-D
+
+Preuves qualité → [KB quality-engineering](../kb/technical/quality-engineering.md) → [contrat/procédures](quality-evidence.md) → `tooling/quality` et tests comportementaux → [ADR-011](../architecture-decisions/011-quality-evidence.md) → [rapport D](phase-2bis-d-report.md). Aucun droit métier ni mutation/audit métier ajouté.

@@ -107,3 +107,7 @@ Références : [ADR-009](../../architecture-decisions/009-e2e-conventions.md), [
 ## Complément 2bis-C
 
 La locale des 13 scénarios historiques est explicitement `fr-FR`. Le Component Object `e2e/components/locale-control.ts` porte les actions du sélecteur partagé ; `e2e/locale.spec.ts` exerce aussi l’anglais, SSR, persistance, focus et erreurs. Les comptes dédiés au test de préférence sont remis à NULL avant/après usage, sans modifier les droits ni les assertions des scénarios historiques.
+
+## Complément 2bis-D
+
+Les 38 exécutions issues de C conservent leurs assertions. Le helper axe attache seulement les comptes de violations/incomplete et IDs de règles au rapport JSON, sans HTML ni données de page. La couverture unitaire V8 et les preuves canoniques sont décrites dans la [KB qualité](quality-engineering.md) ; les mentions de hors-périmètre ci-dessus concernent B/C.

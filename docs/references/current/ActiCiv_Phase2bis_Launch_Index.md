@@ -76,3 +76,7 @@ The remaining v1.3 mention in Master Prompt §56 is corrected to v1.4. The curre
 ## Current authorization — 2bis-C
 
 Patrick approved B and ADR-008/009, then explicitly authorized internationalisation, locale preferences and reference translations only. See [ADR-010](../../architecture-decisions/010-internationalisation-locales.md), [KB](../../kb/technical/internationalisation.md) and [C report](../../quality/phase-2bis-c-report.md). STOP before D; no Phase 3.
+
+## Décision ultérieure — checkpoint 2bis-D
+
+Patrick approuve A/B/C et ADR-008/009/010, puis autorise uniquement D : coverage, rapports structurés, snapshot canonique et gates consultatives. C est figé au commit `1e067b35a148c6a2da9be3857b1ca4170e91bf60`. L’instruction récente prime sur le statut C encore présent dans AGENTS ; aucune nouvelle règle persistante n’y est introduite dans D. Aucun E ni Phase 3 autorisé. [Procédures D](../../quality/quality-evidence.md), [rapport D](../../quality/phase-2bis-d-report.md).

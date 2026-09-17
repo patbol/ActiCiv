@@ -7,6 +7,8 @@ export default defineConfig([
   {
     ignores: [
       "**/.next/**",
+      "coverage/**",
+      ".quality/**",
       "**/node_modules/**",
       "**/next-env.d.ts",
       "**/playwright-report/**",

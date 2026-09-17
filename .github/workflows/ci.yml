@@ -33,6 +33,18 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - name: Validate exact clean SHA
         run: pnpm release:verify --rebuild-db | tee /tmp/acticiv-quality.log
+      - name: Collect canonical quality evidence (advisory during D review)
+        if: always()
+        continue-on-error: true
+        run: pnpm quality:collect
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-snapshots-${{ github.sha }}
+          path: .quality/snapshots/
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         if: always()
         with:

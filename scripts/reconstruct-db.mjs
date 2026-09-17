@@ -1,5 +1,6 @@
 import { execFileSync, spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { validReconstruction } from "../tooling/quality/reconstruction.ts";
 if (
   !/^project_id\s*=\s*"acticiv"/m.test(
     readFileSync("supabase/config.toml", "utf8"),
@@ -53,19 +54,15 @@ const raw = execFileSync(
   ],
   {
     input:
-      "select json_build_object('migrations',(select count(*) from supabase_migrations.schema_migrations),'organizations',(select count(*) from public.organizations),'profiles',(select count(*) from public.professional_profiles),'services',(select count(*) from public.services),'territories',(select count(*) from public.territories),'postgis',(select extversion from pg_extension where extname='postgis'));",
+      "select json_build_object('versions',(select json_agg(version order by version) from supabase_migrations.schema_migrations),'organizations',(select count(*) from public.organizations),'profiles',(select count(*) from public.professional_profiles),'services',(select count(*) from public.services),'territories',(select count(*) from public.territories),'postgis',(select extversion from pg_extension where extname='postgis'));",
     encoding: "utf8",
   },
 );
 const actual = JSON.parse(raw);
-if (
-  actual.migrations !== 9 ||
-  actual.organizations !== 3 ||
-  actual.profiles !== 9 ||
-  actual.services !== 6 ||
-  actual.territories !== 3 ||
-  !actual.postgis
-)
+const expectedVersions = readdirSync("supabase/migrations")
+  .filter((f) => f.endsWith(".sql"))
+  .map((f) => f.split("_")[0]);
+if (!validReconstruction(actual, expectedVersions))
   throw new Error(
     "Rebuilt schema/seed differs from expected Phase 2 foundation",
   );

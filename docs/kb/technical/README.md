@@ -20,3 +20,5 @@ Les sujets POM/tagging (B), i18n (C), coverage/rapports/gates (D), Security Assu
 Employer le [modèle technique](../templates/technical-topic.md). Une fiche explique la responsabilité, les frontières, les contrats, les risques et les preuves, plutôt que recopier chaque ligne de code.
 
 Fiche active ajoutée en 2bis-C : [internationalisation, préférences et traductions](internationalisation.md).
+
+- [Quality engineering — preuves, snapshots et gates](quality-engineering.md).

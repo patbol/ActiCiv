@@ -6,6 +6,10 @@
     "e2e/**/*.ts",
     "vitest.integration.config.ts",
     "packages/backend/integration/**/*.ts",
-    "integration/**/*.ts"
-  ]
+    "integration/**/*.ts",
+    "tooling/quality/**/*.ts"
+  ],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true
+  }
 }

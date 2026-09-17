@@ -20,7 +20,18 @@ export default defineConfig({
   forbidOnly: true,
   retries: 0,
   workers: process.env.CI ? 2 : 2,
-  reporter: [["list"], ["html", { open: "never" }]],
+  reporter: [
+    ["list"],
+    ["html", { open: "never" }],
+    ...(process.env.ACTICIV_PLAYWRIGHT_JSON
+      ? [
+          ["json", { outputFile: process.env.ACTICIV_PLAYWRIGHT_JSON }] as [
+            string,
+            { outputFile: string },
+          ],
+        ]
+      : []),
+  ],
   use: {
     locale: "fr-FR",
     ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH

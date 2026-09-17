@@ -1,15 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 export const proOrigin = "http://127.0.0.1:3001";
 export async function accessible(page: Page) {
-  expect(
-    (
-      await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
-        .analyze()
-    ).violations,
-  ).toEqual([]);
+  const result = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .analyze();
+  await test.info().attach("acticiv-axe", {
+    body: JSON.stringify({
+      violations: result.violations.length,
+      incomplete: result.incomplete.length,
+      rules: result.violations.map((v) => v.id),
+    }),
+    contentType: "application/json",
+  });
+  expect(result.violations).toEqual([]);
 }
 export async function activateByKeyboard(control: Locator) {
   await control.focus();

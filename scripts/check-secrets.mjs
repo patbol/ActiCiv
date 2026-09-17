@@ -1,8 +1,16 @@
 import { createHash } from "node:crypto";
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, readFileSync, mkdtempSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  readFileSync,
+  mkdtempSync,
+  rmSync,
+  writeFileSync,
+  mkdirSync,
+  copyFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 // Official release checksums: https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1
 const version = "8.30.1";
 const checksums = {
@@ -67,13 +75,78 @@ try {
   );
   const result = spawnSync(
     executable,
-    ["git", "--redact", "--no-banner", "--log-opts=HEAD", "."],
+    [
+      "git",
+      "--redact",
+      "--no-banner",
+      "--log-opts=HEAD",
+      "--report-format=json",
+      "--report-path=" + join(directory, "history.json"),
+      ".",
+    ],
     { stdio: "inherit" },
   );
   if (result.status !== 0)
     throw new Error(
       "Secret scan failed; inspect redacted findings before publication",
     );
+  // Scan the exact source candidate too: git history alone misses uncommitted work.
+  const candidateDir = join(directory, "candidate");
+  mkdirSync(candidateDir);
+  const files = execFileSync(
+    "git",
+    ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+    { encoding: "utf8" },
+  )
+    .split("\0")
+    .filter(Boolean);
+  for (const file of files) {
+    if (!existsSync(file)) continue;
+    const target = join(candidateDir, file);
+    mkdirSync(dirname(target), { recursive: true });
+    copyFileSync(file, target);
+  }
+  const candidateResult = spawnSync(
+    executable,
+    [
+      "dir",
+      candidateDir,
+      "--redact",
+      "--no-banner",
+      "--config",
+      join(process.cwd(), ".gitleaks.toml"),
+      "--report-format=json",
+      "--report-path=" + join(directory, "candidate.json"),
+    ],
+    { stdio: "inherit" },
+  );
+  if (process.env.ACTICIV_SECRET_REPORT) {
+    const findings = ["history", "candidate"].flatMap((scope) => {
+      const path = join(directory, scope + ".json");
+      return existsSync(path)
+        ? JSON.parse(readFileSync(path, "utf8")).map((f) => ({
+            scope,
+            rule: f.RuleID,
+            line: f.StartLine,
+          }))
+        : [];
+    });
+    writeFileSync(
+      process.env.ACTICIV_SECRET_REPORT,
+      JSON.stringify({
+        complete: result.status === 0 && candidateResult.status === 0,
+        tool_status: "completed",
+        passed: result.status === 0 && candidateResult.status === 0,
+        metrics: {
+          version,
+          findings,
+          scopes: ["HEAD history", "source candidate"],
+        },
+      }),
+    );
+  }
+  if (candidateResult.status !== 0)
+    throw new Error("Candidate secret scan failed; findings redacted");
   console.log(
     `SECRET_SCAN_SHA=${execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim()}`,
   );
