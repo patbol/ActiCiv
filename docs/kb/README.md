@@ -2,6 +2,8 @@
 
 Statut 2bis-A : structure et contrats de fiches établis. La KB détaillée n'est pas encore peuplée ; son absence ne vaut pas absence des comportements déjà implémentés en Phase 2.
 
+Évolution 2bis-B : première fiche technique active [testing](technical/testing.md), liée aux POM, fixtures, garde-fous et preuves. Les autres domaines restent à documenter selon leur checkpoint.
+
 - [KB métier](business/README.md) : comportement, acteurs, droits et cas limites.
 - [KB technique](technical/README.md) : architecture, données, frontières et exploitation.
 - [Modèle métier](templates/business-feature.md).

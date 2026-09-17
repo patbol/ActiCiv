@@ -17,7 +17,7 @@ process.env.PRO_APP_ORIGIN = "http://127.0.0.1:3001";
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
+  forbidOnly: true,
   retries: 0,
   workers: process.env.CI ? 2 : 2,
   reporter: [["list"], ["html", { open: "never" }]],

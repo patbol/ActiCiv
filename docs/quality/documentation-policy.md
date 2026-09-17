@@ -42,15 +42,15 @@ En cas de conflit, arrêter le changement de comportement concerné, exposer les
 
 Chaîne cible : Prettier → TypeScript strict → ESLint → tests d'architecture/scripts → Quality Gates. Choisir l'outil le plus simple adapté au contrôle ; garder le jugement humain pour UX, architecture, lecteur d'écran et pentest.
 
-| Contrôle                                                          | État / checkpoint                       |
-| ----------------------------------------------------------------- | --------------------------------------- |
-| Format, TS strict, lint, frontières domain/application et bundles | Existent en Phase 2, à préserver        |
-| POM, tags, focus/skips, attentes et garde-fous de conventions     | Cible 2bis-B, non implémentée en 2bis-A |
-| Cohérence locale/catalogues                                       | Cible 2bis-C                            |
-| Coverage, rapports, snapshots/gates                               | Cible 2bis-D                            |
-| Scanners, artefacts compilés, mesures/budgets performance         | Cible 2bis-E                            |
-| Contrats et séparation d'observabilité                            | Cible 2bis-F                            |
-| Validation approfondie KB/Skills                                  | Cible 2bis-G                            |
+| Contrôle                                                          | État / checkpoint                                                |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Format, TS strict, lint, frontières domain/application et bundles | Existent en Phase 2, à préserver                                 |
+| POM, tags, focus/skips, attentes et garde-fous de conventions     | Implémentés en 2bis-B ; voir KB testing et preuves du checkpoint |
+| Cohérence locale/catalogues                                       | Cible 2bis-C                                                     |
+| Coverage, rapports, snapshots/gates                               | Cible 2bis-D                                                     |
+| Scanners, artefacts compilés, mesures/budgets performance         | Cible 2bis-E                                                     |
+| Contrats et séparation d'observabilité                            | Cible 2bis-F                                                     |
+| Validation approfondie KB/Skills                                  | Cible 2bis-G                                                     |
 
 Un contrôle documentaire ponctuel en 2bis-A n'est pas présenté comme un nouveau gate CI. Aucun plugin, script qualité du produit, budget numérique ou dependency n'est ajouté à ce checkpoint.
 

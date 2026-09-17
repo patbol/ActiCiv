@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoint actif et seul autorisé : **2bis-A — baseline documentaire, Rules et gouvernance**. Les sections ci-dessous décrivent aussi des cibles futures ; elles n'autorisent pas leur implémentation maintenant. **STOP après 2bis-A pour revue de Patrick ; aucun 2bis-B sans validation explicite.**
+Checkpoint **2bis-A CLOSED / APPROVED** par Patrick, commit `be191f56109ea6380ccbd520ed49eb8a6074a9c0`. Checkpoint actif et seul autorisé : **2bis-B — POM, fixtures, tagging et conventions exécutables**. Les sections ci-dessous décrivent aussi des cibles futures ; elles n'autorisent pas leur implémentation maintenant. **STOP après 2bis-B pour revue de Patrick ; aucun 2bis-C sans validation explicite.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 
@@ -215,6 +215,8 @@ Interdits en code commité :
 
 Release Playwright :
 **`retries: 0`**.
+
+Conventions 2bis-B exécutées par `pnpm lint` : metadata `tag` statique, une criticité par test, route et composant hérités des suites ; aucun focus, skip/fixme ni `waitForTimeout` approuvé. Une exception future exige une décision explicite, une justification, un propriétaire, une expiration et une adaptation testée du garde-fou ; un commentaire inline ne suffit pas. Voir [KB testing](docs/kb/technical/testing.md).
 
 ---
 
@@ -912,6 +914,8 @@ Ordre de travail recommandé :
 Ne jamais démarrer le checkpoint suivant sans validation explicite de Patrick lorsque le plan de travail le demande.
 
 En 2bis-A, seuls les index, règles, DoD/checklist/traçabilité, structures/templates KB et catalogue Skills sont réalisés. POM, tagging, i18n, migrations, coverage, snapshots/gates, scanners, analytics/logger et Quality Center restent non commencés. Les playbooks Skills complets relèvent de 2bis-G, sauf autorisation ultérieure ciblée.
+
+Cette description de 2bis-A reste historique. Patrick a ensuite approuvé A et autorisé B : extraction E2E et premiers garde-fous uniquement. i18n/2bis-C et les autres checkpoints restent non commencés. Les mises à jour de Skills en B documentent les mécanismes disponibles, sans anticiper les quinze playbooks de G.
 
 ---
 

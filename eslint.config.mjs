@@ -2,6 +2,7 @@ import { defineConfig } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettier from "eslint-config-prettier";
+import acticiv from "./tooling/eslint/conventions.mjs";
 export default defineConfig([
   {
     ignores: [
@@ -15,6 +16,24 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
+  { plugins: { acticiv } },
+  {
+    files: ["e2e/**/*.ts"],
+    linterOptions: { noInlineConfig: true },
+    rules: { "acticiv/e2e-execution": "error" },
+  },
+  {
+    files: ["e2e/**/*.spec.ts"],
+    rules: { "acticiv/e2e-metadata": "error" },
+  },
+  {
+    files: [
+      "apps/*/src/**/*.{ts,tsx,js,jsx}",
+      "packages/*/src/**/*.{ts,tsx,js,jsx}",
+    ],
+    ignores: ["**/*.test.*", "**/*.spec.*", "**/__tests__/**"],
+    rules: { "acticiv/production-boundaries": "error" },
+  },
   {
     settings: { next: { rootDir: ["apps/citizen/", "apps/pro/"] } },
     rules: { "@typescript-eslint/no-explicit-any": "error" },

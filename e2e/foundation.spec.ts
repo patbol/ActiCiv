@@ -1,67 +1,60 @@
-import { test, expect } from "@playwright/test";
-import AxeBuilder from "@axe-core/playwright";
-for (const port of [3000, 3001]) {
-  test(`surface ${port}: renders and passes automatic accessibility checks`, async ({
-    page,
-  }, testInfo) => {
-    await page.goto(`http://127.0.0.1:${port}`);
-    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await page.screenshot({
-      path: testInfo.outputPath("surface.png"),
-      fullPage: true,
-    });
-    await expect(
-      page.getByText("Aperçu de développement · Aucun signalement envoyé"),
-    ).toBeVisible();
-    expect(
-      (
-        await new AxeBuilder({ page })
-          .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
-          .analyze()
-      ).violations,
-    ).toEqual([]);
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= window.innerWidth,
-      ),
-    ).toBe(true);
-  });
-  test(`surface ${port}: keyboard dialog focus and persistent labels`, async ({
-    page,
-  }) => {
-    await page.goto(`http://127.0.0.1:${port}`);
-    const trigger = page.getByRole("button", { name: "Découvrir le projet" });
-    await trigger.focus();
-    await page.keyboard.press("Enter");
-    await expect(page.getByRole("dialog")).toBeVisible();
-    const input = page.getByLabel("Texte de démonstration");
-    await expect(input).toBeFocused();
-    await input.fill("Essai");
-    expect(
-      (
-        await new AxeBuilder({ page })
-          .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
-          .analyze()
-      ).violations,
-    ).toEqual([]);
-    await page.keyboard.press("Shift+Tab");
-    await expect(page.getByRole("button", { name: "Fermer" })).toBeFocused();
-    await page.keyboard.press("Escape");
-    await expect(trigger).toBeFocused();
-  });
-  test(`surface ${port}: skip link and reduced motion`, async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto(`http://127.0.0.1:${port}`);
-    await page.keyboard.press("Tab");
-    await expect(
-      page.getByRole("link", { name: "Aller au contenu" }),
-    ).toBeFocused();
-    await page.keyboard.press("Enter");
-    await expect(page).toHaveURL(/#main$/);
-    expect(
-      await page
-        .getByRole("button", { name: "Découvrir le projet" })
-        .evaluate((el) => getComputedStyle(el).transitionDuration),
-    ).toBe("0s");
-  });
+import { test, expect } from "./fixtures/test";
+import { accessible } from "./helpers/ui";
+
+for (const port of [3000, 3001] as const) {
+  test.describe(
+    `surface ${port}`,
+    { tag: ["@route:foundation", "@component:foundation"] },
+    () => {
+      test(
+        `surface ${port}: renders and passes automatic accessibility checks`,
+        { tag: ["@medium", "@type:a11y", "@type:smoke"] },
+        async ({ page, foundation }, testInfo) => {
+          const surface = foundation(port);
+          await surface.open();
+          await expect(surface.heading).toBeVisible();
+          await page.screenshot({
+            path: testInfo.outputPath("surface.png"),
+            fullPage: true,
+          });
+          await expect(surface.developmentNotice).toBeVisible();
+          await accessible(page);
+          expect(await surface.fitsViewport()).toBe(true);
+        },
+      );
+      test.describe("shared dialog", { tag: "@component:dialog" }, () => {
+        test(
+          `surface ${port}: keyboard dialog focus and persistent labels`,
+          { tag: ["@high", "@type:a11y"] },
+          async ({ page, foundation }) => {
+            const surface = foundation(port);
+            await surface.open();
+            await surface.openDialogByKeyboard();
+            await expect(surface.dialog.root).toBeVisible();
+            await expect(surface.dialog.input).toBeFocused();
+            await surface.dialog.input.fill("Essai");
+            await accessible(page);
+            await page.keyboard.press("Shift+Tab");
+            await expect(surface.dialog.closeButton).toBeFocused();
+            await surface.dialog.dismissByKeyboard();
+            await expect(surface.discoverButton).toBeFocused();
+          },
+        );
+      });
+      test(
+        `surface ${port}: skip link and reduced motion`,
+        { tag: ["@medium", "@type:a11y"] },
+        async ({ page, foundation }) => {
+          const surface = foundation(port);
+          await page.emulateMedia({ reducedMotion: "reduce" });
+          await surface.open();
+          await page.keyboard.press("Tab");
+          await expect(surface.skipLink).toBeFocused();
+          await page.keyboard.press("Enter");
+          await expect(page).toHaveURL(/#main$/);
+          expect(await surface.discoverTransitionDuration()).toBe("0s");
+        },
+      );
+    },
+  );
 }

@@ -8,7 +8,8 @@ Date : 17 septembre 2026
 - **Accepted Phase 2 baseline SHA** : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`
 - **Final Phase 2 matrix** : 260 PASS / 0 FAIL / 1 DEFERRED (TalkBack only)
 - **Current phase** : Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations
-- **Active checkpoint** : 2bis-A only; STOP for Patrick review before 2bis-B.
+- **2bis-A** : CLOSED / APPROVED by Patrick on `be191f56109ea6380ccbd520ed49eb8a6074a9c0`.
+- **Active checkpoint** : 2bis-B only, explicitly authorized; STOP for Patrick review before 2bis-C.
 - **Phase 3** : NOT STARTED
 
 ## Current authoritative references
@@ -47,7 +48,7 @@ Historical references must be clearly labelled as historical in repository index
 - production test-hook policy clarified: semantic locators first, retained production hooks require an explicit reviewed purpose;
 - console policy clarified: log/debug/trace forbidden in production application code; warn/error normally go through structured logging, with narrow documented low-level exceptions only.
 
-## First authorized implementation checkpoint
+## First authorized implementation checkpoint — historical launch scope
 
 **2bis-A — Documentation baseline & governance only.**
 
@@ -63,6 +64,10 @@ Before technical checkpoint 2bis-B:
 - stop for Patrick review if requested.
 
 No Phase 3 behavior is authorized.
+
+## Current authorization — 2bis-B
+
+Patrick approved 2bis-A and explicitly authorized POM/Component Objects, reusable fixtures, test metadata and the first executable conventions without product changes. See [E2E conventions ADR](../../architecture-decisions/009-e2e-conventions.md), [testing KB](../../kb/technical/testing.md) and [checkpoint report](../../quality/phase-2bis-b-report.md). No i18n/2bis-C or later checkpoint is authorized.
 
 ## 2bis-A documentary correction record
 

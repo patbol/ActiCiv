@@ -1,8 +1,8 @@
 # Documentation ActiCiv
 
 **Phase 2 = CLOSED**. Baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
-**Phase 2 bis = CURRENT**, checkpoint actif **2bis-A**.
-**Phase 3 = NOT STARTED**. Aucun 2bis-B sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT**, **2bis-A CLOSED / APPROVED**, checkpoint actif **2bis-B**.
+**Phase 3 = NOT STARTED**. Aucun 2bis-C sans validation explicite de Patrick.
 
 ## CURRENT — contrat applicable
 
@@ -30,6 +30,7 @@ Une exigence cible n'est pas une preuve d'implémentation. Les PASS de la checkl
 - [Phase 2](evidence/phase2/README.md), postmortems datés et attestation finale.
 - [Attestation officielle Phase 2](evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md) : 260 PASS / 0 FAIL / 1 DEFERRED (TalkBack).
 - [Bilan et inventaire 2bis-A](quality/phase-2bis-a-report.md).
+- [Bilan 2bis-B et conservation des scénarios](quality/phase-2bis-b-report.md).
 
 Les anciens journaux/captures déjà rangés dans `docs/quality/` restent en place et sont indexés comme preuves historiques. Les chemins archivés dans les journaux/manifests décrivent leur époque, pas l'organisation actuelle.
 
@@ -43,5 +44,6 @@ Les anciens journaux/captures déjà rangés dans `docs/quality/` restent en pla
 - [Skills : structure et catalogue initial](skills/README.md) : playbooks complets non implémentés en 2bis-A.
 - [Questions réellement ouvertes](product-decisions/open-questions.md).
 - [Composants actuels](ui.md).
+- [KB testing : E2E, fixtures et conventions exécutables](kb/technical/testing.md).
 
 La structure documentaire approuvée est conservée. Toute nouvelle documentation vit sous `/docs`, hors exceptions racine explicites. Voir la politique pour les README techniques préexistants et la conservation de l'historique.

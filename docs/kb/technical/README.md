@@ -2,6 +2,8 @@
 
 Structure disponible en 2bis-A, fiches détaillées à compléter selon les checkpoints autorisés. Les sources suivantes décrivent le socle réel :
 
+Fiche active ajoutée en 2bis-B : [testing, POM et conventions exécutables](testing.md).
+
 | Sujet                              | Source existante                                                                                                                                  |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Monolithe et séparation hexagonale | [ADR 001](../../architecture-decisions/001-modular-monolith.md)                                                                                   |

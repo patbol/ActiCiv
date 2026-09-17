@@ -8,6 +8,8 @@ Chemin documentaire canonique prévu : `docs/skills/<name>/SKILL.md`. Ne créer 
 
 Tous les statuts suivants sont **PLANNED**, pas des workflows exécutables disponibles.
 
+Mise à jour 2bis-B pour les futurs Skills `add-e2e-test`, `fix-bug`, `change-existing-feature`, `security-review` et `prepare-release` : utiliser la [KB testing](../kb/technical/testing.md) pour les objets/fixtures existants, metadata statique, contrôles ESLint, sélection par tags et validation sans retries. Les mécanismes sont disponibles ; les playbooks complets et leur découverte restent prévus en G.
+
 | Nom                       | Déclencheur et résultat attendu                            | Garde-fou central                                           |
 | ------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
 | `implement-feature`       | Besoin autorisé → fonctionnalité et preuves proportionnées | Scope, critères et test-first critique                      |

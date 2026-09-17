@@ -2,6 +2,8 @@
 
 Statut : **proposée pour revue du checkpoint 2bis-A**. Formalise l'organisation et les principes approuvés par Patrick ; les conventions nouvelles de frontmatter et chemins de playbooks restent soumises à sa revue. Date : 17 septembre 2026.
 
+Décision ultérieure : **acceptée** lors de la validation explicite de 2bis-A par Patrick sur `be191f56109ea6380ccbd520ed49eb8a6074a9c0`. Le texte de proposition ci-dessous est conservé comme historique de cette décision ; aucune ADR antérieure n'est supersédée.
+
 ## Contexte
 
 La Phase 2 est clôturée sur `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`. Patrick a rangé les références/preuves et imposé la structure CURRENT / HISTORICAL / EVIDENCE. La Phase 2 bis requiert une connaissance exploitable et traçable avant la multiplication des parcours. 2bis-A autorise la gouvernance, pas les mécanismes des checkpoints suivants.
