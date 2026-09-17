@@ -1,3 +1,4 @@
+import { AuthHeading, AuthMessage } from "../../../components/auth-feedback";
 import Link from "next/link";
 import { login } from "../actions";
 export default async function Login({
@@ -8,10 +9,12 @@ export default async function Login({
   const params = await searchParams;
   return (
     <main id="main" className="shell">
-      <h1>Connexion professionnelle</h1>
+      <AuthHeading>Connexion professionnelle</AuthHeading>
       <p>Accès réservé aux professionnels invités.</p>
       {params.error && (
-        <p role="alert">Connexion impossible. Vérifiez vos identifiants.</p>
+        <AuthMessage error>
+          Connexion impossible. Vérifiez vos identifiants.
+        </AuthMessage>
       )}
       <form action={login}>
         <label htmlFor="email">Adresse email</label>
@@ -20,6 +23,8 @@ export default async function Login({
           name="email"
           type="email"
           autoComplete="username"
+          aria-invalid={params.error ? true : undefined}
+          aria-describedby={params.error ? "auth-error" : undefined}
           required
         />
         <label htmlFor="password">Mot de passe</label>
@@ -28,6 +33,8 @@ export default async function Login({
           name="password"
           type="password"
           autoComplete="current-password"
+          aria-invalid={params.error ? true : undefined}
+          aria-describedby={params.error ? "auth-error" : undefined}
           required
         />
         <button type="submit">Se connecter</button>

@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { priorities } from "../modules/catalog/domain/category";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getProfessionalContext } from "../modules/authorization/application/context";
 import { supabaseContext } from "../modules/authorization/infrastructure/supabase-context";
@@ -18,7 +19,7 @@ import {
 const uuid = z.guid(),
   org = { organizationId: uuid };
 const role = z.enum(["agent", "supervisor", "client_admin"]);
-const priority = z.enum(["normal", "important", "urgent"]);
+const priority = z.enum(priorities);
 const nonempty = z.string().trim().min(1).max(200);
 const command = z.discriminatedUnion("action", [
   z.object({

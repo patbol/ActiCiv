@@ -8,6 +8,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -20,16 +22,22 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm db:start > /tmp/acticiv-supabase-start.log 2>&1
-      - run: pnpm db:reset
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm verify:full
+      - name: Validate exact clean SHA
+        run: pnpm release:verify --rebuild-db | tee /tmp/acticiv-quality.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase2-closure-${{ github.sha }}
+          path: /tmp/acticiv-quality.log
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

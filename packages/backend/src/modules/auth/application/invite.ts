@@ -8,6 +8,7 @@ export type Invitation = {
   email: string;
   state: "pending" | "sent" | "accepted" | "cancelled";
   expires_at: string;
+  correlation_id: string;
 };
 export interface Invitations {
   reserve(
@@ -20,7 +21,7 @@ export interface Invitations {
   bind(id: string, user: string): Promise<void>;
 }
 export interface IdentityInviter {
-  invite(email: string): Promise<string>;
+  invite(email: string, correlationId: string): Promise<string>;
 }
 export async function inviteProfessional(
   context: Context | null,
@@ -42,7 +43,10 @@ export async function inviteProfessional(
   )
     throw new Error("Invitation expirée ou terminée");
   if (invitation.state === "sent") return invitation.id;
-  const user = await provider.invite(invitation.email);
+  const user = await provider.invite(
+    invitation.email,
+    invitation.correlation_id,
+  );
   await repository.bind(invitation.id, user);
   return invitation.id;
 }

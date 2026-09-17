@@ -34,15 +34,19 @@ export function invitationAdapters(
       },
     },
     provider: {
-      async invite(email) {
-        const { data, error } = await admin.auth.admin.inviteUserByEmail(
-          email,
-          { redirectTo: origin + "/auth/callback?next=/auth/password" },
-        );
+      async invite(email, correlationId) {
+        const correlatedAdmin = createClient(url, key, {
+          auth: { persistSession: false, autoRefreshToken: false },
+          global: { headers: { "x-acticiv-command-id": correlationId } },
+        });
+        const { data, error } =
+          await correlatedAdmin.auth.admin.inviteUserByEmail(email, {
+            redirectTo: origin + "/auth/callback?next=/auth/password",
+          });
         if (!error && data.user) return data.user.id;
         // Recover only the exact email after an ambiguous external failure; membership remains absent.
         for (let page = 1; page <= 100; page++) {
-          const result = await admin.auth.admin.listUsers({
+          const result = await correlatedAdmin.auth.admin.listUsers({
             page,
             perPage: 100,
           });

@@ -1,3 +1,4 @@
+import { AuthHeading, AuthMessage } from "../../../components/auth-feedback";
 import { password } from "../actions";
 export default async function Password({
   searchParams,
@@ -7,9 +8,11 @@ export default async function Password({
   const params = await searchParams;
   return (
     <main id="main" className="shell">
-      <h1>Définir mon mot de passe</h1>
+      <AuthHeading>Définir mon mot de passe</AuthHeading>
       {params.error && (
-        <p role="alert">Le mot de passe n’a pas pu être enregistré.</p>
+        <AuthMessage error>
+          Le mot de passe n’a pas pu être enregistré.
+        </AuthMessage>
       )}
       <form action={password}>
         <label htmlFor="password">Nouveau mot de passe</label>
@@ -19,7 +22,8 @@ export default async function Password({
           name="password"
           type="password"
           autoComplete="new-password"
-          aria-describedby="hint"
+          aria-describedby={params.error ? "hint auth-error" : "hint"}
+          aria-invalid={params.error ? true : undefined}
           minLength={12}
           required
         />

@@ -1,6 +1,154 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { createHash } from "node:crypto";
+async function accessible(page: Page) {
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+}
+async function submitByKeyboard(page: Page, button: string) {
+  await page.getByRole("button", { name: button, exact: true }).focus();
+  await page.keyboard.press("Enter");
+}
+test("recovery validates errors, keyboard focus, new password and a fresh login", async ({
+  page,
+}, testInfo) => {
+  const role = testInfo.project.name === "desktop" ? "agent" : "supervisor";
+  const uid = id(`user-1-${role}`),
+    email = `${role}1@example.test`;
+  const initial = process.env.ACTICIV_E2E_PASSWORD!;
+  const changed = initial + "Recovery!";
+  const base = process.env.SUPABASE_URL!;
+  const headers = {
+    apikey: process.env.SUPABASE_PUBLISHABLE_KEY!,
+    Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+    "Content-Type": "application/json",
+  };
+  expect(
+    (
+      await fetch(`${base}/auth/v1/admin/users/${uid}`, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({ password: initial }),
+      })
+    ).ok,
+  ).toBe(true);
+  await page.goto("http://127.0.0.1:3001/auth/recover");
+  await expect(
+    page.getByRole("heading", { name: "Récupérer mon accès" }),
+  ).toBeFocused();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Adresse email")).toBeFocused();
+  await page.getByLabel("Adresse email").fill("invalid-address");
+  await page.locator("form").evaluate((form: HTMLFormElement) => {
+    form.noValidate = true;
+  });
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", { name: "Recevoir un lien" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#auth-error")).toBeFocused();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Adresse email")).toBeFocused();
+  await page.getByLabel("Adresse email").fill(email);
+  await submitByKeyboard(page, "Recevoir un lien");
+  await expect(page.locator("#auth-status")).toBeFocused();
+  await expect(page.locator("#auth-status")).toContainText("Si cette adresse");
+  await accessible(page);
+  const response = await fetch(`${base}/auth/v1/admin/generate_link`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ type: "recovery", email }),
+  });
+  expect(response.ok).toBe(true);
+  const link = await response.json();
+  await page.goto(
+    `http://127.0.0.1:3001/auth/confirm?token_hash=${encodeURIComponent(link.hashed_token)}&type=recovery`,
+  );
+  await expect(
+    page.getByRole("heading", { name: "Définir mon mot de passe" }),
+  ).toBeFocused();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Nouveau mot de passe")).toBeFocused();
+  await page.getByLabel("Nouveau mot de passe").fill("short");
+  await page.locator("form").evaluate((form: HTMLFormElement) => {
+    form.noValidate = true;
+  });
+  await submitByKeyboard(page, "Enregistrer");
+  await expect(page.locator("#auth-error")).toBeFocused();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Nouveau mot de passe")).toBeFocused();
+  await page.getByLabel("Nouveau mot de passe").fill(changed);
+  await submitByKeyboard(page, "Enregistrer");
+  await expect(page).toHaveURL("http://127.0.0.1:3001/espace");
+  await accessible(page);
+  await submitByKeyboard(page, "Se déconnecter");
+  await page.getByLabel("Adresse email").fill(email);
+  await page.getByLabel("Mot de passe", { exact: true }).fill(changed);
+  await submitByKeyboard(page, "Se connecter");
+  await expect(page).toHaveURL("http://127.0.0.1:3001/espace");
+});
+test("login rejects wrong credentials and exposes a focused accessible error", async ({
+  page,
+}) => {
+  await page.goto("http://127.0.0.1:3001/auth/login");
+  await expect(
+    page.getByRole("heading", { name: "Connexion professionnelle" }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Adresse email")).toBeFocused();
+  await page.getByLabel("Adresse email").fill("absent@example.test");
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Mot de passe", { exact: true })).toBeFocused();
+  await page
+    .getByLabel("Mot de passe", { exact: true })
+    .fill("invalid-password");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", { name: "Se connecter" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#auth-error")).toBeFocused();
+  await expect(page.locator("#auth-error")).toContainText(
+    "Connexion impossible",
+  );
+  await accessible(page);
+});
+test("unavailable invitation remains accessible without granting any membership", async ({
+  page,
+}) => {
+  await page.goto("http://127.0.0.1:3001/auth/accept?error=1");
+  await expect(page.locator("#auth-error")).toBeFocused();
+  await expect(page.getByText("Aucune invitation à activer.")).toBeVisible();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Accéder à mon espace" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL("http://127.0.0.1:3001/espace");
+  await expect(
+    page.getByText("Aucun accès professionnel actif.", { exact: false }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Votre accès professionnel est actif."),
+  ).toHaveCount(0);
+  expect(
+    (
+      await page.request.get("http://127.0.0.1:3001/api/configuration")
+    ).status(),
+  ).toBe(403);
+  await accessible(page);
+});
 function id(value: string) {
   const h = createHash("md5").update(value).digest("hex");
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
@@ -56,6 +204,8 @@ test("invalid callbacks cannot redirect off site", async ({ page }) => {
     "http://127.0.0.1:3001/auth/callback?code=invalid&next=https://evil.example",
   );
   await expect(page).toHaveURL("http://127.0.0.1:3001/auth/login?error=1");
+  await expect(page.locator("#auth-error")).toBeFocused();
+  await accessible(page);
   await expect(
     page
       .getByRole("alert")
@@ -135,17 +285,42 @@ test("invited professional sets a password and activates membership", async ({
   await expect(
     page.getByRole("heading", { name: "Définir mon mot de passe" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Définir mon mot de passe" }),
+  ).toBeFocused();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Nouveau mot de passe")).toBeFocused();
   await page
     .getByLabel("Nouveau mot de passe")
     .fill(process.env.ACTICIV_E2E_PASSWORD!);
-  await page.getByRole("button", { name: "Enregistrer" }).click();
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("button", { name: "Enregistrer" })).toBeFocused();
+  await page.keyboard.press("Enter");
   await expect(
     page.getByRole("heading", { name: "Activer mon accès professionnel" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Activer mon accès professionnel" }),
+  ).toBeFocused();
+  await accessible(page);
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Nom d’affichage")).toBeFocused();
+  await page.getByLabel("Nom d’affichage").fill("   ");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", { name: "Accepter l’invitation" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#auth-error")).toBeFocused();
+  await expect(page.locator("#auth-error")).toContainText(
+    "Invitation indisponible",
+  );
+  await accessible(page);
   await page
     .getByLabel("Nom d’affichage")
     .fill("Professionnel fictif navigateur");
-  await page.getByRole("button", { name: "Accepter l’invitation" }).click();
+  await submitByKeyboard(page, "Accepter l’invitation");
   await expect(
     page.getByText("Votre accès professionnel est actif."),
   ).toBeVisible();

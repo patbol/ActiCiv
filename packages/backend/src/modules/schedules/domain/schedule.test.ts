@@ -7,6 +7,29 @@ const always: Schedule = {
   mode: "always_open",
   days: [],
 };
+it("keeps Sunday midnight and Monday windows contiguous, including a DST weekend", () => {
+  const schedule: Schedule = {
+    timezone: "Europe/Paris",
+    mode: "weekly",
+    days: Array.from({ length: 7 }, (_, i) => ({
+      weekday: i + 1,
+      open: i === 0 || i === 6,
+      windows: i === 6 ? [[23 * 3600, 86400]] : i === 0 ? [[0, 3600]] : [],
+    })),
+  };
+  for (const [sunday, monday] of [
+    ["2026-03-22", "2026-03-23"],
+    ["2026-03-29", "2026-03-30"],
+    ["2026-10-25", "2026-10-26"],
+  ]) {
+    const left = windowsForDate(schedule, sunday!, zonedTime);
+    const right = windowsForDate(schedule, monday!, zonedTime);
+    expect(left).toHaveLength(1);
+    expect(right).toHaveLength(1);
+    expect(left[0]![1]).toBe(right[0]![0]);
+    expect(right[0]![1] - left[0]![0]).toBe(2 * 3600000);
+  }
+});
 it("uses first occurrence at fallback and first valid instant after a gap", () => {
   expect(
     new Date(

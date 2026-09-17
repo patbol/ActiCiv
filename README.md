@@ -52,6 +52,10 @@ apps/citizen et apps/pro consomment packages/ui, shared, types et, exclusivement
 
 Hébergement cible : Vercel, deux projets liés au même monorepo ; aucun déploiement créé. Les sources de référence sont dans docs/references. Elles priment sur l'implémentation.
 
-## Navigateur de vérification alternatif
+## Navigateur et clôture Phase 2
 
-Si un Chromium existe déjà localement, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` permet d'utiliser son chemin pour les E2E. L'exécution de cette livraison utilise Chromium 153.0.8010.0 fourni par un outil QA temporaire hors monorepo, le CDN Playwright ayant expiré. Ce navigateur est réel ; il ne remplace pas la validation Safari/Firefox. La CI conserve l'installation standard Playwright.
+La validation Phase 2 utilise Chromium installé par Playwright, en desktop et émulation mobile. Le navigateur temporaire documenté au postmortem Phase 1 était propre à cette livraison historique. VoiceOver/Safari fait l’objet d’un contrôle manuel distinct ; TalkBack n’est pas assimilé au profil mobile Chromium.
+
+La passe de clôture et ses preuves sont décrites dans [le postmortem Phase 2](doc/ActiCiv_Phase2_Postmortem.md). La commande `pnpm release:verify --rebuild-db` exige un arbre propre, reconstruit la base DEV locale depuis zéro (données DEV supprimées), rejoue reset/seed puis tous les contrôles. Elle enregistre le SHA et refuse toute modification Git pendant la validation. Ne jamais l’utiliser sur des données à conserver. Les preuves finales et l’archive doivent désigner ce même SHA.
+
+`pnpm secrets:check` utilise Gitleaks 8.30.1, téléchargé hors du dépôt et vérifié par une empreinte officielle figée. Il vérifie son détecteur puis scanne tout l’historique accessible depuis HEAD avec résultats expurgés. Le scanner est un outil de qualité ; aucune dépendance runtime de l’application n’est ajoutée.

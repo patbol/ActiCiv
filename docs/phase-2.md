@@ -8,7 +8,7 @@ Décisions explicites récentes > [Livre v1.1](references/ActiCiv_Livre_Produit_
 
 ## Base et invariants
 
-Les huit migrations sont ordonnées : sécurité/PostGIS ; organisations/identités ; audit ; services/invitations ; catalogue ; couverture ; horaires ; SLA. PostgreSQL 17 permet `UNIQUE NULLS NOT DISTINCT` pour les calendriers organisationnels et les quatre portées SLA. Les FK composites imposent le même tenant.
+Les huit migrations initiales sont ordonnées : sécurité/PostGIS ; organisations/identités ; audit ; services/invitations ; catalogue ; couverture ; horaires ; SLA. PostgreSQL 17 permet `UNIQUE NULLS NOT DISTINCT` pour les calendriers organisationnels et les quatre portées SLA. Les FK composites imposent le même tenant.
 
 `service_memberships` porte les services d'opération de l'agent et de supervision du superviseur. Aucun héritage des permissions superviseur par l'administrateur client. Une identité Auth seule ne donne aucun droit métier.
 
@@ -85,3 +85,17 @@ pnpm verify:full
 Les tests SQL se déroulent dans des transactions rollbackées. L'intégration utilise de vrais JWT/Auth et des identités fictives ; les mots de passe sont générés en mémoire. Playwright démarre les builds exacts sur des ports libres ; aucune réutilisation silencieuse d'un serveur existant. Le manque de Supabase bloque les tests, sans mock de substitution.
 
 `verify:full` inclut verify, pgTAP, intégration Auth/RLS, E2E/axe et audit de dépendances. La CI exécute la même commande après reset. `pnpm release:verify` exige un arbre propre, affiche le SHA/runtime, exécute verify:full puis vérifie que l’état Git est resté identique. Clôture : arbre propre, SHA testé localement et dans les deux jobs CI, URL du run, archive `git archive` depuis ce SHA. Une modification ultérieure invalide la validation. Ne pas déclarer la phase clôturée avec une CI non observée ou un contrôle manuel présenté comme automatique.
+
+## Complément de clôture Phase 2
+
+La migration 20260917000100_closure_hardening.sql ajoute correlation_id, conserve les identifiants de commande sur réservation/reprise/acceptation et vérifie les cycles avant la géométrie pour permettre un test isolé. Les événements historiques reçoivent des identifiants autonomes ; aucune corrélation historique de requête n’est inventée.
+
+Les actions Auth passent désormais par les cas d’usage `auth/application/session.ts` et le port ProfessionalSession. Les mutations de territoires/contrats/scopes passent par CoverageAdministration ; la création/récupération d’organisation passe par OrganizationPlatform. La composition gère DTO, session et adaptateurs ; les cas d’usage restent indépendants de Next, Supabase et du réseau.
+
+Le garde automatique domain/application interdit imports réseau, primitives globales et imports dynamiques. Des tests positifs/négatifs exercent la configuration ESLint effective.
+
+Les scénarios complémentaires couvrent les quatre courses du dernier administrateur avec acteurs indépendants et barrière SQL, les erreurs réelles Auth/SQL et la reprise via invitationAdapters, les deux publications SLA successives, dimanche/lundi, cycle exact, nouvelle catégorie sans extension contractuelle, audit corrélé et parcours Auth accessibles. Les suites Node et Vitest d’intégration sont séquentielles pour leurs fixtures communes.
+
+Les pages Auth donnent le focus au titre à l’arrivée et aux erreurs/confirmations après action. La récupération d’un professionnel déjà actif aboutit à son espace. Le protocole VoiceOver et le rapport de clôture distinguent les tests automatiques et la validation humaine.
+
+La commande de validation finale est `pnpm release:verify --rebuild-db`. Le même script est exécuté en CI. Il inclut la reconstruction locale, verify:full et Gitleaks à version/empreinte figées. Les preuves de livraison portent le SHA dans une attestation externe au commit afin de ne pas modifier le code après validation.

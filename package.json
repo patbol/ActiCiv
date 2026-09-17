@@ -7,8 +7,8 @@
   },
   "scripts": {
     "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles",
-    "verify:full": "pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm audit --audit-level high",
-    "test:integration": "node --test integration/*.test.mjs",
+    "verify:full": "pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm audit --audit-level high && pnpm secrets:check",
+    "test:integration": "node --test --test-concurrency=1 integration/*.test.mjs && vitest run --config vitest.integration.config.ts",
     "dev": "pnpm --parallel --filter @acticiv/citizen --filter @acticiv/pro dev",
     "build": "pnpm --filter @acticiv/citizen build && pnpm --filter @acticiv/pro build",
     "typecheck": "pnpm -r typecheck && tsc -p tsconfig.tools.json",
@@ -23,6 +23,7 @@
     "db:status": "supabase status",
     "db:test": "node scripts/check-db-tests.mjs",
     "db:provision": "node scripts/provision-dev.mjs",
+    "secrets:check": "node scripts/check-secrets.mjs",
     "verify:bundles": "node scripts/check-client-bundles.mjs",
     "release:verify": "node scripts/verify-release.mjs"
   },

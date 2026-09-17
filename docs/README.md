@@ -11,3 +11,6 @@ Les dernières décisions explicitement validées priment. La proposition consol
 - [Questions ouvertes](product-decisions/open-questions.md) : uniquement les sujets encore différés.
 
 Historique conservé : [rapport initial Phase 1](references/ActiCiv_Phase1_Rapport_livraison_Phase1.md), [postmortem de clôture](references/ActiCiv_Phase1_Postmortem.md), [proposition Phase 2 initiale](references/ActiCiv_Phase2_Proposition_Architecture.md). Les anciennes réserves de ces documents ne rouvrent pas les décisions ultérieures.
+
+- [Postmortem Phase 2 et matrice de clôture](../doc/ActiCiv_Phase2_Postmortem.md).
+- [Protocole VoiceOver Phase 2](../doc/ActiCiv_Phase2_VoiceOver.md).

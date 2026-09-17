@@ -1,0 +1,140 @@
+Found '/Users/patrickmoreno/ActiCiv/dev/acticiv/.nvmrc' with version <24.21.0>
+Now using node v24.21.0 (npm v11.19.0)
+                                      version
+------------------------------------------------------------------------------------
+ PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit
+(1 row)
+
+ extname | extversion
+---------+------------
+ postgis | 3.3.7
+(1 row)
+
+    version     |         name
+----------------+----------------------
+ 20260916000100 | security
+ 20260916000200 | organizations
+ 20260916000300 | audit
+ 20260916000400 | services_invitations
+ 20260916000500 | catalog
+ 20260916000600 | coverage
+ 20260916000700 | schedules
+ 20260916000800 | sla
+(8 rows)
+
+         tablename         |        policyname        |      roles      |  cmd   |                                                                                                    qual                                                                                                    | with_check
+---------------------------+--------------------------+-----------------+--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------
+ audit_events              | audit_read               | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.platform('audit.read'::text))                                                                                                     |
+ categories                | catalog_read             | {authenticated} | SELECT | (private.any_member() OR private.platform('catalog.manage'::text) OR private.platform('contracts.manage'::text))                                                                                           |
+ contract_scope_categories | contract_read            | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.platform('contracts.manage'::text))                                                                                               |
+ contract_scope_services   | contract_read            | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.platform('contracts.manage'::text))                                                                                               |
+ contract_scopes           | contract_read            | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.platform('contracts.manage'::text))                                                                                               |
+ contracts                 | contract_read            | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.platform('contracts.manage'::text))                                                                                               |
+ hold_reasons              | sla_read                 | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ invitation_services       | invitation_services_read | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ organization_categories   | config_read              | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ organization_memberships  | membership_read          | {authenticated} | SELECT | private.can_read_member(organization_id, id)                                                                                                                                                               |
+ organization_settings     | settings_read            | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.platform('organizations.manage'::text))                                                                                           |
+ organizations             | organization_read        | {authenticated} | SELECT | (private.member(id) OR private.platform('organizations.manage'::text) OR private.platform('contracts.manage'::text))                                                                                       |
+ platform_admins           | platform_self            | {authenticated} | SELECT | ((id = auth.uid()) AND active)                                                                                                                                                                             |
+ professional_invitations  | invitations_read         | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ professional_profiles     | profile_read             | {authenticated} | SELECT | (EXISTS ( SELECT 1                                                                                                                                                                                        +|
+                           |                          |                 |        |    FROM organization_memberships m                                                                                                                                                                        +|
+                           |                          |                 |        |   WHERE ((m.user_id = professional_profiles.id) AND private.can_read_member(m.organization_id, m.id))))                                                                                                    |
+ service_memberships       | service_memberships_read | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.service_access(organization_id, service_id, ARRAY['supervisor'::text]) OR (private.member(organization_id) AND (EXISTS ( SELECT 1+|
+                           |                          |                 |        |    FROM organization_memberships m                                                                                                                                                                        +|
+                           |                          |                 |        |   WHERE ((m.id = service_memberships.membership_id) AND (m.user_id = auth.uid()))))))                                                                                                                      |
+ service_schedule_days     | schedule_read            | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ service_schedule_versions | schedule_read            | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ service_schedule_windows  | schedule_read            | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ service_schedules         | schedule_read            | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ services                  | services_read            | {authenticated} | SELECT | (private.member(organization_id, ARRAY['client_admin'::text]) OR private.service_access(organization_id, id) OR private.platform('contracts.manage'::text))                                                |
+ sla_pause_rules           | sla_read                 | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ sla_policies              | sla_read                 | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ sla_policy_versions       | sla_read                 | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ sla_targets               | sla_read                 | {authenticated} | SELECT | private.member(organization_id, ARRAY['client_admin'::text])                                                                                                                                               |
+ territories               | territory_read           | {authenticated} | SELECT | (private.platform('territories.manage'::text) OR private.platform('contracts.manage'::text) OR (EXISTS ( SELECT 1                                                                                         +|
+                           |                          |                 |        |    FROM contract_scopes s                                                                                                                                                                                 +|
+                           |                          |                 |        |   WHERE ((s.territory_id = territories.id) AND private.member(s.organization_id, ARRAY['client_admin'::text])))))                                                                                          |
+ verticals                 | catalog_read             | {authenticated} | SELECT | (private.any_member() OR private.platform('catalog.manage'::text) OR private.platform('contracts.manage'::text))                                                                                           |
+(27 rows)
+
+         tablename         | rowsecurity
+---------------------------+-------------
+ audit_events              | t
+ categories                | t
+ contract_scope_categories | t
+ contract_scope_services   | t
+ contract_scopes           | t
+ contracts                 | t
+ hold_reasons              | t
+ invitation_services       | t
+ organization_categories   | t
+ organization_memberships  | t
+ organization_settings     | t
+ organizations             | t
+ platform_admins           | t
+ professional_invitations  | t
+ professional_profiles     | t
+ service_memberships       | t
+ service_schedule_days     | t
+ service_schedule_versions | t
+ service_schedule_windows  | t
+ service_schedules         | t
+ services                  | t
+ sla_pause_rules           | t
+ sla_policies              | t
+ sla_policy_versions       | t
+ sla_targets               | t
+ territories               | t
+ verticals                 | t
+(27 rows)
+
+        table_name         |                              definition
+---------------------------+----------------------------------------------------------------------
+ categories                | UNIQUE (vertical_id, code)
+ contract_scope_categories | UNIQUE (scope_id, category_id)
+ contract_scope_services   | UNIQUE (scope_id, service_id)
+ contract_scopes           | UNIQUE (contract_id, territory_id)
+ contract_scopes           | UNIQUE (organization_id, id)
+ contracts                 | UNIQUE (organization_id, id)
+ contracts                 | UNIQUE (organization_id, reference)
+ hold_reasons              | UNIQUE (organization_id, id)
+ hold_reasons              | UNIQUE (organization_id, code)
+ invitation_services       | UNIQUE (invitation_id, service_id)
+ organization_categories   | UNIQUE (organization_id, category_id)
+ organization_memberships  | UNIQUE (organization_id, id)
+ organization_memberships  | UNIQUE (user_id)
+ organization_settings     | UNIQUE (organization_id)
+ organizations             | UNIQUE (code)
+ professional_invitations  | UNIQUE (organization_id, idempotency_key)
+ professional_invitations  | UNIQUE (organization_id, id)
+ service_memberships       | UNIQUE (membership_id, service_id)
+ service_schedule_days     | UNIQUE (organization_id, id)
+ service_schedule_days     | UNIQUE (version_id, weekday)
+ service_schedule_versions | UNIQUE (schedule_id, version)
+ service_schedule_versions | UNIQUE (organization_id, id)
+ service_schedules         | UNIQUE (organization_id, id)
+ service_schedules         | UNIQUE NULLS NOT DISTINCT (organization_id, service_id)
+ services                  | UNIQUE (organization_id, code)
+ services                  | UNIQUE (organization_id, id)
+ sla_pause_rules           | UNIQUE (target_id, hold_reason_id)
+ sla_policies              | UNIQUE NULLS NOT DISTINCT (organization_id, service_id, category_id)
+ sla_policies              | UNIQUE (organization_id, id)
+ sla_policy_versions       | UNIQUE (organization_id, id)
+ sla_policy_versions       | UNIQUE (policy_id, version)
+ sla_targets               | UNIQUE (version_id, kind)
+ sla_targets               | UNIQUE (organization_id, id)
+ territories               | UNIQUE (code)
+ verticals                 | UNIQUE (code)
+(35 rows)
+
+ organizations | territories
+---------------+-------------
+             3 |           3
+(1 row)
+
+   relname
+--------------
+ audit_events
+(1 row)

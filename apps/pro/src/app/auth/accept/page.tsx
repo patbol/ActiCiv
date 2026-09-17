@@ -1,3 +1,4 @@
+import { AuthHeading, AuthMessage } from "../../../components/auth-feedback";
 import Link from "next/link";
 import { accept } from "../actions";
 import { professionalClient } from "../../../lib/auth";
@@ -11,16 +12,24 @@ export default async function Accept({
   const params = await searchParams;
   return (
     <main id="main" className="shell">
-      <h1>Activer mon accès professionnel</h1>
+      <AuthHeading>Activer mon accès professionnel</AuthHeading>
       {params.error && (
-        <p role="alert">
+        <AuthMessage error>
           Invitation indisponible ou expirée. Contactez votre administrateur.
-        </p>
+        </AuthMessage>
       )}
       {data?.length === 1 ? (
         <form action={accept}>
           <label htmlFor="name">Nom d’affichage</label>
-          <input id="name" name="name" autoComplete="name" required />
+          <input
+            id="name"
+            name="name"
+            autoComplete="name"
+            maxLength={200}
+            aria-invalid={params.error ? true : undefined}
+            aria-describedby={params.error ? "auth-error" : undefined}
+            required
+          />
           <button type="submit">Accepter l’invitation</button>
         </form>
       ) : (

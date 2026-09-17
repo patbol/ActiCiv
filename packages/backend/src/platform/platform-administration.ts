@@ -1,9 +1,21 @@
 import "server-only";
 import { z } from "zod";
+import { priorities } from "../modules/catalog/domain/category";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { rpc } from "./commands";
 import { geographicCandidates } from "../modules/coverage/application/candidates";
 import { coverageReader } from "../modules/coverage/infrastructure/supabase";
+import {
+  saveContract,
+  saveTerritory,
+  setContractScope,
+} from "../modules/coverage/application/administration";
+import { coverageAdministration } from "../modules/coverage/infrastructure/administration";
+import {
+  saveOrganization,
+  recoverOrganization,
+} from "../modules/organizations/application/platform";
+import { organizationPlatform } from "../modules/organizations/infrastructure/platform";
 const uuid = z.guid(),
   text = z.string().trim().min(1).max(200);
 const schema = z.discriminatedUnion("action", [
@@ -30,7 +42,7 @@ const schema = z.discriminatedUnion("action", [
     verticalId: uuid,
     code: text,
     name: text,
-    priority: z.enum(["normal", "important", "urgent"]),
+    priority: z.enum(priorities),
     active: z.boolean(),
   }),
   z.object({
@@ -92,19 +104,15 @@ export async function platformAdministration(
   };
   if (!platform?.capabilities.includes(capabilities[value.action]))
     throw new Error("Accès refusé");
+  const context = {
+    userId: user.id,
+    capabilities: platform.capabilities as string[],
+  };
   switch (value.action) {
     case "organization.save":
-      return rpc(client, "save_organization", {
-        p_code: value.code,
-        p_name: value.name,
-        p_status: value.status,
-      });
+      return saveOrganization(context, value, organizationPlatform(client));
     case "organization.recover":
-      return rpc(client, "recover_organization", {
-        p_org: value.organizationId,
-        p_user: value.userId,
-        p_name: value.name,
-      });
+      return recoverOrganization(context, value, organizationPlatform(client));
     case "vertical.save":
       return rpc(client, "save_vertical", {
         p_code: value.code,
@@ -120,29 +128,11 @@ export async function platformAdministration(
         p_active: value.active,
       });
     case "territory.save":
-      return rpc(client, "save_territory", {
-        p_code: value.code,
-        p_name: value.name,
-        p_kind: value.kind,
-        p_geometry: value.geometry,
-        p_parent: value.parentId,
-      });
+      return saveTerritory(context, value, coverageAdministration(client));
     case "contract.save":
-      return rpc(client, "save_contract", {
-        p_org: value.organizationId,
-        p_reference: value.reference,
-        p_status: value.status,
-        p_from: value.from,
-        p_until: value.until,
-        p_plan: value.plan,
-      });
+      return saveContract(context, value, coverageAdministration(client));
     case "scope.set":
-      return rpc(client, "set_contract_scope", {
-        p_contract: value.contractId,
-        p_territory: value.territoryId,
-        p_categories: value.categories,
-        p_services: value.services,
-      });
+      return setContractScope(context, value, coverageAdministration(client));
     case "coverage.read":
       return geographicCandidates(
         value.longitude,

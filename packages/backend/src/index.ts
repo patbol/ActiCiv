@@ -20,3 +20,11 @@ export {
 } from "./modules/organizations/application/administration";
 export { configure } from "./platform/configuration";
 export { platformAdministration } from "./platform/platform-administration";
+export { professionalSession } from "./modules/auth/infrastructure/session";
+export {
+  signInProfessional,
+  recoverProfessional,
+  defineProfessionalPassword,
+  acceptProfessionalInvitation,
+  signOutProfessional,
+} from "./modules/auth/application/session";

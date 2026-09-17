@@ -9,3 +9,7 @@ La chaîne vérifie Auth, profil actif, organisation/membership actifs, capacit�
 Les invitations ont des états explicites et une clé d'idempotence. Auth et SQL ne constituent pas une transaction distribuée. Seule l'acceptation valide crée le membership métier. Le dernier administrateur actif est protégé par verrou et contrôle SQL, y compris désactivation de profil. Tests directs, JWT réels et concurrence sont requis.
 
 Les droits EXECUTE par défaut sont révoqués globalement pour PUBLIC avant création des fonctions : une révocation limitée au schéma n'annule pas le défaut global PostgreSQL. Les tests contrôlent les privilèges effectifs du pont Auth pour anon/authenticated/service_role, pas seulement la présence d'un GRANT dans une migration.
+
+## Renforcement de clôture Phase 2
+
+Les chemins Auth et administration contractuelle sont désormais orchestrés par des ports/cas d’usage explicites. Les tests de concurrence utilisent deux acteurs et deux transactions bloquées avant libération du verrou d’organisation ; ils vérifient le refus SQL exact pour suppression, rétrogradation et désactivation de profil/membership.

@@ -1,4 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["playwright.config.ts", "vitest.config.ts", "e2e/**/*.ts"]
+  "include": [
+    "playwright.config.ts",
+    "vitest.config.ts",
+    "e2e/**/*.ts",
+    "vitest.integration.config.ts",
+    "packages/backend/integration/**/*.ts",
+    "integration/**/*.ts"
+  ]
 }

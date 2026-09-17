@@ -50,6 +50,7 @@ it("keeps partial failures recoverable and never grants membership", async () =>
       email: "x@example.test",
       state: "pending",
       expires_at: "2099-01-01Z",
+      correlation_id: "command-id",
     }),
     bind: vi
       .fn()

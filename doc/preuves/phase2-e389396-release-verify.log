@@ -1,0 +1,175 @@
+$ node scripts/verify-release.mjs
+Validation locale du commit e389396945ac869ce6c342678d18577693fc2c96
+{"node":"v24.21.0","icu":"78.3","tz":"2026c"}
+$ pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm audit --audit-level high
+$ pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ eslint . --max-warnings 0
+$ pnpm -r typecheck && tsc -p tsconfig.tools.json
+Scope: 6 of 7 workspace projects
+packages/backend typecheck$ tsc --noEmit
+packages/types typecheck$ tsc --noEmit
+packages/ui typecheck$ tsc --noEmit
+packages/shared typecheck$ tsc --noEmit
+packages/shared typecheck: Done
+packages/types typecheck: Done
+packages/backend typecheck: Done
+packages/ui typecheck: Done
+apps/citizen typecheck$ next typegen && tsc --noEmit
+apps/pro typecheck$ next typegen && tsc --noEmit
+apps/pro typecheck: Generating route types...
+apps/citizen typecheck: Generating route types...
+apps/pro typecheck: ✓ Types generated successfully
+apps/citizen typecheck: ✓ Types generated successfully
+apps/citizen typecheck: Done
+apps/pro typecheck: Done
+$ vitest run
+
+ RUN  v4.1.11 /Users/patrickmoreno/ActiCiv/dev/acticiv
+
+
+ Test Files  8 passed (8)
+      Tests  17 passed (17)
+   Start at  21:28:44
+   Duration  1.10s (transform 174ms, setup 0ms, import 434ms, tests 896ms, environment 1ms)
+
+$ pnpm --filter @acticiv/citizen build && pnpm --filter @acticiv/pro build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 15ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 521ms
+  Running TypeScript ...
+  Finished TypeScript in 1374ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/7) ...
+  Generating static pages using 7 workers (1/7)
+  Generating static pages using 7 workers (3/7)
+  Generating static pages using 7 workers (5/7)
+✓ Generating static pages using 7 workers (7/7) in 148ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/health
+├ ƒ /brand.svg
+├ ○ /icon.svg
+└ ○ /manifest.webmanifest
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 16ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 890ms
+  Running TypeScript ...
+  Finished TypeScript in 1496ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/15) ...
+  Generating static pages using 7 workers (3/15)
+  Generating static pages using 7 workers (7/15)
+  Generating static pages using 7 workers (11/15)
+✓ Generating static pages using 7 workers (15/15) in 208ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/configuration
+├ ƒ /api/health
+├ ƒ /api/platform
+├ ƒ /auth/accept
+├ ƒ /auth/callback
+├ ƒ /auth/confirm
+├ ƒ /auth/login
+├ ƒ /auth/password
+├ ƒ /auth/recover
+├ ƒ /brand.svg
+├ ƒ /espace
+└ ○ /icon.svg
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+$ node scripts/check-client-bundles.mjs
+Frontières des bundles clients vérifiées.
+$ node scripts/check-db-tests.mjs
+Connecting to local database...
+psql:/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2.sql:2: NOTICE:  extension "pgtap" already exists, skipping
+/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2.sql ............. ok
+psql:/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2_edge_cases.sql:8: NOTICE:  Self-intersection at or near point 1 1
+/Users/patrickmoreno/ActiCiv/dev/acticiv/supabase/tests/phase2_edge_cases.sql .. ok
+All tests successful.
+Files=2, Tests=69,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.01 cusr  0.00 csys =  0.03 CPU)
+Result: PASS
+$ node --test integration/*.test.mjs
+✔ real JWTs enforce tenant/service access and stale identity revocation (947.770292ms)
+✔ signup is disabled and unauthenticated data is inaccessible (4.603ms)
+✔ concurrent demotions cannot remove every administrator (337.014459ms)
+✔ invitations survive partial failure, are idempotent, and grant rights only after acceptance (746.017041ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2843.952625
+$ playwright test
+[WebServer] (node:44790) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3000
+[WebServer] (node:44816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:44826) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1 --port 3001
+[WebServer] (node:44855) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 20 tests using 2 workers
+
+(node:44863) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:44862) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [desktop] › e2e/auth.spec.ts:54:1 › invalid callbacks cannot redirect off site (446ms)
+  ✓   1 [desktop] › e2e/auth.spec.ts:8:1 › professional login, accessible form and logout use real Supabase (1.8s)
+  ✓   4 [desktop] › e2e/auth.spec.ts:160:1 › client administrator uses the protected configuration entrypoint (734ms)
+  ✓   5 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (526ms)
+  ✓   3 [desktop] › e2e/auth.spec.ts:65:1 › invited professional sets a password and activates membership (2.6s)
+  ✓   7 [desktop] › e2e/foundation.spec.ts:52:3 › surface 3000: skip link and reduced motion (202ms)
+  ✓   6 [desktop] › e2e/foundation.spec.ts:29:3 › surface 3000: keyboard dialog focus and persistent labels (543ms)
+  ✓   8 [desktop] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (523ms)
+  ✓  10 [desktop] › e2e/foundation.spec.ts:52:3 › surface 3001: skip link and reduced motion (206ms)
+  ✓   9 [desktop] › e2e/foundation.spec.ts:29:3 › surface 3001: keyboard dialog focus and persistent labels (520ms)
+(node:44936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:44937) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [mobile] › e2e/auth.spec.ts:54:1 › invalid callbacks cannot redirect off site (251ms)
+  ✓  11 [mobile] › e2e/auth.spec.ts:8:1 › professional login, accessible form and logout use real Supabase (1.6s)
+  ✓  14 [mobile] › e2e/auth.spec.ts:160:1 › client administrator uses the protected configuration entrypoint (744ms)
+  ✓  13 [mobile] › e2e/auth.spec.ts:65:1 › invited professional sets a password and activates membership (2.6s)
+  ✓  15 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3000: renders and passes automatic accessibility checks (651ms)
+  ✓  17 [mobile] › e2e/foundation.spec.ts:52:3 › surface 3000: skip link and reduced motion (235ms)
+  ✓  16 [mobile] › e2e/foundation.spec.ts:29:3 › surface 3000: keyboard dialog focus and persistent labels (591ms)
+  ✓  18 [mobile] › e2e/foundation.spec.ts:4:3 › surface 3001: renders and passes automatic accessibility checks (633ms)
+  ✓  19 [mobile] › e2e/foundation.spec.ts:29:3 › surface 3001: keyboard dialog focus and persistent labels (549ms)
+  ✓  20 [mobile] › e2e/foundation.spec.ts:52:3 › surface 3001: skip link and reduced motion (236ms)
+
+  20 passed (12.7s)
+No known vulnerabilities found
+LOCAL_VALIDATED_SHA=e389396945ac869ce6c342678d18577693fc2c96
+La clôture requiert aussi les deux jobs CI sur ce SHA et les contrôles manuels applicables.

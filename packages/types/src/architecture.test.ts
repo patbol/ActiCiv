@@ -18,6 +18,61 @@ it("rejects server/database imports in public packages", async () => {
     ).toBe(true);
   }
 }, 15000);
+it("rejects HTTP and network access in domain/application while allowing adapters", async () => {
+  const eslint = new ESLint();
+  const programs = [
+    ...[
+      "http",
+      "https",
+      "node:http",
+      "node:https",
+      "node:net",
+      "node:tls",
+      "dns",
+      "dgram",
+      "axios",
+      "undici",
+      "node-fetch",
+      "ws",
+    ].map((name) => `import * as x from '${name}'; export { x };`),
+    "export const x = () => fetch('https://example.test');",
+    "export const x = () => globalThis.fetch('https://example.test');",
+    "export const x = () => globalThis['fetch']('https://example.test');",
+    "export const x = () => new WebSocket('wss://example.test');",
+    "export const x = () => new XMLHttpRequest();",
+    "export const x = () => new EventSource('https://example.test');",
+    "export const x = () => import('node:http');",
+    "export const x = require('https');",
+    "const {fetch: request} = globalThis; export {request};",
+  ];
+  for (const layer of ["domain", "application"]) {
+    for (const code of programs) {
+      const result = await eslint.lintText(code, {
+        filePath: `packages/backend/src/modules/auth/${layer}/network-probe.ts`,
+      });
+      expect(
+        result
+          .flatMap((r) => r.messages)
+          .some((m) =>
+            [
+              "no-restricted-imports",
+              "no-restricted-globals",
+              "no-restricted-syntax",
+            ].includes(m.ruleId ?? ""),
+          ),
+        code,
+      ).toBe(true);
+    }
+  }
+  const result = await eslint.lintText(
+    "export const request = () => fetch('https://example.test');",
+    {
+      filePath:
+        "packages/backend/src/modules/auth/infrastructure/network-probe.ts",
+    },
+  );
+  expect(result.flatMap((r) => r.messages)).toEqual([]);
+}, 15000);
 it("rejects infrastructure imports in critical domain and use cases", async () => {
   const eslint = new ESLint();
   for (const filePath of [

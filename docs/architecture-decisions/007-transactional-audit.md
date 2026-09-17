@@ -7,3 +7,7 @@ Toute mutation métier auditable écrit un événement dans sa transaction SQL. 
 Acteur dérivé de l'identité serveur ; opérations privilégiées de bootstrap identifiées système. Append-only, liste blanche de champs, aucune copie aveugle de ligne, token, mot de passe ou email. Les modifications géographiques sont identifiées par empreinte. Lecture client limitée à son organisation ; lecture globale exige audit.read.
 
 Les logs techniques d'observabilité restent indépendants et ne constituent pas une preuve d'audit métier.
+
+## Renforcement de clôture Phase 2
+
+Un correlation_id UUID de commande est propagé via le client serveur, enregistré dans l’invitation et repris lors de l’association/acceptation. Le transaction_id SQL reste distinct. L’identifiant de corrélation n’accorde aucun droit et ne remplace jamais auth.uid. Les événements historiques sans contexte reçoivent chacun un identifiant autonome.

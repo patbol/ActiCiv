@@ -1,0 +1,18 @@
+Found '/Users/patrickmoreno/ActiCiv/dev/acticiv/.nvmrc' with version <24.21.0>
+Now using node v24.21.0 (npm v11.19.0)
+v24.21.0
+11.19.0
+e389396945ac869ce6c342678d18577693fc2c96
+phase-2-core-data-security
+origin	https://github.com/patbol/ActiCiv.git (fetch)
+origin	https://github.com/patbol/ActiCiv.git (push)
+{"node":"v24.21.0","Temporal":"undefined","icu":"78.3","tz":"2026c"}
+Warning: React version was set to "detect" in eslint-plugin-react settings, but the "react" package is not installed. Assuming latest React version for linting.
+{"module":"node:http","errors":[]}
+{"module":"node:https","errors":[]}
+{"module":"http","errors":[]}
+{"module":"https","errors":[]}
+{"module":"axios","errors":[]}
+{"module":"next/headers","errors":[{"rule":"no-restricted-imports","message":"'next/headers' import is restricted from being used by a pattern. Domain and use cases must depend only on domain types and explicit ports."}]}
+{"module":"@supabase/supabase-js","errors":[{"rule":"no-restricted-imports","message":"'@supabase/supabase-js' import is restricted from being used by a pattern. Domain and use cases must depend only on domain types and explicit ports."}]}
+{"module":"global fetch","errors":[]}

@@ -15,3 +15,7 @@ Conséquences : Docker et GitHub sont requis pour certaines preuves. Un job écr
 Phase 1 clôturée selon son postmortem. Node 24.21.0 est figé dans .nvmrc, utilisé par nvm et CI. verify compose format/lint/types/unitaires/builds ; verify:full ajoute pgTAP, Auth/RLS réel, E2E/axe et audit de dépendances. Aucun succès global si Supabase est indisponible. Les ports E2E doivent être libres.
 
 La livraison est liée à un commit propre, testé localement et dans les deux jobs GitHub Actions. Archiver depuis ce SHA uniquement. Toute modification après validation impose une nouvelle validation. Les captures/rapports historiques ne valent pas preuve du nouveau SHA.
+
+## Renforcement de clôture Phase 2
+
+release:verify --rebuild-db reconstruit les données DEV locales depuis zéro, rejoue reset/seed et vérifie le résultat avant la validation complète. verify:full inclut Gitleaks 8.30.1 à empreintes de téléchargement figées, un contrôle positif/négatif de son détecteur et le scan de l’historique de HEAD. La CI utilise le même script et conserve son journal, sans exporter les clés de connexion Supabase. Les preuves finales sont jointes hors commit ; l’archive source reste strictement issue du SHA testé.

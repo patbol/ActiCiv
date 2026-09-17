@@ -6,7 +6,7 @@ La proposition A–I et ses trois précisions finales sont approuvées. Ce rappo
 
 ## Livré
 
-- Huit migrations PostgreSQL 17 : organisations, profils, memberships, services, invitations, catalogue, contrats/territoires PostGIS, calendriers/SLA versionnés, audit.
+- Neuf migrations PostgreSQL 17 : organisations, profils, memberships, services, invitations, catalogue, contrats/territoires PostGIS, calendriers/SLA versionnés, audit.
 - Unicités NULLS NOT DISTINCT ; FK composites ; dernier administrateur actif protégé sous concurrence ; supervision portée par service_memberships.
 - RLS/grants et RPC contrôlées ; pont Auth privilégié isolé ; audit atomique obligatoire, append-only et minimisé.
 - Modules hexagonaux critiques, règles de dépendance et tests ; adaptateurs Supabase, PostGIS et Temporal.
@@ -18,7 +18,7 @@ La proposition A–I et ses trois précisions finales sont approuvées. Ce rappo
 
 ## Vérification
 
-La suite contient tests unitaires/domaine/frontières, 69 assertions pgTAP, quatre scénarios d'intégration utilisant de vrais JWT/Auth (dont concurrence et reprise d'invitation), les 12 cas navigateur Phase 1 et les nouveaux parcours Auth/configuration desktop/mobile. Les résultats définitifs sont ceux du journal `release:verify` du SHA livré. Aucun test critique supprimé, aucun retry Playwright.
+La suite contient tests unitaires/domaine/frontières, 84 assertions pgTAP, huit scénarios Node et quatre scénarios avec adaptateurs réels utilisant de vrais JWT/Auth (dont concurrence et reprise d'invitation), les 12 cas navigateur Phase 1 et les nouveaux parcours Auth/configuration desktop/mobile. Les résultats définitifs sont ceux du journal `release:verify` du SHA livré. Aucun test critique supprimé, aucun retry Playwright.
 
 Les contrôles SQL démontrent notamment : unicité effective des quatre scopes SLA, refus inter-tenant, refus d'auto-promotion, protection du dernier administrateur, versions immuables, DST via unités, inclusion/frontières/trous/chevauchements, rollback métier si audit échoue et rollback commun de l'audit.
 
@@ -38,3 +38,7 @@ Le navigateur standard Playwright Chromium est utilisé. Les tests axe/clavier n
 - ESLint 9 conservé pour les peer dependencies ; réévaluation cohérente avant PROD.
 - Données de fuseaux liées au runtime ICU/tz ; enregistrées lors de release:verify. Les futurs reports conserveront les versions et instants calculés.
 - Pas de moteur de SLA lié aux reports, routage complet, workflow citoyen, intervention, notification métier, billing ou Phase 3.
+
+## Passe de clôture renforcée du 17 septembre 2026
+
+Le rapport de référence est désormais [le postmortem complet et sa matrice](../../doc/ActiCiv_Phase2_Postmortem.md). Les scénarios supplémentaires et leurs résultats sont décrits là : 25 unités, 84 assertions SQL, 8 intégrations Node, 4 intégrations avec vrais adaptateurs et 26 E2E sans retry. Les résultats exacts du candidat final restent soumis à release:verify, CI et au contrôle VoiceOver. L’existence de ces tests ne vaut pas une clôture anticipée.

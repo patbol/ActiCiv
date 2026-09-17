@@ -1,18 +1,24 @@
+import { AuthHeading, AuthMessage } from "../../../components/auth-feedback";
 import { recover } from "../actions";
 export default async function Recover({
   searchParams,
 }: {
-  searchParams: Promise<{ sent?: string }>;
+  searchParams: Promise<{ sent?: string; error?: string }>;
 }) {
   const params = await searchParams;
   return (
     <main id="main" className="shell">
-      <h1>Récupérer mon accès</h1>
+      <AuthHeading>Récupérer mon accès</AuthHeading>
+      {params.error && (
+        <AuthMessage error>
+          Le lien n’a pas pu être envoyé. Vérifiez l’adresse et réessayez.
+        </AuthMessage>
+      )}
       {params.sent ? (
-        <p role="status">
+        <AuthMessage>
           Si cette adresse correspond à un compte, un lien de récupération sera
           envoyé.
-        </p>
+        </AuthMessage>
       ) : (
         <form action={recover}>
           <label htmlFor="email">Adresse email</label>
@@ -21,6 +27,8 @@ export default async function Recover({
             name="email"
             type="email"
             autoComplete="email"
+            aria-invalid={params.error ? true : undefined}
+            aria-describedby={params.error ? "auth-error" : undefined}
             required
           />
           <button type="submit">Recevoir un lien</button>

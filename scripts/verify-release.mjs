@@ -13,6 +13,12 @@ console.log(
     tz: process.versions.tz,
   }),
 );
+if (process.argv.includes("--rebuild-db")) {
+  const rebuilt = spawnSync("node", ["scripts/reconstruct-db.mjs"], {
+    stdio: "inherit",
+  });
+  if (rebuilt.status !== 0) process.exit(rebuilt.status ?? 1);
+}
 const result = spawnSync("pnpm", ["verify:full"], { stdio: "inherit" });
 if (result.status !== 0) process.exit(result.status ?? 1);
 if (git("rev-parse", "HEAD") !== sha || git("status", "--porcelain"))

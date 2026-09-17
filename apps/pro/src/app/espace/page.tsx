@@ -2,13 +2,14 @@ import Link from "next/link";
 import { getProfessionalContext, supabaseContext } from "@acticiv/backend";
 import { professionalClient } from "../../lib/auth";
 import { logout } from "../auth/actions";
+import { AuthHeading } from "../../components/auth-feedback";
 export default async function Space() {
   const context = await getProfessionalContext(
     supabaseContext(await professionalClient()),
   );
   return (
     <main id="main" className="shell">
-      <h1>Mon espace professionnel</h1>
+      <AuthHeading>Mon espace professionnel</AuthHeading>
       {context ? (
         <>
           <p>Votre accès professionnel est actif.</p>
