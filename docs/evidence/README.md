@@ -13,3 +13,5 @@ Les résultats des postmortems ne sont pas réécrits pour refléter une clôtur
 Une preuve contient commande/contexte, SHA, environnement, résultat réel et limites. Aucun secret, token ou credential de session. Une absence environnementale reste DEFERRED, jamais PASS implicite. Voir la [politique documentaire](../quality/documentation-policy.md).
 
 - [Rapport 2bis-C](../quality/phase-2bis-c-report.md) : arbre local d’implémentation, résultats et limites ; [journal verify:full](phase2bis/2bis-c-validation.txt), [reconstruction DB](phase2bis/2bis-c-db-reset.txt). Ces fichiers ne constituent pas une attestation de release ou de validation manuelle.
+
+2bis-D : [rapport et identité des campagnes locales](../quality/phase-2bis-d-report.md). Les snapshots/rapports machine-readable restent des artefacts minimisés sous `.quality/snapshots/<run-id>/`, avec SHA, digest et baseline candidate ; aucune baseline acceptée ni preuve CI distante inventée.
