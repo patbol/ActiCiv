@@ -51,6 +51,18 @@ async function tokens() {
     }),
   );
 }
+async function warmMemberCommand(token) {
+  const result = await request(config, "/rest/v1/rpc/change_member", {
+    token,
+    method: "POST",
+    body: {
+      p_member: members[0],
+      p_role: "client_admin",
+      p_active: true,
+    },
+  });
+  assert.equal(result.ok, true, "authenticated member command is ready");
+}
 function sqlTransaction(query) {
   return new Promise((resolve) => {
     const child = spawn("docker", dockerArgs);
@@ -117,6 +129,7 @@ for (const operation of [
       `update public.organization_memberships set role='client_admin' where id='${members[1]}';`,
     );
     try {
+      await warmMemberCommand(jwt[0]);
       if (operation === "delete")
         sql(
           `delete from public.service_memberships where membership_id='${members[1]}'`,
