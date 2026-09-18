@@ -6,7 +6,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles",
+    "verify": "pnpm format:check && pnpm lint && pnpm docs:validate && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles",
     "verify:full": "pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm test:e2e:prod && pnpm security:sast && pnpm artifact:check && pnpm audit --audit-level high && ACTICIV_SCAN_ARTIFACTS=1 pnpm secrets:check",
     "test:integration": "node --test --test-concurrency=1 integration/*.test.mjs && vitest run --config vitest.integration.config.ts",
     "dev": "pnpm --parallel --filter @acticiv/citizen --filter @acticiv/pro dev",
@@ -39,7 +39,9 @@
     "artifact:check": "node tooling/quality/assurance-cli.ts artifact",
     "performance:measure": "node tooling/quality/assurance-cli.ts performance",
     "performance:compare": "node tooling/quality/assurance-cli.ts compare",
-    "test:e2e:prod": "playwright test --config playwright.prod.config.ts"
+    "test:e2e:prod": "playwright test --config playwright.prod.config.ts",
+    "docs:validate": "node tooling/quality/knowledge-cli.ts",
+    "docs:generate": "node tooling/quality/knowledge-cli.ts --write"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -59,7 +61,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.70.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "yaml": "2.9.1"
   },
   "type": "module"
 }

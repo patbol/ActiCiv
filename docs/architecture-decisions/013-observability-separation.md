@@ -39,3 +39,7 @@ F ne construit ni Quality Center, ni playbooks complets G, ni fonctionnalité Ph
 ## Références
 
 [Analytics](../kb/technical/analytics.md), [audit](../kb/technical/audit.md), [logging](../kb/technical/logging.md), [corrélation/erreurs](../kb/technical/correlation-errors.md), [rapport F](../quality/phase-2bis-f-report.md). Code et tests sont reliés depuis ces KB.
+
+## Décision ultérieure — statut courant
+
+Acceptée explicitement par Patrick à la finalisation F et au lancement de G sur la baseline ebab16c5c5c3133dda5afa5061263da5c3bcf25e. Le texte de proposition demeure historique ; aucune décision acceptée n’est réécrite. Voir l’[audit des statuts](README.md).

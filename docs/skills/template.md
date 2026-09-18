@@ -1,18 +1,7 @@
-# Modèle documentaire de futur Skill
+# Modèle de Skill
 
-Statut : template de préparation 2bis-A ; aucun Skill chargé automatiquement depuis ce fichier.
+Copier la structure d’un [playbook existant](update-kb/SKILL.md) et adapter son contrat, sans créer de micro-skill vide. Frontmatter `name` (kebab-case identique au dossier) et `description` (déclencheur/action spécifique).
 
-Un futur `SKILL.md` comportera un frontmatter `name` / `description` correspondant à son entrée du [catalogue](README.md). Son nom de dossier et son nom déclaré resteront cohérents. La convention d'intégration à l'outil sera vérifiée avant activation en 2bis-G.
+Sections : Objectif et déclencheur ; Préconditions et lectures ; Impact map ; Procédure ordonnée ; Tests et preuves ; Documentation ; Sécurité et arrêt ; Definition of Done ; Erreurs à éviter. Référencer AGENTS au lieu de recopier ses règles. Aucune commande destructrice par défaut.
 
-## Contenu requis
-
-1. Objectif et situations où utiliser/ne pas utiliser ce workflow.
-2. Entrées : demande explicite, checkpoint autorisé, sources/KB/ADR, état Git/runtime et critères d'acceptation.
-3. Impact map avant modification lorsque le comportement existe déjà.
-4. Étapes concrètes, test-first pour les risques critiques ; commandes contextualisées, sans secret incorporé.
-5. Résultats attendus : code/docs/preuves selon le scope, pas de promesse de réussite sans observation.
-6. Contrôles finaux proportionnés, régression, sécurité/a11y/i18n et mise à jour des liens/documents pertinents.
-7. Conditions d'arrêt : conflit de sources, permission manquante, scope dépassé, preuve obligatoire absente ; préserver le travail utilisateur.
-8. Retour : résultat, changements, validations réellement exécutées, limites et STOP au prochain jalon soumis à validation.
-
-Une procédure de release ne peut pas transformer un ancien journal en preuve d'un nouveau SHA. Une procédure de bug ne modifie pas le contrat pour justifier après coup le défaut. Une procédure de migration examine audit atomique, RLS et reconstruction réelle.
+Modifier le catalogue/validateur et leurs tests si le nombre de Skills évolue après décision explicite. Les quinze procédures actuelles sont canoniques sous `docs/skills/<name>/SKILL.md` ; découverte manuelle documentée dans [l’index](README.md).

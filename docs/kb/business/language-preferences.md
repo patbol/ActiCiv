@@ -1,5 +1,7 @@
 ---
 id: feature.language-preferences
+title: "Choisir sa langue d’interface"
+introduced_in: phase-2bis-c
 domain: preferences
 type: business-feature
 status: active
@@ -47,13 +49,13 @@ Chaque professionnel actif peut seulement modifier sa propre préférence, avec 
 
 Les libellés de catégories, verticales et motifs disposent de traductions, sinon le français historique sert de fallback. Les IDs/codes et les périmètres contractuels restent identiques. Les noms propres d’organisation/service ne sont pas traduits automatiquement.
 
-Les changements DB sont audités atomiquement, avec acteur et corrélation ; si l’audit échoue, l’écriture échoue. Les choix anonymes du navigateur n’écrivent aucun événement métier en base. Aucun analytics produit ni nouveau log de données personnelles.
+Les changements DB sont audités atomiquement, avec acteur et corrélation ; si l’audit échoue, l’écriture échoue. Les choix anonymes du navigateur n’écrivent aucun événement métier en base. Depuis F, les événements pro_locale_changed/citizen_locale_changed et le diagnostic technique minimisé suivent le [registre analytics](../technical/analytics.md) et le [logger](../technical/logging.md), sans données personnelles. Le mode analytics reste off par défaut.
 
 ## Erreurs, edge cases et limites
 
 Langue navigateur non prise en charge : fallback. Retour à l’héritage : org, sans écrire la préférence navigateur en DB. Déconnexion : les textes publics suivent le navigateur, sans conserver implicitement la langue du dernier professionnel. En DEV, les deux ports d’un même hôte partagent les cookies ; en production, les domaines distincts gardent leurs cookies host-only.
 
-Les emails d’invitation/récupération restent français pendant C : leur localisation par destinataire nécessitera un traitement serveur cohérent avec profil et organisation. Les écrans atteints depuis leurs liens sont déjà localisés.
+Les emails d’invitation/récupération restent français actuellement : leur localisation par destinataire nécessitera un traitement serveur cohérent avec profil et organisation. Les écrans atteints depuis leurs liens sont déjà localisés.
 
 Tests critiques : priorité/héritage, refus cross-user/tenant et droits falsifiés, transaction audit, persistance/reconnexion, SSR fr/en, URL/session/formulaire/focus, axe et contrôle VoiceOver distinct. Voir la [KB technique](../technical/internationalisation.md) et les [preuves](../../quality/phase-2bis-c-report.md). Aucun parcours Phase 3 n’est décrit comme existant.
 

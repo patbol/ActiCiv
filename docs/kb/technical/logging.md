@@ -1,5 +1,7 @@
 ---
 id: technical.logging
+title: "Logs structurés"
+introduced_in: phase-2bis-f
 domain: observability
 type: technical-topic
 status: active

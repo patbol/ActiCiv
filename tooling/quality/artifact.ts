@@ -17,6 +17,13 @@ export function inspectFile(path: string, source: string, map?: string) {
   const add = (category: string, at = 0) =>
     out.push(finding("artifact", category, "high", path + ":" + at));
   if (
+    /docs\/(?:kb|skills)\//.test(path) ||
+    /docs\/(?:kb|skills)\/|id:\s*(?:feature|technical)\.[a-z-]+|name:\s*(?:implement-feature|prepare-release)/.test(
+      source,
+    )
+  )
+    add("knowledge-leak");
+  if (
     /(?:^|\/)(?:fixtures|__tests__|__mocks__|test-helpers)(?:\/|\.)|\.(?:spec|test)\.[cm]?js$/.test(
       path,
     )
@@ -148,7 +155,7 @@ export function inspectArtifact(app: string) {
     const name = path.slice(root.length + 1),
       bytes = readFileSync(path);
     hash.update(name + "\0").update(bytes);
-    if (/\.(?:js|json|html|rsc|css|map)$/.test(path)) {
+    if (/\.(?:js|json|html|rsc|css|map|md)$/.test(path)) {
       const map = existsSync(path + ".map")
         ? readFileSync(path + ".map", "utf8")
         : undefined;
@@ -157,6 +164,8 @@ export function inspectArtifact(app: string) {
     if (path.endsWith(".nft.json")) {
       const traced = JSON.parse(bytes.toString()).files as string[];
       for (const p of traced) {
+        if (/docs\/(?:kb|skills)\//.test(p))
+          findings.push(finding("artifact", "knowledge-leak", "high", name));
         // pnpm peer labels may mention playwright without tracing its actual package.
         const actual = p.split("node_modules/").pop()!;
         if (

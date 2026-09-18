@@ -14,7 +14,7 @@ Applicable aux changements ActiCiv dans le checkpoint explicitement autorisé. R
 | Couverture               | Effet sur les scénarios et modules critiques ; métriques/seuils une fois instrumentés et approuvés     |
 | Sécurité                 | Droits, ownership, tenancy, RLS, secrets ; tests négatifs/réels selon impact                           |
 | Accessibilité            | Clavier, focus, labels, erreurs, axe et lecteur d'écran selon changement                               |
-| i18n                     | Texte/format/locale et timezone distincts ; deux locales lorsque la fondation sera intégrée            |
+| i18n                     | Texte/format/locale et timezone distincts ; fr-FR/en-GB selon les fondations actuelles                 |
 | Observabilité            | Analytics minimisés, audit transactionnel et logs techniques examinés séparément                       |
 | Données                  | Migration append-only, contraintes nullable/tenant, seeds, reprise et reconstruction si schéma modifié |
 | Connaissances            | KB métier/technique, droits, API et liens mis à jour dans la même PR                                   |
@@ -25,19 +25,19 @@ Chaque dimension non applicable reçoit une justification courte. Les fondations
 
 ## Rigueur proportionnée
 
-| Changement                                         | Minimum pertinent                                                                                                                   |
-| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Documentation seule                                | Sources/statuts, liens, format, absence de secrets, inventaire, diff et `git diff --check` ; pas de test artificiel miroir du texte |
-| Présentation locale                                | Format/lint, revue visuelle et a11y adaptée ; pas d'ADR sans changement structurel                                                  |
-| Composant partagé / interaction                    | Tests comportementaux et régression, a11y/i18n, KB concernée                                                                        |
-| Auth, permissions, tenant, SLA, concurrence, audit | Test-first, cas négatifs, adaptateurs réels/SQL selon risque, documentation et validations ciblées                                  |
-| Migration                                          | Contraintes, RLS/grants, audit atomique, backfill, seed/reset/reconstruction et stratégie de récupération                           |
+| Changement                                         | Minimum pertinent                                                                                                                                         |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Documentation seule                                | Sources/statuts, liens, format, absence de secrets, inventaire, `pnpm docs:validate`, diff et `git diff --check` ; pas de test artificiel miroir du texte |
+| Présentation locale                                | Format/lint, revue visuelle et a11y adaptée ; pas d'ADR sans changement structurel                                                                        |
+| Composant partagé / interaction                    | Tests comportementaux et régression, a11y/i18n, KB concernée                                                                                              |
+| Auth, permissions, tenant, SLA, concurrence, audit | Test-first, cas négatifs, adaptateurs réels/SQL selon risque, documentation et validations ciblées                                                        |
+| Migration                                          | Contraintes, RLS/grants, audit atomique, backfill, seed/reset/reconstruction et stratégie de récupération                                                 |
 
 Un test qui passe après retry reste instable et ne constitue pas une preuve propre de release. Les seuils coverage/performance exigent mesure, proposition puis accord explicite de Patrick ; aucun seuil arbitraire ne devient bloquant.
 
 ## Checkpoint et release sont distincts
 
-Un checkpoint prêt pour revue n'est ni une phase clôturée ni une autorisation du checkpoint suivant. En 2bis-A, la preuve est documentaire, sans modification fonctionnelle ni DB.
+Un checkpoint prêt pour revue n'est ni une phase clôturée ni une autorisation du checkpoint suivant. En G, les preuves concernent documentation, validateurs et outillage ; aucune modification fonctionnelle ni DB.
 
 La clôture finale conserve `verify`, `verify:full` et `release:verify --rebuild-db` lorsqu'applicable : arbre propre, SHA exact, CI observée sur ce SHA, reconstruction si DB modifiée, contrôles humains requis et artefact issu du candidat validé. Tout changement post-validation impose une validation adaptée du nouveau candidat. Une CI écrite ou une ancienne preuve ne suffit pas. Les exigences PROD/pentest futures ne sont pas fabriquées en DEV.
 

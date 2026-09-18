@@ -44,3 +44,7 @@ Migration des tests seulement ; aucune migration de données ni nouveau package.
 - [KB testing](../kb/technical/testing.md), [bilan et inventaire des assertions](../quality/phase-2bis-b-report.md).
 - [Règles exécutables](../../tooling/eslint/conventions.mjs), [tests de règles](../../packages/types/src/conventions.test.ts), [tests d'architecture conservés](../../packages/types/src/architecture.test.ts).
 - [Fixtures](../../e2e/fixtures/test.ts), [Auth](../../e2e/auth.spec.ts), [foundation](../../e2e/foundation.spec.ts).
+
+## Décision ultérieure — statut courant
+
+Acceptée explicitement par Patrick au lancement de C. Le texte de proposition demeure historique ; aucune décision acceptée n’est réécrite. Voir l’[audit des statuts](README.md).

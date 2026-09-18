@@ -81,3 +81,7 @@ Tests RED puis GREEN sur résolution, droits applicatifs, SQL absent avant migra
 Déploiement : migration d’abord, puis applications. Ancienne application compatible avec les colonnes/tables additives. Retour applicatif possible vers B sans supprimer les nouvelles données. En cas de problème de données : conserver sauvegarde et audit, corriger par migration forward ; ne pas effacer traductions/préférences via un down destructif. Les anciennes migrations restent immuables.
 
 Références : [KB technique](../kb/technical/internationalisation.md), [KB métier](../kb/business/language-preferences.md), [rapport C](../quality/phase-2bis-c-report.md).
+
+## Décision ultérieure — statut courant
+
+Acceptée explicitement par Patrick au lancement de D. Le texte de proposition demeure historique ; aucune décision acceptée n’est réécrite. Voir l’[audit des statuts](README.md).

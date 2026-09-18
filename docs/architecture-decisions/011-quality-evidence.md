@@ -41,3 +41,7 @@ Tests comportementaux : absence/corruption/incomplétude, identités discordante
 Pas de migration DB. Retirer l’intégration CI consultative revient au comportement précédent ; conserver les artefacts historiques. Une évolution incompatible du contrat exige une nouvelle version de schéma et un lecteur adapté, sans réécrire les snapshots historiques.
 
 Références : [KB qualité](../kb/technical/quality-engineering.md), [contrat et procédures](../quality/quality-evidence.md), [rapport D](../quality/phase-2bis-d-report.md), [Vitest V4 coverage](https://v4.vitest.dev/config/coverage), [reporters Playwright](https://playwright.dev/docs/test-reporters).
+
+## Décision ultérieure — statut courant
+
+Acceptée explicitement par Patrick à la finalisation D et au lancement de E. Le texte de proposition demeure historique ; aucune décision acceptée n’est réécrite. Voir l’[audit des statuts](README.md).

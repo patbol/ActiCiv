@@ -1,5 +1,7 @@
 ---
 id: technical.internationalisation
+title: "Internationalisation et résolution de locale"
+introduced_in: phase-2bis-c
 domain: internationalisation
 type: technical-topic
 status: active
@@ -60,7 +62,7 @@ Le refresh conserve URL et saisies ; le focus initial Auth ne dépend plus du te
 
 Les nouvelles tables ont des uniques `(entity_id,locale)` sans dimension nullable. Les traductions de motifs gardent la RLS administrateur des motifs existants. Pas de SELECT settings pour agent/supervisor. Pas de service_role dans ces chemins.
 
-Historique français autoritaire : triggers de synchronisation et de validation empêchent la divergence ; anciens RPC et nouvelle RPC convergent sur ce contrat. L’audit SQL existant englobe préférence + traduction + synchronisation, acteur réel, whitelist, corrélation. Son échec annule la transaction. Logs techniques et analytics restent distincts, aucun événement supplémentaire dans C.
+Historique français autoritaire : triggers de synchronisation et de validation empêchent la divergence ; anciens RPC et nouvelle RPC convergent sur ce contrat. L’audit SQL existant englobe préférence + traduction + synchronisation, acteur réel, whitelist, corrélation. Son échec annule la transaction. Depuis F, les changements de locale alimentent le [registre analytics](analytics.md) minimisé, off par défaut, et le [logger](logging.md) séparé de l’audit SQL.
 
 ## Migration et exploitation
 
@@ -74,7 +76,7 @@ Les formats de date exigent un IANA explicite ; `Intl` ne modifie jamais le cale
 
 Emails Auth encore français : `.Data` ne contient pas la politique profil/organisation et le destinataire de récupération n'est pas le demandeur anonyme. Voir [ADR-010](../../architecture-decisions/010-internationalisation-locales.md) pour le futur traitement serveur et les alternatives rejetées.
 
-[Tests](testing.md) : les scénarios historiques restent en français explicite ; nouveaux E2E fr/en, SSR, isolation entre requêtes, cookies/session, clavier/focus et axe. [Rapport](../../quality/phase-2bis-c-report.md) : résultats réels et statut VoiceOver/TalkBack. Ni couverture instrumentée, snapshot canonique, gates complets ni Phase 3.
+[Tests](testing.md) : les scénarios historiques restent en français explicite ; nouveaux E2E fr/en, SSR, isolation entre requêtes, cookies/session, clavier/focus et axe. [Rapport](../../quality/phase-2bis-c-report.md) : résultats réels et statut VoiceOver/TalkBack. La couverture et les snapshots existent depuis D ; les scanners et contrôles PROD depuis E ; les flux d’observabilité depuis F. Aucun Phase 3.
 
 Une identité invitée Auth sans profil actif utilise seulement le cookie d’interface, comme le visiteur. Elle ne peut écrire de préférence DB ni obtenir un accès professionnel avant activation.
 

@@ -250,6 +250,8 @@ export function collect(rebuild = false) {
     ["typecheck", ["typecheck"]],
   ] as const)
     run(id, "pnpm", [...args]);
+  const docs = join(directory, "private/docs.json");
+  run("docs", "pnpm", ["docs:validate", "--output", docs], docs);
   const unit = join(directory, "private/unit.json"),
     coverage = join(directory, "private/coverage");
   run(

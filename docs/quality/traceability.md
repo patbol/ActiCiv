@@ -33,20 +33,8 @@ La fiche référence les fichiers/tests précis ; le bilan PR identifie les IDs 
 
 Pour un bug : reproduire → retrouver le contrat → test de régression si faisable → correction minimale → tests ciblés → validations pertinentes. Modifier le contrat documentaire uniquement si le comportement attendu change réellement et a été approuvé.
 
-En 2bis-A, ces conventions et [templates](../kb/README.md) sont établis ; la population détaillée et les validations automatiques de graphe documentaire seront traitées dans les checkpoints autorisés. Aucun parseur ni dépendance n'est ajouté ici.
+## Vue unique et mise à jour
 
-## Chaîne 2bis-C implémentée
+La [matrice générée](../kb/traceability.md) est dérivée des métadonnées KB. Les index thématiques et le registre de statut ADR sont des entrées complémentaires, pas d’autres matrices code/tests à synchroniser. `pnpm docs:generate` puis `pnpm docs:validate` sont requis après modification des liens.
 
-Autorisation Patrick C / Livre §51 ↔ [feature.language-preferences](../kb/business/language-preferences.md) ↔ [technical.internationalisation](../kb/technical/internationalisation.md) ↔ droits own-profile/configuration/catalogue ↔ module locales et migration additive ↔ tests unitaires/SQL/adaptateurs/E2E ↔ audit transactionnel (aucun nouvel analytics/log) ↔ [ADR-010](../architecture-decisions/010-internationalisation-locales.md). [Preuves réelles et exceptions](phase-2bis-c-report.md).
-
-## Checkpoint 2bis-D
-
-Preuves qualité → [KB quality-engineering](../kb/technical/quality-engineering.md) → [contrat/procédures](quality-evidence.md) → `tooling/quality` et tests comportementaux → [ADR-011](../architecture-decisions/011-quality-evidence.md) → [rapport D](phase-2bis-d-report.md). Aucun droit métier ni mutation/audit métier ajouté.
-
-## Impact map E
-
-Exigences E §§2–24 → KB sécurité/artefact/performance/dépendances → CLI et scans tooling/quality → rapports → snapshot v1 / policy E → CI et ADR-012. Droits/DB/RLS/audit métier inchangés. Surface UI affectée : dialogue DEMO absent PROD, historique E2E conservé + suite PROD/axe. Aucun Analytics/Logs F.
-
-## Impact map F
-
-Exigences F §§1–31 → KB Analytics/Audit/Logs/Corrélation → Auth/locale/configuration/plateforme existants → port Auth pur et composition serveur → projection invitation readonly avec auth.uid → tests anti-PII/SQL/adaptateurs/HTTP → audit SQL inchangé et diagnostics séparés → snapshot canonique policy F → ADR-013 proposée. Aucun droit métier nouveau ; aucune UI modifiée. Migration additive uniquement pour reprendre la corrélation autorisée de l'invité. [Rapport F](phase-2bis-f-report.md).
+La [KB gouvernance](../kb/technical/knowledge-governance.md) définit types/statuts/phases et limites des checks. `title` et `introduced_in` sont requis ; IDs antérieurs conservés. Les contrats Analytics/Audit/Logs de F ont remplacé l’absence d’instrumentation des preuves C : les anciens rapports restent datés.

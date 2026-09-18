@@ -1,5 +1,7 @@
 ---
 id: technical.correlation-errors
+title: "Corrélation et gestion des erreurs"
+introduced_in: phase-2bis-f
 domain: observability
 type: technical-topic
 status: active

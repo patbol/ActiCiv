@@ -452,3 +452,34 @@ it("observability evidence fails closed when either privacy or logger suite is a
   expect(complete.gate_evaluation.status).toBe("PASS");
   expect(complete.provenance.observability).toEqual(complete.provenance.unit);
 });
+
+it("G requires actual successful documentation evidence in the same canonical snapshot", () => {
+  const p = {
+    version: "2bis-G.v1",
+    mode: "advisory",
+    rules: [{ id: "knowledge-governance", source: "docs", required: true }],
+  };
+  expect(assemble(identity, [], p).gate_evaluation.status).toBe("FAIL");
+  for (const passed of [true, false]) {
+    const row = {
+      ...evidence(),
+      source: "docs",
+      report: {
+        complete: true,
+        tool_status: "completed",
+        passed,
+        metrics: { kb: 32, skills: 15 },
+      },
+    };
+    const s = assemble(identity, [row], p);
+    expect(s.gate_evaluation.status).toBe(passed ? "PASS" : "FAIL");
+    expect(s.checks.docs?.metrics.skills).toBe(15);
+  }
+  expect(
+    assemble(
+      identity,
+      [{ ...evidence(), source: "docs", report: { passed: true } }],
+      p,
+    ).gate_evaluation.status,
+  ).toBe("FAIL");
+});

@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoints **2bis-A, B, C, D et E CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-012 approuvées. Baseline E : `70e145da43d246a0452b371dd4da7cf12e0078b3`. Checkpoint actif et seul autorisé : **2bis-F — Analytics / Audit / Logs**. **STOP après F pour revue de Patrick ; aucun 2bis-G, Quality Center ni Phase 3 sans validation explicite.**
+Checkpoints **2bis-A à F CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-014 approuvées. Baseline F : `ebab16c5c5c3133dda5afa5061263da5c3bcf25e`. Checkpoint actif et seul autorisé : **2bis-G — Knowledge Base, Skills & Documentation Governance (finalisation uniquement ; architecture G approuvée)**. **STOP après G pour revue de Patrick ; aucun 2bis-H, Quality Center ni Phase 3 sans validation explicite.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 
@@ -915,7 +915,7 @@ Ne jamais démarrer le checkpoint suivant sans validation explicite de Patrick l
 
 En 2bis-A, seuls les index, règles, DoD/checklist/traçabilité, structures/templates KB et catalogue Skills sont réalisés. POM, tagging, i18n, migrations, coverage, snapshots/gates, scanners, analytics/logger et Quality Center restent non commencés. Les playbooks Skills complets relèvent de 2bis-G, sauf autorisation ultérieure ciblée.
 
-Cette description de 2bis-A reste historique. Patrick a ensuite approuvé A et autorisé B : extraction E2E et premiers garde-fous uniquement. Patrick a ensuite approuvé B et autorisé C uniquement ; i18n est en cours, D et les suivants ne sont pas commencés. Les mises à jour de Skills en B documentent les mécanismes disponibles, sans anticiper les quinze playbooks de G.
+Cette description de 2bis-A reste historique. Patrick a ensuite approuvé A et autorisé B : extraction E2E et premiers garde-fous uniquement. Patrick a ensuite approuvé B et autorisé C uniquement ; à cette date i18n était en cours et D n’avait pas commencé. Les mises à jour de Skills en B documentent les mécanismes disponibles, sans anticiper les quinze playbooks de G.
 
 ---
 
@@ -934,4 +934,10 @@ En cas de doute :
 
 ## Complément opérationnel 2bis-E
 
-`pnpm build` produit PROD ; `pnpm build:demo` produit DEMO séparément. Vérifier le vrai build PROD via `artifact:check` et la suite `test:e2e:prod`. Ne pas transformer un PASS DEMO en preuve PROD. Les dépendances uniquement démonstratives restent devDependencies. Les métriques performance/coverage restent advisory sans seuil approuvé. Les détails sont dans [ADR-012](docs/architecture-decisions/012-security-artifact-performance.md) proposée pour revue.
+`pnpm build` produit PROD ; `pnpm build:demo` produit DEMO séparément. Vérifier le vrai build PROD via `artifact:check` et la suite `test:e2e:prod`. Ne pas transformer un PASS DEMO en preuve PROD. Les dépendances uniquement démonstratives restent devDependencies. Les métriques performance/coverage restent advisory sans seuil approuvé. Les détails sont dans [ADR-012](docs/architecture-decisions/012-security-artifact-performance.md) acceptée par Patrick au lancement de F.
+
+## Complément opérationnel 2bis-G
+
+Décision récente : A–F approuvés ; G seul autorisé. Les paragraphes de lancement A/B/C ci-dessus sont historiques. Avant une tâche, lire la [KB liée au comportement](docs/kb/traceability.md) puis le [Skill adapté](docs/skills/README.md). Chemin canonique : `docs/skills/<name>/SKILL.md` ; sélection/lecture explicites, aucun autodiscovery de `/docs` revendiqué. AGENTS porte les règles, les Skills les procédures.
+
+Une modification de comportement/droit/DB/API/audit/analytics/logs/architecture met à jour sa KB dans la même PR. `pnpm docs:generate` dérive la traçabilité ; `pnpm docs:validate` contrôle métadonnées/liens/ADR/Skills et fraîcheur de la vue. Voir [limites du validateur](docs/kb/technical/knowledge-governance.md). Ne pas étendre les phases actives du validateur avant autorisation explicite.

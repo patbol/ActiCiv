@@ -1,5 +1,7 @@
 ---
 id: technical.quality-engineering
+title: "Engineering quality — preuves communes"
+introduced_in: phase-2bis-d
 domain: engineering-quality
 type: technical-topic
 status: active
@@ -54,3 +56,7 @@ Procédures, schema, exclusions et limites : [Quality evidence](../../quality/qu
 ## Extension F
 
 Policy `tooling/quality/policy-f.json` advisory : preuve observability dérivée des suites privacy/registry/logger unitaires, même rapport/provenance. SQL et adaptateurs continuent à prouver l'audit réel ; aucune métrique d'usage produit transformée en gate. Lecteurs D/E conservés. [Rapport F](../../quality/phase-2bis-f-report.md).
+
+## Complément G
+
+`docs:validate` vérifie KB, ADR, Skills, liens et vue dérivée ; son rapport minimisé est une source `docs` du snapshot canonique v1. La policy `2bis-G.v1` ajoute cette preuve requise, sans seuil numérique. Les évaluations D/E/F conservent leurs policies versionnées. [Contrat documentaire](knowledge-governance.md).

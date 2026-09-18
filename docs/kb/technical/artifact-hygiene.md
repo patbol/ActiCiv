@@ -1,5 +1,7 @@
 ---
 id: technical.artifact-hygiene
+title: "Hygiène de l'artefact PROD"
+introduced_in: phase-2bis-e
 domain: engineering-quality
 type: technical-topic
 status: active

@@ -24,6 +24,17 @@ it.each([
   ["server/a.js", "const x = 'MOCK_AUTH'", "bypass"],
   ["server/a.js", "const x = 'preview-name'", "demo"],
   ["static/a.js", "import 'vitest'", "test-code"],
+  [
+    "static/a.js",
+    "const path='docs/skills/fix-bug/SKILL.md'",
+    "knowledge-leak",
+  ],
+  [
+    "static/a.js",
+    "const kb='id: feature.professional-authentication'",
+    "knowledge-leak",
+  ],
+  ["server/docs/kb/business/auth.md", "# Auth", "knowledge-leak"],
 ])("rejects compiled leakage case %# (%s)", (path, source, rule) => {
   expect(inspectFile(path, source).some((f) => f.category === rule)).toBe(true);
 });

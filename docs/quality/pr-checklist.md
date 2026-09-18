@@ -29,3 +29,10 @@ Modèle à copier dans la description de PR ou dans le bilan local si aucune PR 
 Lister les limites, DEFERRED justifiés, questions réellement ouvertes et éventuelles exceptions avec responsable/échéance/périmètre. Une exception ne permet pas de cacher un FAIL critique.
 
 Indiquer READY FOR PATRICK REVIEW ou NOT READY. La revue de ce checkpoint ne vaut pas validation automatique du suivant. Voir la [DoD](definition-of-done.md).
+
+## Contrôle documentaire G
+
+- [ ] IDs KB affectés identifiés dans l’impact map ; changement comportement/droit/DB/API/audit/analytics/logs/architecture documenté dans la même PR.
+- [ ] `pnpm docs:generate` puis `pnpm docs:validate` satisfaits ; liens, ADR, code/tests et Skills concernés relus.
+- [ ] Sources historiques étiquetées, aucune fonctionnalité future active, aucune preuve réécrite.
+- [ ] Contradiction code/KB/ADR signalée avant changement ; absence de contradiction non inférée d’un validateur syntaxique.

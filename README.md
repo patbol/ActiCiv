@@ -2,7 +2,7 @@
 
 **Phase 2 = CLOSED** — baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
 
-**Phase 2 bis = CURRENT** — **2bis-A/B/C/D/E APPROVED** ; checkpoint actif : **2bis-F**, Analytics / Audit / Logs uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-G, Quality Center ni Phase 3 sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT** — **2bis-A/B/C/D/E/F APPROVED** ; checkpoint actif : **2bis-G**, Knowledge Base, Skills & Documentation Governance uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-H, Quality Center ni Phase 3 sans validation explicite de Patrick.
 
 La [clôture Phase 2](docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md) atteste 260 PASS, 0 FAIL et 1 DEFERRED (TalkBack). Les garanties métier et sécurité de Phase 2 restent acquises.
 
@@ -71,3 +71,7 @@ La passe de clôture et ses preuves sont décrites dans [le postmortem Phase 2](
 `pnpm secrets:check` utilise Gitleaks 8.30.1, téléchargé hors du dépôt et vérifié par une empreinte officielle figée. Il vérifie son détecteur puis scanne tout l’historique accessible depuis HEAD avec résultats expurgés. Le scanner est un outil de qualité ; aucune dépendance runtime de l’application n’est ajoutée.
 
 Checkpoint E : [rapport et preuves](docs/quality/phase-2bis-e-report.md). PROD : `pnpm build`; DEMO : `pnpm build:demo`. Les E2E historiques tournent sur DEMO ; `pnpm test:e2e:prod` vérifie PROD. [Contrat artefacts](docs/kb/technical/artifact-hygiene.md).
+
+## Connaissances et procédures G
+
+Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. G seul autorisé : [KB](docs/kb/README.md), [traçabilité générée](docs/kb/traceability.md), [quinze Skills](docs/skills/README.md), [audit ADR](docs/architecture-decisions/README.md), [rapport G](docs/quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. STOP après G ; H/Quality Center/Phase 3 non commencés.

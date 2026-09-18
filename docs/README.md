@@ -1,8 +1,8 @@
 # Documentation ActiCiv
 
 **Phase 2 = CLOSED**. Baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
-**Phase 2 bis = CURRENT**, **2bis-A/B/C/D/E APPROVED**, checkpoint actif **2bis-F**.
-**Phase 3 = NOT STARTED**. Aucun 2bis-G, Quality Center ni Phase 3 sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT**, **2bis-A/B/C/D/E/F APPROVED**, checkpoint actif **2bis-G**.
+**Phase 3 = NOT STARTED**. Aucun 2bis-H, Quality Center ni Phase 3 sans validation explicite de Patrick.
 
 ## CURRENT — contrat applicable
 
@@ -41,7 +41,7 @@ Les anciens journaux/captures déjà rangés dans `docs/quality/` restent en pla
 - [Checklist PR / changement](quality/pr-checklist.md).
 - [Traçabilité et impact map](quality/traceability.md).
 - [KB métier et technique](kb/README.md) : structure et templates ; fiches détaillées à compléter dans leur checkpoint.
-- [Skills : structure et catalogue initial](skills/README.md) : playbooks complets non implémentés en 2bis-A.
+- [Skills : quinze procédures canoniques](skills/README.md) : playbooks finalisés en G, revue attendue.
 - [Questions réellement ouvertes](product-decisions/open-questions.md).
 - [Composants actuels](ui.md).
 - [KB testing : E2E, fixtures et conventions exécutables](kb/technical/testing.md).
@@ -56,4 +56,8 @@ La structure documentaire approuvée est conservée. Toute nouvelle documentatio
 
 2bis-E : [rapport](quality/phase-2bis-e-report.md), [Security Assurance](kb/technical/security-assurance.md), [artefacts PROD](kb/technical/artifact-hygiene.md), [performance](kb/technical/performance-hygiene.md), [dépendances](kb/technical/dependency-governance.md).
 
-2bis-F : [rapport](quality/phase-2bis-f-report.md), [ADR-013 proposée](architecture-decisions/013-observability-separation.md), KB [Analytics](kb/technical/analytics.md), [Audit](kb/technical/audit.md), [Logs](kb/technical/logging.md), [Corrélation](kb/technical/correlation-errors.md).
+2bis-F : [rapport](quality/phase-2bis-f-report.md), [ADR-013 acceptée](architecture-decisions/013-observability-separation.md), KB [Analytics](kb/technical/analytics.md), [Audit](kb/technical/audit.md), [Logs](kb/technical/logging.md), [Corrélation](kb/technical/correlation-errors.md).
+
+## Connaissances et procédures G
+
+Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. G seul autorisé : [KB](kb/README.md), [traçabilité générée](kb/traceability.md), [quinze Skills](skills/README.md), [audit ADR](architecture-decisions/README.md), [rapport G](quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. STOP après G ; H/Quality Center/Phase 3 non commencés.

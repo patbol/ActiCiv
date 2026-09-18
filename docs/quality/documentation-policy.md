@@ -1,6 +1,6 @@
 # Politique documentaire et conventions d'ingénierie
 
-Statut : gouvernance 2bis-A, à relire par Patrick. Cette politique formalise l'organisation qu'il a approuvée ; elle n'autorise aucun checkpoint suivant.
+Statut : gouvernance A approuvée, complétée en G pour revue. A–F et ADR-008 à 013 approuvés ; G seul autorisé.
 
 ## Responsabilités des dossiers
 
@@ -16,7 +16,7 @@ Statut : gouvernance 2bis-A, à relire par Patrick. Cette politique formalise l'
 | `docs/quality/`                           | Méthode de travail, DoD, checklists et bilans de checkpoint               |
 | `docs/kb/business/`, `docs/kb/technical/` | Connaissances vivantes structurées                                        |
 | `docs/kb/templates/`                      | Modèles de fiches, pas des preuves ni des fonctionnalités                 |
-| `docs/skills/`                            | Catalogue et emplacement canonique des futurs playbooks                   |
+| `docs/skills/`                            | Catalogue et quinze playbooks canoniques                                  |
 
 Toute nouvelle documentation versionnée vit sous `/docs`, sauf `AGENTS.md`, le README racine et les fichiers racine explicitement prévus. Les README de proximité déjà présents dans `supabase/` ne sont pas déplacés arbitrairement en 2bis-A ; ils restent des pointeurs techniques existants. Aucun dossier concurrent `doc/` n'est recréé. Les journaux/captures historiques préexistants de `docs/quality/` restent indexés à leur emplacement ; pas de rangement supplémentaire non demandé.
 
@@ -46,13 +46,13 @@ Chaîne cible : Prettier → TypeScript strict → ESLint → tests d'architectu
 | ----------------------------------------------------------------- | ---------------------------------------------------------------- |
 | Format, TS strict, lint, frontières domain/application et bundles | Existent en Phase 2, à préserver                                 |
 | POM, tags, focus/skips, attentes et garde-fous de conventions     | Implémentés en 2bis-B ; voir KB testing et preuves du checkpoint |
-| Cohérence locale/catalogues                                       | Cible 2bis-C                                                     |
-| Coverage, rapports, snapshots/gates                               | Cible 2bis-D                                                     |
-| Scanners, artefacts compilés, mesures/budgets performance         | Cible 2bis-E                                                     |
-| Contrats et séparation d'observabilité                            | Cible 2bis-F                                                     |
-| Validation approfondie KB/Skills                                  | Cible 2bis-G                                                     |
+| Cohérence locale/catalogues                                       | Implémenté C                                                     |
+| Coverage, rapports, snapshots/gates                               | Implémenté D (seuils advisory)                                   |
+| Scanners, artefacts compilés, mesures/budgets performance         | Implémenté E (budgets non approuvés)                             |
+| Contrats et séparation d'observabilité                            | Implémenté F                                                     |
+| Validation approfondie KB/Skills                                  | Implémenté G, revue attendue                                     |
 
-Un contrôle documentaire ponctuel en 2bis-A n'est pas présenté comme un nouveau gate CI. Aucun plugin, script qualité du produit, budget numérique ou dependency n'est ajouté à ce checkpoint.
+G ajoute `pnpm docs:validate` à `verify`/CI et au snapshot canonique ; `pnpm docs:generate` produit la matrice depuis le frontmatter. Voir le [contrat et ses limites](../kb/technical/knowledge-governance.md). Les contrôles éditoriaux restent humains, notamment la cohérence métier et la mise à jour dans la même PR.
 
 ## Revue documentaire
 

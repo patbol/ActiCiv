@@ -1,5 +1,7 @@
 ---
 id: technical.dependency-governance
+title: "Coût et supply chain des dépendances"
+introduced_in: phase-2bis-e
 domain: engineering-quality
 type: technical-topic
 status: active
@@ -30,3 +32,5 @@ Toute nouvelle dépendance runtime significative doit expliquer besoin, client/s
 `pnpm install --frozen-lockfile` et `pnpm audit --audit-level high` conservés. Lifecycle allowlist existante : esbuild, sharp, supabase, unrs-resolver ; watcher/SWC désactivés explicitement. Pas d'ouverture globale des scripts d'installation. Aucun nouvel outil runtime produit ajouté.
 
 CI : contents read-only, actions épinglées par SHA, checkout sans credential persistant, pas de secrets cloud injectés, pas de pull_request_target. Rétention qualité/journal 14 jours. Les traces/DOM bruts d'échec ne sont plus uploadés automatiquement ; rapports minimisés du collecteur à privilégier. Revue GitHub réelle E : rulesets `[]`, main `protected:false` ; endpoint détaillé de protection interdit au connecteur (403), plan/droits administratifs non déduits. Protection de branche à décider/appliquer par Patrick avant promotion réelle, pas un PASS fabriqué.
+
+Complément G : `yaml` 2.9.1 dev-only (Node >=14.6, ISC) parse le frontmatter standard et rejette doublons/alias ; alternative parseur maison rejetée pour risque et maintenance. Aucun import application, aucun coût client/serveur produit ; garde Artifact Hygiene documentaire sur le build compilé. L’audit de dépendances reste obligatoire.

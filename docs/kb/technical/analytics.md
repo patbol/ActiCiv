@@ -1,5 +1,7 @@
 ---
 id: technical.analytics
+title: "Analytics minimal"
+introduced_in: phase-2bis-f
 domain: observability
 type: technical-topic
 status: active

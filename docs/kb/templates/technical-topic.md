@@ -1,5 +1,7 @@
 ---
 id: template.technical-topic
+title: "Modèle de fiche technique"
+introduced_in: phase-2bis-a
 domain: governance
 type: technical-topic-template
 status: template

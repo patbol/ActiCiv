@@ -1,5 +1,7 @@
 ---
 id: technical.audit
+title: "Audit SQL autoritaire"
+introduced_in: phase-2
 domain: observability
 type: technical-topic
 status: active

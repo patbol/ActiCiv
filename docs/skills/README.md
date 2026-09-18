@@ -1,43 +1,31 @@
-# Skills — structure et catalogue initial
+# Skills ActiCiv — procédures canoniques
 
-Statut 2bis-A : catalogue et contrat de playbook seulement. **Aucun des 15 Skills ci-dessous n'est déclaré implémenté ou automatiquement découvert.** Les procédures détaillées relèvent de 2bis-G ou d'une autorisation ciblée ultérieure. Un Skill ne donne jamais l'autorisation de franchir un checkpoint.
+Quinze playbooks rédigés en G, prêts pour revue. Ils utilisent le format `SKILL.md` avec frontmatter `name`/`description` ; ils ne sont pas une autorisation d’exécuter une tâche ni de franchir une phase.
 
-Chemin documentaire canonique prévu : `docs/skills/<name>/SKILL.md`. Ne créer ce dossier que lorsqu'un playbook réel est écrit. En attendant, [AGENTS.md](../../AGENTS.md) pointe explicitement ici ; la lecture est manuelle. Aucun mécanisme d'autodiscovery, symlink, dossier `.agents/skills` ou copie concurrente n'est installé en 2bis-A. L'intégration de découverte sera vérifiée et documentée au checkpoint concerné, sans prétendre que `/docs` est découvert automatiquement.
+## Découverte réelle
 
-## Catalogue requis
+Lire [AGENTS.md](../../AGENTS.md) → cet index → le `SKILL.md` correspondant. Le catalogue est une aide au choix manuel pour humains/agents, sans prétendre que `/docs` est automatiquement découvert par l’outil. Aucun mécanisme local simple de découverte des playbooks n’était configuré dans le dépôt ; pas de framework/symlink ni copie supplémentaire installée. Les lectures complémentaires sont liées depuis chaque procédure.
 
-Tous les statuts suivants sont **PLANNED**, pas des workflows exécutables disponibles.
+## Catalogue
 
-Mise à jour 2bis-B pour les futurs Skills `add-e2e-test`, `fix-bug`, `change-existing-feature`, `security-review` et `prepare-release` : utiliser la [KB testing](../kb/technical/testing.md) pour les objets/fixtures existants, metadata statique, contrôles ESLint, sélection par tags et validation sans retries. Les mécanismes sont disponibles ; les playbooks complets et leur découverte restent prévus en G.
+- [add-analytics-event](add-analytics-event/SKILL.md) — Ajouter un événement produit minimisé dans le registre canonique et ses adaptateurs sans confondre audit et analytics.
+- [add-audit-event](add-audit-event/SKILL.md) — Étendre l’audit SQL transactionnel d’une mutation auditable sans double écriture applicative.
+- [add-business-rule](add-business-rule/SKILL.md) — Ajouter un invariant métier approuvé côté domaine/serveur et SQL lorsque nécessaire.
+- [add-e2e-test](add-e2e-test/SKILL.md) — Ajouter un scénario Playwright d’un parcours existant avec objets réutilisables, isolation, tags et locators accessibles.
+- [add-logging](add-logging/SKILL.md) — Ajouter un diagnostic structuré à code et propriétés autorisés dans l’adaptateur serveur.
+- [add-rbac-rule](add-rbac-rule/SKILL.md) — Implémenter un droit approuvé avec chaîne professionnelle, capacités plateforme et tests JWT/RLS négatifs.
+- [change-existing-feature](change-existing-feature/SKILL.md) — Modifier un comportement existant après lecture des contrats et impact map complète.
+- [create-adr](create-adr/SKILL.md) — Documenter une décision structurante avec alternatives, conséquences et succession explicite.
+- [database-migration](database-migration/SKILL.md) — Faire évoluer le schéma par migration additive avec upgrade, reprise, seed et reconstruction prouvés.
+- [fix-bug](fix-bug/SKILL.md) — Reproduire et corriger un défaut avec test de non-régression, sans réécrire le contrat pour justifier le bug.
+- [i18n](i18n/SKILL.md) — Ajouter textes, formats ou préférences fr-FR/en-GB en conservant SSR, session, focus et fallback.
+- [implement-feature](implement-feature/SKILL.md) — Implémenter un besoin explicitement autorisé avec preuves proportionnées, KB et limites de phase respectées.
+- [prepare-release](prepare-release/SKILL.md) — Préparer les preuves du SHA exact avec gates, CI et artefacts vérifiés sans auto-accepter la release.
+- [security-review](security-review/SKILL.md) — Examiner une surface autorisée avec preuves négatives, scanners et findings sans fabriquer de pentest.
+- [update-kb](update-kb/SKILL.md) — Mettre à jour une fiche KB réelle et sa traçabilité dans la même PR que le contrat changé.
 
-| Nom                       | Déclencheur et résultat attendu                            | Garde-fou central                                           |
-| ------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
-| `implement-feature`       | Besoin autorisé → fonctionnalité et preuves proportionnées | Scope, critères et test-first critique                      |
-| `change-existing-feature` | Comportement existant → impact map avant edits             | Règles/droits/DB/RLS/API/UI/tests/i18n/observabilité/KB/ADR |
-| `fix-bug`                 | Défaut reproductible → correction et non-régression        | Reproduire → test → fix → régression → validations          |
-| `add-business-rule`       | Invariant autorisé → règle serveur/SQL et preuve           | Backend source de vérité, cas limites                       |
-| `add-e2e-test`            | Parcours réel → scénario lisible et isolé                  | POM/tags selon fondation installée, locators accessibles    |
-| `add-rbac-rule`           | Droit approuvé → autorisation et tests négatifs            | Tenant, service, ownership, refus par défaut                |
-| `database-migration`      | Changement schéma → migration et reprise prouvées          | Append-only, FK/unique nullable, RLS/audit/seeds/reset      |
-| `add-analytics-event`     | Usage justifié → événement typé/documenté                  | Taxonomie et minimisation, aucun provider dispersé          |
-| `add-audit-event`         | Mutation auditable → preuve transactionnelle               | Échec audit = rollback métier                               |
-| `add-logging`             | Besoin diagnostic → contexte structuré sûr                 | Niveaux, corrélation, aucune fuite de payload               |
-| `i18n`                    | Texte/format/préférence → comportement locale-aware        | Codes stables, locale distincte de timezone                 |
-| `create-adr`              | Décision structurante → ADR avec alternatives              | Succession explicite, pas de réécriture de l'histoire       |
-| `update-kb`               | Contrat modifié → connaissances et liens actuels           | Pas de comportement futur fictif                            |
-| `security-review`         | Surface/risque réel → constats et preuves                  | Scénarios pertinents, gravité, remédiation/retest           |
-| `prepare-release`         | Candidat autorisé → preuves de readiness                   | SHA/artefact exacts, gates réels, contrôle humain requis    |
+## Contrat commun
 
-## Contrat d'un futur playbook
+AGENTS porte les règles non négociables ; les Skills portent les étapes spécialisées. Objectif/déclencheur, préconditions/lectures, impact map, procédure ordonnée, tests/preuves, documentation, sécurité/arrêt, DoD et erreurs à éviter sont présents. Runtime : charger nvm et `nvm use` dans chaque shell ; ne pas réinstaller pnpm.
 
-Voir le [modèle](template.md). Chaque Skill définira nom/description, déclencheurs, contexte et entrées, étapes, sorties, contrôles finaux et conditions d'arrêt/escalade. Les chemins cités devront exister ; les commandes respecteront le runtime nvm et la phase autorisée.
-
-Les procédures sont proportionnées : pas de DB reset pour corriger un lien ; intégration réelle pour un changement RLS ; preuve d'accessibilité pour une interaction nouvelle. La [DoD](../quality/definition-of-done.md) et la [traçabilité](../quality/traceability.md) portent le contrat commun, sans le dupliquer dans quinze fichiers vides.
-
-## Compléments ciblés F — procédures partielles, pas chantier G
-
-- `add-analytics-event` : vérifier parcours existant et finalité, lire [KB](../kb/technical/analytics.md), test RED événement/propriétés/PII, ajouter au registre canonique, brancher après succès réel, tester off/no-op/local ; aucune activation PROD implicite.
-- `add-audit-event` : lire [contrat SQL](../kb/technical/audit.md), inventorier les triggers avant tout writer ; pas de double audit. Toute mutation nouvelle exige test rollback/acteur/whitelist/corrélation et migration additive si nécessaire. Aucun writer applicatif F ajouté.
-- `add-logging` : lire [KB](../kb/technical/logging.md), justifier diagnostic/code, test RED anti-PII/cause/niveau/contexte, composer serveur uniquement, mesurer volume/coût ; échec log indépendant de mutation métier.
-
-Ces compléments au catalogue sont manuels, ciblés F. Aucun Skill complet/autodiscovery ou nouvelle architecture KB G installé.
+`pnpm docs:validate` contrôle les quinze chemins, métadonnées, sections et liens ; la revue contrôle leur pertinence. [Modèle](template.md), [DoD](../quality/definition-of-done.md) et [KB gouvernance](../kb/technical/knowledge-governance.md). Pas de reset DB pour une fiche seule, pas de nouveau parcours UI/VoiceOver artificiel. G seul autorisé ; STOP avant H et Phase 3.

@@ -1,15 +1,14 @@
 # Knowledge Base ActiCiv
 
-Statut 2bis-A : structure et contrats de fiches établis. La KB détaillée n'est pas encore peuplée ; son absence ne vaut pas absence des comportements déjà implémentés en Phase 2.
+La KB décrit les comportements et fondations réellement présents. Elle est une entrée de travail pour produit, QA, développeurs et agents ; les preuves datées demeurent dans leurs dossiers.
 
-Évolution 2bis-B : première fiche technique active [testing](technical/testing.md), liée aux POM, fixtures, garde-fous et preuves. Les autres domaines restent à documenter selon leur checkpoint.
+- [Métier](business/README.md) : acteurs, droits, règles, erreurs et effets.
+- [Technique](technical/README.md) : frontières, données et exploitation.
+- [Traçabilité générée](traceability.md) : exigences/rôles → KB → ADR → code → tests → observabilité, et retour ADR → KB.
+- [Contrat du validateur](technical/knowledge-governance.md) et [politique](../quality/documentation-policy.md).
+- [Modèle métier](templates/business-feature.md) ; [modèle technique](templates/technical-topic.md).
+- [Skills](../skills/README.md) : procédures réutilisables.
 
-- [KB métier](business/README.md) : comportement, acteurs, droits et cas limites.
-- [KB technique](technical/README.md) : architecture, données, frontières et exploitation.
-- [Modèle métier](templates/business-feature.md).
-- [Modèle technique](templates/technical-topic.md).
-- [Traçabilité et convention de frontmatter](../quality/traceability.md).
+Lire [AGENTS](../../AGENTS.md), les [sources courantes](../references/current/ActiCiv_Phase2bis_Launch_Index.md), puis les fiches/ADR liées avant modification. Contradiction : STOP. Ni la présence d’un test dans les métadonnées, ni un statut active ne signifie test exécuté avec succès.
 
-Créer une fiche pour un sujet réel et significatif, sans dossier vide ni duplication du livre. Utiliser des IDs stables, des chemins de code/tests existants et une déclaration explicite de ce qui est implémenté, prévu ou non applicable. Aucun workflow Phase 3 n'est documenté comme existant.
-
-Les index ci-dessous constituent la carte d'entrée pendant la transition. Les fiches détaillées seront complétées avec les changements autorisés puis en 2bis-G. Les [sources courantes](../references/current/ActiCiv_Phase2bis_Launch_Index.md) et [ADR actives](../architecture-decisions/README.md) restent consultables avant toute modification.
+`pnpm docs:generate` actualise la vue dérivée ; `pnpm docs:validate` contrôle le contrat. Une seule matrice de liens, sans duplication manuelle. 2bis-G est en revue ; H et Phase 3 non commencés.

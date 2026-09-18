@@ -1,5 +1,7 @@
 ---
 id: technical.testing
+title: "Tests E2E et conventions exécutables"
+introduced_in: phase-2bis-b
 domain: engineering-quality
 type: technical-topic
 status: active
@@ -30,7 +32,7 @@ related_docs:
 
 ## État et responsabilités
 
-2bis-B conserve les 13 scénarios de Phase 2, soit 26 exécutions desktop/mobile. POM et tagging sont implémentés. 2bis-C ajoute les scénarios de locale décrits dans la [KB i18n](internationalisation.md) ; couverture et snapshots/gates complets restent hors périmètre.
+POM, tagging et isolation sont implémentés depuis B. Les scénarios de locale C portent la suite DEMO à 38 exécutions desktop/mobile ; E ajoute 14 exécutions PROD. Coverage et snapshots D, scanners E et observabilité F existent : voir les fiches techniques associées.
 
 - `e2e/pages/` : six objets sans classe de base ; navigation, locators et actions réutilisables.
 - `e2e/components/dialog.ts` : dialogue réellement partagé par Citizen/Pro.
@@ -42,7 +44,7 @@ related_docs:
 
 Les anciens IDs de messages sont remplacés par `getByRole("main").getByRole("alert" | "status")`. Le scope main distingue le message Auth de l'annonceur de route Next.js. Les champs password utilisent `getByLabel` car ils n'ont pas de rôle textbox implicite. Le formulaire est atteint via `input.form` uniquement pour déclencher la validation serveur. Aucun testid ajouté.
 
-Les textes accessibles restent français, centralisés dans les objets de page ; les assertions de contenu significatives restent dans les specs. 2bis-C pourra adapter ces points à la locale sans ajouter maintenant de catalogue/traduction ni importer les chaînes de l'application comme oracle.
+Les scénarios historiques fixent fr-FR ; les scénarios locale testent également en-GB. Les textes accessibles sont centralisés dans les objets utiles ; les assertions significatives restent dans les specs, sans importer les catalogues produit comme oracle.
 
 ## Métadonnées et sélection
 
@@ -73,7 +75,7 @@ pnpm test:e2e --grep '(?=.*@critical)(?=.*@route:auth)'
 pnpm test:e2e --grep '@type:smoke'
 ```
 
-`--list` peut être ajouté pour contrôler une sélection sans exécuter les tests. Aucun grep n'est fixé dans la configuration : la commande E2E normale lance les 26 tests. Ces sélections ne remplacent pas la suite complète de validation.
+`--list` peut être ajouté pour contrôler une sélection sans exécuter les tests. Aucun grep n'est fixé dans la configuration : la commande E2E normale lance les 38 tests DEMO. Ces sélections ne remplacent pas la suite complète de validation.
 
 ## Garde-fous et exceptions
 
@@ -86,7 +88,7 @@ pnpm test:e2e --grep '@type:smoke'
 
 Aucun skip ni timeout arbitraire approuvé pour B. Une exception exige validation de Patrick, responsable, raison et expiration, plus adaptation testée du garde-fou. Aucun mécanisme inline ne permet de s'auto-autoriser. L'arrivée d'un provider/adaptateur ou d'une surface sans dimension pertinente sera traitée au checkpoint autorisé ; pas d'exemption générale créée à l'avance.
 
-Ce sont des contrôles syntaxiques proportionnés, pas une analyse exhaustive de tous les alias ou flux dynamiques. Ils ne remplacent pas la revue ni le futur scanner d'artefact compilé.
+Ce sont des contrôles syntaxiques proportionnés, pas une analyse exhaustive de tous les alias ou flux dynamiques. Ils ne remplacent pas la revue ni le scanner d’artefact compilé existant.
 
 ## Auth, isolation et données
 
@@ -94,13 +96,13 @@ Les identités seed restent réparties comme avant : recovery agent1/supervisor1
 
 Les secrets de préparation restent côté Node, issus de la CLI locale. Aucun token/mot de passe n'est incorporé aux sources ou aux messages d'erreur de setup. Les requêtes admin restent des préparations de test ; les écritures métier de configuration sont exécutées avec les cookies de l'utilisateur dans le navigateur. Réponse API non-2xx = échec immédiat de fixture, pas de succès silencieux.
 
-Aucun reset nécessaire pour ce refactor. Les invitations synthétiques créées persistent dans la base DEV comme auparavant ; le reset explicite reste réservé à une opération de reconstruction autorisée. Ne pas lancer deux campagnes mutantes sur la même base simultanément. Audit métier, analytics et logs du produit ne changent pas.
+B n’a pas nécessité de reset. Une modification de tests seule ne justifie pas un reset. Les invitations synthétiques créées persistent dans la base DEV comme auparavant ; le reset explicite reste réservé à une opération de reconstruction autorisée. Ne pas lancer deux campagnes mutantes sur la même base simultanément. Les contrats d’observabilité actuels sont décrits dans leurs fiches dédiées.
 
 ## Validation et limites
 
 `pnpm verify` couvre format/lint/types/unit/builds/bundles ; `pnpm test:integration` couvre les adaptateurs réels ; `pnpm test:e2e` couvre les deux profils, axe et clavier avec retries zéro. Voir [preuves 2bis-B](../../quality/phase-2bis-b-report.md) pour les résultats réellement obtenus.
 
-Le nombre d'analyses axe et les matchers par scénario ont été comparés à la baseline A. L'automatisation ne remplace pas VoiceOver/TalkBack ; aucun changement UI produit n'est introduit ici. Aucun nouveau résultat manuel n'est prétendu. Aucun Quality Snapshot, coverage, scanner PROD complet ou logger ajouté.
+Le nombre d'analyses axe et les matchers par scénario ont été comparés à la baseline A. L'automatisation ne remplace pas VoiceOver/TalkBack ; aucun changement UI produit n'est introduit ici. Aucun nouveau résultat manuel n'est prétendu. Ces contrôles additionnels existent désormais depuis D/E/F ; consulter leurs preuves propres, sans attribuer leurs résultats au checkpoint B.
 
 Références : [ADR-009](../../architecture-decisions/009-e2e-conventions.md), [DoD](../../quality/definition-of-done.md), [traçabilité](../../quality/traceability.md), [règles persistantes](../../../AGENTS.md).
 

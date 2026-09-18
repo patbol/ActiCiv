@@ -1,5 +1,7 @@
 ---
 id: template.business-feature
+title: "Modèle de fiche métier"
+introduced_in: phase-2bis-a
 domain: governance
 type: business-feature-template
 status: template

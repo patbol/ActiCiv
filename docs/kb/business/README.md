@@ -1,16 +1,16 @@
-# KB métier — index de préparation
+# KB métier — comportements existants
 
-Aucune fiche métier détaillée n'est déclarée active en 2bis-A. Cet index identifie les domaines déjà présents et leurs points d'entrée réels ; il ne réinvente pas leurs règles.
+Fiches actuelles issues des comportements Phase 1/2 et des fondations A–G. Les chemins et associations détaillés sont dans la [traçabilité générée](../traceability.md).
 
-| Domaine existant                       | Contrat / décision                                                                                           | Code et preuve à consulter                                                                                                                                                                                      |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Auth, invitations, accès professionnel | [ADR 004](../../architecture-decisions/004-tenancy-security.md)                                              | [Cas d'usage Auth](../../../packages/backend/src/modules/auth/application/session.ts), [adaptateurs réels testés](../../../packages/backend/integration/invitations.integration.ts)                             |
-| Organisations, services et droits      | [ADR 004](../../architecture-decisions/004-tenancy-security.md)                                              | [Policy](../../../packages/backend/src/modules/authorization/domain/policy.ts), [tests sécurité](../../../integration/security.test.mjs), [concurrence dernier admin](../../../integration/last-admin.test.mjs) |
-| Couverture contractuelle               | [ADR 005](../../architecture-decisions/005-contractual-geography.md)                                         | [Cas d'usage](../../../packages/backend/src/modules/coverage/application/administration.ts), [SQL de clôture](../../../supabase/tests/phase2_closure.sql)                                                       |
-| Horaires et SLA versionnés             | [ADR 006](../../architecture-decisions/006-sla-schedules.md)                                                 | [Horaires/DST](../../../packages/backend/src/modules/schedules/domain/schedule.test.ts), [SLA](../../../packages/backend/src/modules/sla/domain/policy.test.ts)                                                 |
-| Catalogue                              | [Référence Phase 2 datée](../../references/historical/ActiCiv_Phase2_Implementation_Reference_HISTORICAL.md) | [Priorités](../../../packages/backend/src/modules/catalog/domain/category.ts), [migration catalogue](../../../supabase/migrations/20260916000500_catalog.sql)                                                   |
-| Audit métier                           | [ADR 007](../../architecture-decisions/007-transactional-audit.md)                                           | [Audit SQL](../../../supabase/migrations/20260916000300_audit.sql), [corrélation](../../../supabase/migrations/20260917000100_closure_hardening.sql)                                                            |
+- [Droits professionnels et capacités plateforme](authorization-roles.md).
+- [Périmètres contractuels et candidats géographiques](contractual-coverage.md).
+- [Inviter et activer un professionnel](invitations.md).
+- [Choisir sa langue d’interface](language-preferences.md).
+- [Organisations et services configurables](organization-services.md).
+- [Accéder à son espace professionnel](professional-authentication.md).
+- [Appartenance professionnelle et dernier administrateur](professional-membership.md).
+- [Calendriers de service et heures ouvrées](service-schedules.md).
+- [Politiques SLA versionnées](sla-policies.md).
+- [Territoires et hiérarchie géographique](territories.md).
 
-Employer le [modèle métier](../templates/business-feature.md) et la [traçabilité](../../quality/traceability.md). Nommer les capacités précisément : agent, supervisor, client_admin et plateforme ne sont pas interchangeables. Une ancienne proposition ne prime pas sur une décision validée ultérieure.
-
-Fiche active ajoutée en 2bis-C : [choisir sa langue d’interface](language-preferences.md).
+Aucun comportement Phase 3 ni écran Quality Center n’est présenté comme implémenté.

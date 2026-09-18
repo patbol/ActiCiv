@@ -1,4 +1,4 @@
-# Quality evidence — contrat v1 et procédures D
+# Quality evidence — contrat v1 et procédures courantes
 
 ## Exécuter et lire
 
@@ -31,7 +31,7 @@ Contrat typé : [model.ts](../../tooling/quality/model.ts). Validation d’entr�
 | `manual_evidence` | VoiceOver/TalkBack séparés, portée et référence datée ; confirmation humaine nécessaire                                                            |
 | `gate_evaluation` | Policy version/digest, mode consultatif, résultat global et par règle avec raison et référence                                                     |
 
-Les axes sont explicitement identifiés dans `checks` : `unit`, `architecture`, `integration-node`, `integration-adapters`, `sql`, `e2e`, `e2e-critical`, `axe`, `dependency-audit`, `secret-scan`, `build-citizen`, `build-pro`, `bundles`, `db-reset` si exécuté. `source-integrity` relie les preuves à l’état réellement testé. Les gates futures SAST/DAST/pentest/artefact avancé/performance sont NOT_APPLICABLE selon la policy D, jamais PASS.
+Les axes sont explicitement identifiés dans `checks` : `unit`, `architecture`, `integration-node`, `integration-adapters`, `sql`, `e2e`, `e2e-critical`, `axe`, `dependency-audit`, `secret-scan`, `build-citizen`, `build-pro`, `bundles`, `db-reset` si exécuté. `source-integrity` relie les preuves à l’état réellement testé. Dans la policy D historique, les contrôles alors futurs étaient NOT_APPLICABLE. Les policies E/F/G et leurs preuves propres définissent les exigences actuelles.
 
 Les rapports JSON/LCOV sont sous `reports/`. Les rapports Vitest/Playwright minimisés conservent les champs natifs nécessaires, sans logs/erreurs/HTML/variables d’environnement. Les rapports natifs et logs complets sont uniquement sous `.quality/work/<run>/private/`, accès local restreint, jamais uploadés par la nouvelle étape CI. Les fichiers `.quality/` sont ignorés par Git ; exemples sélectionnés, minimisés et relus sous `docs/evidence/` seulement.
 
@@ -67,6 +67,12 @@ Chaîne de release : sources stables → contrôles natifs → rapports minimis�
 
 ## Extension compatible E
 
-Le schéma v1 reste inchangé : nouveaux checks `sast`, `dast`, `artifact`, `performance`, `e2e-prod` dans les maps déjà extensibles. Les normalisateurs valident le producteur et son exécution. `policy.json` D est conservée ; `policy-e.json` E devient la policy de collecte, toujours advisory et sans seuil numérique. `quality:evaluate` sélectionne la policy historique D pour ses snapshots ; les digests historiques ne changent pas. Aucune migration de données.
+Le schéma v1 reste inchangé : nouveaux checks `sast`, `dast`, `artifact`, `performance`, `e2e-prod` dans les maps déjà extensibles. Les normalisateurs valident le producteur et son exécution. `policy.json` D est conservée ; Lors de E, `policy-e.json` devenait la policy de collecte, toujours advisory et sans seuil numérique. `quality:evaluate` sélectionne la policy historique D pour ses snapshots ; les digests historiques ne changent pas. Aucune migration de données.
 
 `ACTICIV_RUN_DAST=1 pnpm quality:collect` inclut ZAP local ; sinon sa preuve est DEFERRED. Les CLI sécurité/artefact et leurs contrôles CI stables restent bloquants en cas d’échec. `verify:full` conserve les étapes anciennes et ajoute E2E PROD, SAST, artefact et scan secrets compilés. Les résultats bruts privés ne sont pas uploadés. Comparer une baseline à une autre policy nécessite une décision explicite, pas une compatibilité silencieuse.
+
+## Policy courante G
+
+`policy-g.json` version 2bis-G.v1 est désormais la policy de collecte, advisory. Elle conserve F (dont observability) et ajoute `knowledge-governance` via la source `docs` : exécution réelle de `pnpm docs:validate`, métriques minimisées KB/ADR/Skills/liens et fraîcheur de la trace. Échec ou absence de cette preuve = FAIL. Les policies D/E/F restent inchangées et sélectionnées pour réévaluer leurs snapshots.
+
+Pas de nouveau seuil numérique ni de migration. `verify` inclut le check documentaire, donc CI aussi. Pour G sans DB changée, ne pas passer `--rebuild-db` ; la policy générique conserve une reconstruction manquante DEFERRED, dont la non-applicabilité à ce checkpoint est justifiée dans le rapport G. Aucun override de gate ne fabrique une reconstruction.
