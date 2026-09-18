@@ -397,3 +397,19 @@ it("exposes security, accessibility and bundle deltas without inventing regressi
     delta: 10,
   });
 });
+
+it("counts production E2E results in canonical comparison totals", () => {
+  const before = assemble(identity, [evidence()], policy);
+  const after = structuredClone(before);
+  after.checks["e2e-prod"] = structuredClone(after.checks.unit!);
+  const b = {
+    ...candidate(before),
+    status: "ACCEPTED",
+    accepted_by: "reviewer-fixture",
+    accepted_at: identity.created_at,
+    decision_ref: "fixture-only",
+  };
+  expect(
+    compare(after, { baseline: b, snapshot: before }).deltas,
+  ).toMatchObject({ tests: 1 });
+});

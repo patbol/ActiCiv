@@ -1,0 +1,34 @@
+[
+  {
+    "source": "next/dist/esm/server/lib/incremental-cache/file-system-cache.js",
+    "source_sha256": "b302160449337c862becc64e9a26d6cafef1395dab3866901672cdfcac3400a3",
+    "rule": "console",
+    "reason": "Upstream server diagnostics; no first-party console allowance. Next internal cache/fetch debug branches and Phoenix unused transport diagnostics; reviewed source in pinned lockfile.",
+    "owner": "ActiCiv engineering",
+    "review_on": "Dependency upgrade"
+  },
+  {
+    "source": "next/dist/esm/server/lib/incremental-cache/index.js",
+    "source_sha256": "b17df5fc67318923deb4f853c9eb0163ff72729ec82872ecdabbbb5ee375a17e",
+    "rule": "console",
+    "reason": "Upstream server diagnostics; no first-party console allowance. Next internal cache/fetch debug branches and Phoenix unused transport diagnostics; reviewed source in pinned lockfile.",
+    "owner": "ActiCiv engineering",
+    "review_on": "Dependency upgrade"
+  },
+  {
+    "source": "@supabase/phoenix/priv/static/phoenix.mjs",
+    "source_sha256": "6e095ff0168d6005f52e1f27cfa029ac4eb31214545d659847e023ac87e40b0f",
+    "rule": "console",
+    "reason": "Upstream server diagnostics; no first-party console allowance. Next internal cache/fetch debug branches and Phoenix unused transport diagnostics; reviewed source in pinned lockfile.",
+    "owner": "ActiCiv engineering",
+    "review_on": "Dependency upgrade"
+  },
+  {
+    "source": "next/dist/esm/server/lib/patch-fetch.js",
+    "source_sha256": "b7adde64208ddc1d953a866ed55cd8c6180d4c0b438c8421698c0b5eea192049",
+    "rule": "console",
+    "reason": "Upstream server diagnostics; no first-party console allowance. Next internal cache/fetch debug branches and Phoenix unused transport diagnostics; reviewed source in pinned lockfile.",
+    "owner": "ActiCiv engineering",
+    "review_on": "Dependency upgrade"
+  }
+]

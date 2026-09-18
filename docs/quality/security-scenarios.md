@@ -1,0 +1,26 @@
+# Catalogue sécurité — surfaces existantes, 2bis-E
+
+Les tests cités sont des preuves de leur périmètre, jamais un pentest exhaustif. Rejouer via verify:full et quality:collect. Droits métier : ADR-004 à 007 inchangées.
+
+| Surface / risque                        | Contrôle réel                                                           | Preuve / limite                                                                                                          |
+| --------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Auth/session/profil actif               | refus identité seule, logout, recovery, activation invitation           | e2e/auth.spec.ts ; integration ; backend modules/auth                                                                    |
+| Callbacks / open redirect               | destination locale validée, token expiré/mauvais type                   | backend auth/domain tests ; E2E invitation/recovery                                                                      |
+| IDOR / cross-tenant                     | ownership serveur + FK/RLS et refus tenant étranger                     | supabase/tests ; integration ; backend/integration                                                                       |
+| RBAC/RLS bypass, metadata forgée        | pas de privilège depuis user_metadata, JWT réel                         | pgTAP et intégration Phase 2/C ; règle Semgrep ciblée                                                                    |
+| Platform capability / expansion contrat | capacités explicites et catégories couvertes                            | pgTAP Phase 2 ; tests application coverage/catalog                                                                       |
+| Invitation / recovery                   | échec/reprise adaptateurs réels, atomicité activation/audit             | backend/integration ; integration ; e2e/auth.spec.ts                                                                     |
+| service_role                            | réservé adaptateurs privilégiés explicitement autorisés, absent browser | architecture.test.ts ; check-client-bundles ; artifact ; SAST client-privilege                                           |
+| SQL injection                           | RPC typées/DTO, pas de SQL concaténé dans sources TS                    | pgTAP/integration ; SAST sql-concatenation ; E2E PROD refus entrée malformée, pas preuve exhaustive SQL                  |
+| XSS                                     | échappement React, aucun sink brut recensé, SAST raw-html               | CSP complète absente : dette medium, non masquée                                                                         |
+| CSRF APIs                               | Origin strict, cookies same-site                                        | e2e/auth.spec.ts ; e2e/locale.spec.ts ; refus configuration hors origine                                                 |
+| CSRF Server Actions                     | protection Origin/Host native Next ; aucune allowedOrigins élargie      | ZAP signale absence token HTML, insuffisant pour conclure un exploit ou un faux positif ; retest ciblé requis avant PROD |
+| SSRF                                    | pas d'URL cible arbitraire fournie au serveur métier                    | NOT_APPLICABLE à cette surface ; clients Supabase configurés, callbacks limités                                          |
+| Secrets                                 | historique + sources + bundles, rapports expurgés                       | Gitleaks 8.30.1 avec contrôles positifs/négatifs ; exception métadonnées Next serveur documentée                         |
+| Debug/bypass/fixtures                   | scan compilé, routes/manifests/NFT, lint                                | tooling/quality/artifact.ts et assurance.test.ts                                                                         |
+| Erreurs                                 | messages localisés génériques, pas de stack/SQL/config renvoyés         | e2e/artifact-prod.spec.ts sur API existantes, 400/403/404 ; pas d'endpoint debug artificiel                              |
+| Rate limiting Auth                      | configuration Auth locale existante, pas de nouveau moteur anti-abus    | configuration à vérifier sur futur DEMO/PROD ; test de charge non exécuté                                                |
+| Storage / photos / reports              | surfaces Phase 3 absentes                                               | NOT_APPLICABLE ; aucun test inventé                                                                                      |
+| Supply chain / CI                       | lockfile, lifecycle allowlist, SHA actions, token read-only             | KB dépendances + revue GitHub E ; protections branche absentes observées                                                 |
+
+Toute nouvelle surface doit mettre à jour ce catalogue avec exigence, code, droit, tests et preuve. Aucune suppression de test ou acceptation de risque n'est autorisée par cette fiche.

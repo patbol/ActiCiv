@@ -1,0 +1,22 @@
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: #102b24aa;
+}
+.dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 480px);
+  max-height: 90dvh;
+  overflow: auto;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 20px 100px #0003;
+}
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}

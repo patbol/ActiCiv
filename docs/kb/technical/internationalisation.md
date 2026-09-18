@@ -77,3 +77,7 @@ Emails Auth encore français : `.Data` ne contient pas la politique profil/organ
 [Tests](testing.md) : les scénarios historiques restent en français explicite ; nouveaux E2E fr/en, SSR, isolation entre requêtes, cookies/session, clavier/focus et axe. [Rapport](../../quality/phase-2bis-c-report.md) : résultats réels et statut VoiceOver/TalkBack. Ni couverture instrumentée, snapshot canonique, gates complets ni Phase 3.
 
 Une identité invitée Auth sans profil actif utilise seulement le cookie d’interface, comme le visiteur. Elle ne peut écrire de préférence DB ni obtenir un accès professionnel avant activation.
+
+## Complément E
+
+Le catalogue `dialog` devient une entrée DEMO dédiée, chargée uniquement par le composant de démonstration aliasé au build. Les catalogues common/foundation/auth restent serveur, les politiques de locale et préférences ne changent pas. Le build PROD ne contient ni dialogue ni ses chaînes/CSS.

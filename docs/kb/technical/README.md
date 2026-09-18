@@ -22,3 +22,5 @@ Employer le [modèle technique](../templates/technical-topic.md). Une fiche expl
 Fiche active ajoutée en 2bis-C : [internationalisation, préférences et traductions](internationalisation.md).
 
 - [Quality engineering — preuves, snapshots et gates](quality-engineering.md).
+
+Fiches E : [Security Assurance](security-assurance.md), [Artifact Hygiene](artifact-hygiene.md), [Performance Hygiene](performance-hygiene.md), [Dependency Governance](dependency-governance.md).

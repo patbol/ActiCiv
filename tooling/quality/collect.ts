@@ -60,7 +60,7 @@ export function minimize(source: string, raw: unknown): unknown {
         };
       }),
     };
-  if (source === "e2e") {
+  if (["e2e", "e2e-prod"].includes(source)) {
     const suites = (raw: unknown): unknown[] =>
       array(raw).map((value) => {
         const s = object(value);
@@ -339,6 +339,28 @@ export function collect(rebuild = false) {
   run("bundles", "pnpm", ["verify:bundles"]);
   const pw = join(directory, "private/playwright.json");
   run("e2e", "pnpm", ["test:e2e"], pw, { ACTICIV_PLAYWRIGHT_JSON: pw });
+  const prod = join(directory, "private/playwright-prod.json");
+  run("e2e-prod", "pnpm", ["test:e2e:prod"], prod, {
+    ACTICIV_PLAYWRIGHT_JSON: prod,
+  });
+  for (const source of ["sast", "artifact", "performance"]) {
+    const native = join(directory, "private", source + ".json");
+    run(
+      source,
+      "node",
+      ["tooling/quality/assurance-cli.ts", source, "--output", native],
+      native,
+    );
+  }
+  if (process.env.ACTICIV_RUN_DAST === "1") {
+    const native = join(directory, "private/dast.json");
+    run(
+      "dast",
+      "node",
+      ["tooling/quality/assurance-cli.ts", "dast", "--output", native],
+      native,
+    );
+  }
   const audit = join(directory, "private/audit.json");
   const a = spawnSync("pnpm", ["audit", "--audit-level", "high", "--json"], {
     encoding: "utf8",
@@ -358,6 +380,7 @@ export function collect(rebuild = false) {
   const secret = join(directory, "private/secrets.json");
   run("secret-scan", "pnpm", ["secrets:check"], secret, {
     ACTICIV_SECRET_REPORT: secret,
+    ACTICIV_SCAN_ARTIFACTS: "1",
   });
   const stable =
     git("rev-parse", "HEAD") === who.commit_sha &&

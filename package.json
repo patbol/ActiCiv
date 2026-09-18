@@ -7,7 +7,7 @@
   },
   "scripts": {
     "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm verify:bundles",
-    "verify:full": "pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm audit --audit-level high && pnpm secrets:check",
+    "verify:full": "pnpm verify && pnpm db:test && pnpm test:integration && pnpm test:e2e && pnpm test:e2e:prod && pnpm security:sast && pnpm artifact:check && pnpm audit --audit-level high && ACTICIV_SCAN_ARTIFACTS=1 pnpm secrets:check",
     "test:integration": "node --test --test-concurrency=1 integration/*.test.mjs && vitest run --config vitest.integration.config.ts",
     "dev": "pnpm --parallel --filter @acticiv/citizen --filter @acticiv/pro dev",
     "build": "pnpm --filter @acticiv/citizen build && pnpm --filter @acticiv/pro build",
@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "pnpm build:demo && playwright test",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset --local",
@@ -32,10 +32,18 @@
     "quality:evaluate": "node tooling/quality/cli.ts evaluate",
     "quality:report": "node tooling/quality/cli.ts report",
     "quality:compare": "node tooling/quality/cli.ts compare",
-    "quality:flakiness": "node tooling/quality/cli.ts flakiness"
+    "quality:flakiness": "node tooling/quality/cli.ts flakiness",
+    "build:demo": "pnpm --filter @acticiv/citizen build:demo && pnpm --filter @acticiv/pro build:demo",
+    "security:sast": "node tooling/quality/assurance-cli.ts sast",
+    "security:dast:baseline": "node tooling/quality/assurance-cli.ts dast",
+    "artifact:check": "node tooling/quality/assurance-cli.ts artifact",
+    "performance:measure": "node tooling/quality/assurance-cli.ts performance",
+    "performance:compare": "node tooling/quality/assurance-cli.ts compare",
+    "test:e2e:prod": "playwright test --config playwright.prod.config.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@jridgewell/trace-mapping": "0.3.31",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^24.13.4",

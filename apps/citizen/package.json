@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1 --port 3000",
-    "build": "next build",
-    "start": "next start --hostname 127.0.0.1 --port 3000",
-    "typecheck": "next typegen && tsc --noEmit"
+    "dev": "ACTICIV_BUILD_TARGET=demo next dev --hostname 127.0.0.1 --port 3000",
+    "build": "ACTICIV_BUILD_TARGET=prod next build",
+    "start": "ACTICIV_BUILD_TARGET=prod next start --hostname 127.0.0.1 --port 3000",
+    "typecheck": "ACTICIV_BUILD_TARGET=prod next typegen && tsc --noEmit",
+    "build:demo": "ACTICIV_BUILD_TARGET=demo next build",
+    "start:demo": "ACTICIV_BUILD_TARGET=demo next start --hostname 127.0.0.1 --port 3000"
   },
   "dependencies": {
     "@acticiv/backend": "workspace:*",

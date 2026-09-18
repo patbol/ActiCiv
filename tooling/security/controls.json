@@ -1,0 +1,9 @@
+{
+  "dynamic-code": "eval(input);",
+  "shell-execution": "exec(command);",
+  "raw-html": "element.innerHTML = input;",
+  "insecure-tls": "const options = {rejectUnauthorized: false};",
+  "sql-concatenation": "db.query('SELECT ' + input);",
+  "acticiv-client-privilege": "const name = 'NEXT_PUBLIC_SERVICE_ROLE';",
+  "acticiv-auth-metadata-role": "const role = user.user_metadata.role;"
+}

@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./locale": "./src/locale.ts",
-    "./messages": "./src/messages/index.ts"
+    "./messages": "./src/messages/index.ts",
+    "./demo-messages": "./src/messages/demo.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

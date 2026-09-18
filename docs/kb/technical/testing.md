@@ -111,3 +111,7 @@ La locale des 13 scénarios historiques est explicitement `fr-FR`. Le Component 
 ## Complément 2bis-D
 
 Les 38 exécutions issues de C conservent leurs assertions. Le helper axe attache seulement les comptes de violations/incomplete et IDs de règles au rapport JSON, sans HTML ni données de page. La couverture unitaire V8 et les preuves canoniques sont décrites dans la [KB qualité](quality-engineering.md) ; les mentions de hors-périmètre ci-dessus concernent B/C.
+
+## Complément 2bis-E
+
+Les 38 tests historiques conservent leurs assertions sur les builds DEMO séparés (`pnpm test:e2e` les construit). La suite `playwright.prod.config.ts` sélectionne seulement `artifact-prod.spec.ts` contre PROD : absence du dialogue, axe, headers et erreurs réelles. Aucun retry ni skip ajouté. `pnpm build` est requis avant la suite PROD. Les sélections `pnpm exec playwright test` requièrent `pnpm build:demo` préparé. Les traces brutes restent privées, hors upload CI.

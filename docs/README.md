@@ -1,8 +1,8 @@
 # Documentation ActiCiv
 
 **Phase 2 = CLOSED**. Baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
-**Phase 2 bis = CURRENT**, **2bis-A, 2bis-B et 2bis-C APPROVED**, checkpoint actif **2bis-D**.
-**Phase 3 = NOT STARTED**. Aucun 2bis-E sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT**, **2bis-A/B/C/D APPROVED**, checkpoint actif **2bis-E**.
+**Phase 3 = NOT STARTED**. Aucun 2bis-F sans validation explicite de Patrick.
 
 ## CURRENT — contrat applicable
 
@@ -53,3 +53,5 @@ La structure documentaire approuvée est conservée. Toute nouvelle documentatio
 - [Rapport 2bis-C](quality/phase-2bis-c-report.md).
 
 2bis-D : [preuves qualité et procédures](quality/quality-evidence.md), [KB](kb/technical/quality-engineering.md), [rapport](quality/phase-2bis-d-report.md).
+
+2bis-E : [rapport](quality/phase-2bis-e-report.md), [Security Assurance](kb/technical/security-assurance.md), [artefacts PROD](kb/technical/artifact-hygiene.md), [performance](kb/technical/performance-hygiene.md), [dépendances](kb/technical/dependency-governance.md).

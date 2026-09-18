@@ -23,6 +23,7 @@ import {
   normalizeCoverage,
   parseTap,
 } from "./parsers.ts";
+import { assuranceCheck } from "./security.ts";
 export function digest(value: unknown) {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex");
 }
@@ -213,7 +214,10 @@ export function assemble(
     try {
       if (source === "unit" || source === "integration-adapters")
         result = normalizeVitest(row.report);
-      else if (source === "e2e") result = normalizePlaywright(row.report);
+      else if (["e2e", "e2e-prod"].includes(source))
+        result = normalizePlaywright(row.report);
+      else if (["sast", "dast", "artifact", "performance"].includes(source))
+        result = assuranceCheck(row.report, source);
       else if (source === "dependency-audit")
         result = normalizeAudit(row.report);
       else if (source === "coverage") {
@@ -491,6 +495,7 @@ export function compare(
           "integration-node",
           "integration-adapters",
           "e2e",
+          "e2e-prod",
           "sql",
         ].includes(k),
       )

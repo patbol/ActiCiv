@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoints **2bis-A et 2bis-B CLOSED / APPROVED** par Patrick ; ADR-008 et ADR-009 approuvées. Baseline de 2bis-C : `7d43c1b8b3ece14cb6df03f4a445030cbbec326b`. Checkpoint actif et seul autorisé : **2bis-C — internationalisation, locales, préférences et traductions**. Les cibles futures ci-dessous ne sont pas autorisées maintenant. **STOP après 2bis-C pour revue de Patrick ; aucun 2bis-D sans validation explicite.**
+Checkpoints **2bis-A, B, C et D CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-011 approuvées. Baseline D : `ced9d07e7f929c8dfdfff236f95c8b6300d6503d`. Checkpoint actif et seul autorisé : **2bis-E — Security Assurance, Production Artifact Hygiene & Performance Hygiene**. **STOP après E pour revue de Patrick ; aucun 2bis-F ni Phase 3 sans validation explicite.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 
@@ -931,3 +931,7 @@ En cas de doute :
 6. ne jamais masquer un échec.
 
 **ActiCiv privilégie la preuve réelle, la maintenabilité et la simplicité contrôlée.**
+
+## Complément opérationnel 2bis-E
+
+`pnpm build` produit PROD ; `pnpm build:demo` produit DEMO séparément. Vérifier le vrai build PROD via `artifact:check` et la suite `test:e2e:prod`. Ne pas transformer un PASS DEMO en preuve PROD. Les dépendances uniquement démonstratives restent devDependencies. Les métriques performance/coverage restent advisory sans seuil approuvé. Les détails sont dans [ADR-012](docs/architecture-decisions/012-security-artifact-performance.md) proposée pour revue.

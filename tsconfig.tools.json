@@ -7,7 +7,8 @@
     "vitest.integration.config.ts",
     "packages/backend/integration/**/*.ts",
     "integration/**/*.ts",
-    "tooling/quality/**/*.ts"
+    "tooling/quality/**/*.ts",
+    "playwright.prod.config.ts"
   ],
   "compilerOptions": {
     "allowImportingTsExtensions": true

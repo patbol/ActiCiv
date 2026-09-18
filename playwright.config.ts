@@ -16,6 +16,7 @@ process.env.ACTICIV_E2E_PASSWORD ??= randomUUID() + "aA!";
 process.env.PRO_APP_ORIGIN = "http://127.0.0.1:3001";
 export default defineConfig({
   testDir: "./e2e",
+  testIgnore: "artifact-prod.spec.ts",
   fullyParallel: true,
   forbidOnly: true,
   retries: 0,
@@ -54,12 +55,12 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "pnpm --filter @acticiv/citizen start",
+      command: "pnpm --filter @acticiv/citizen start:demo",
       url: "http://127.0.0.1:3000",
       reuseExistingServer: false,
     },
     {
-      command: "pnpm --filter @acticiv/pro start",
+      command: "pnpm --filter @acticiv/pro start:demo",
       url: "http://127.0.0.1:3001",
       reuseExistingServer: false,
     },

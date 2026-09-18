@@ -64,3 +64,9 @@ Sans baseline : NO_BASELINE. Candidat non accepté, digest/identité/policy/envi
 `quality:flakiness N` répète les tests `@critical` dans N campagnes séquentielles, chacune à zéro retry. Rapports par tentative et résumé par test : tentatives, passes, échecs, taux d’échec, mix pass/fail, tags, dates première/dernière observation. Liste différente entre répétitions = rapport incomplet rejeté. Cette commande n’a pas de fréquence CI inventée et ne remplace pas le run principal.
 
 Chaîne de release : sources stables → contrôles natifs → rapports minimisés → snapshot → même évaluateur → revue / baseline explicitement acceptée. L’identité de release reste le SHA propre et son artefact, avec CI sur le même SHA. Un résultat local dirty ou une CI seulement écrite ne vaut pas release. Le futur Quality Center lira les snapshots et leurs gates ; aucune UI ou DB qualité n’est construite dans D.
+
+## Extension compatible E
+
+Le schéma v1 reste inchangé : nouveaux checks `sast`, `dast`, `artifact`, `performance`, `e2e-prod` dans les maps déjà extensibles. Les normalisateurs valident le producteur et son exécution. `policy.json` D est conservée ; `policy-e.json` E devient la policy de collecte, toujours advisory et sans seuil numérique. `quality:evaluate` sélectionne la policy historique D pour ses snapshots ; les digests historiques ne changent pas. Aucune migration de données.
+
+`ACTICIV_RUN_DAST=1 pnpm quality:collect` inclut ZAP local ; sinon sa preuve est DEFERRED. Les CLI sécurité/artefact et leurs contrôles CI stables restent bloquants en cas d’échec. `verify:full` conserve les étapes anciennes et ajoute E2E PROD, SAST, artefact et scan secrets compilés. Les résultats bruts privés ne sont pas uploadés. Comparer une baseline à une autre policy nécessite une décision explicite, pas une compatibilité silencieuse.

@@ -2,7 +2,7 @@
 
 **Phase 2 = CLOSED** — baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
 
-**Phase 2 bis = CURRENT** — **2bis-A, 2bis-B et 2bis-C APPROVED** ; checkpoint actif : **2bis-D**, couverture, preuves qualité, snapshot canonique et gates consultatives uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-E sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT** — **2bis-A/B/C/D APPROVED** ; checkpoint actif : **2bis-E**, Security Assurance, artefacts PROD et performance uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-F sans validation explicite de Patrick.
 
 La [clôture Phase 2](docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md) atteste 260 PASS, 0 FAIL et 1 DEFERRED (TalkBack). Les garanties métier et sécurité de Phase 2 restent acquises.
 
@@ -69,3 +69,5 @@ La validation Phase 2 utilise Chromium installé par Playwright, en desktop et �
 La passe de clôture et ses preuves sont décrites dans [le postmortem Phase 2](docs/evidence/phase2/ActiCiv_Phase2_Postmortem_HISTORICAL.md). La commande `pnpm release:verify --rebuild-db` exige un arbre propre, reconstruit la base DEV locale depuis zéro (données DEV supprimées), rejoue reset/seed puis tous les contrôles. Elle enregistre le SHA et refuse toute modification Git pendant la validation. Ne jamais l’utiliser sur des données à conserver. Les preuves finales et l’archive doivent désigner ce même SHA.
 
 `pnpm secrets:check` utilise Gitleaks 8.30.1, téléchargé hors du dépôt et vérifié par une empreinte officielle figée. Il vérifie son détecteur puis scanne tout l’historique accessible depuis HEAD avec résultats expurgés. Le scanner est un outil de qualité ; aucune dépendance runtime de l’application n’est ajoutée.
+
+Checkpoint E : [rapport et preuves](docs/quality/phase-2bis-e-report.md). PROD : `pnpm build`; DEMO : `pnpm build:demo`. Les E2E historiques tournent sur DEMO ; `pnpm test:e2e:prod` vérifie PROD. [Contrat artefacts](docs/kb/technical/artifact-hygiene.md).

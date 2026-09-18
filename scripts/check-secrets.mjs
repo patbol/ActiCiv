@@ -1,3 +1,4 @@
+import { generatedNextFinding } from "../tooling/quality/artifact-secrets.ts";
 import { createHash } from "node:crypto";
 import { execFileSync, spawnSync } from "node:child_process";
 import {
@@ -120,6 +121,75 @@ try {
     ],
     { stdio: "inherit" },
   );
+  const artifactResults = [];
+  const artifactReviews = [];
+  if (process.env.ACTICIV_SCAN_ARTIFACTS === "1") {
+    for (const app of ["citizen", "pro"]) {
+      if (!existsSync(`apps/${app}/.next/BUILD_ID`))
+        throw new Error("Production artifact missing for secrets scan");
+      for (const area of ["static", "server"]) {
+        const scan = spawnSync(
+          executable,
+          [
+            "dir",
+            `apps/${app}/.next/${area}`,
+            "--redact",
+            "--no-banner",
+            "--report-format=json",
+            "--report-path=" + join(directory, `${app}-${area}.json`),
+          ],
+          { stdio: "inherit" },
+        );
+        const found = JSON.parse(
+          readFileSync(join(directory, `${app}-${area}.json`), "utf8"),
+        );
+        const manifest = JSON.parse(
+          readFileSync(
+            `apps/${app}/.next/server/server-reference-manifest.json`,
+            "utf8",
+          ),
+        );
+        let unreviewed = 0;
+        for (const f of found) {
+          const prefix = `apps/${app}/.next/server/`;
+          const line = readFileSync(f.File, "utf8").split(/\r?\n/)[
+            f.StartLine - 1
+          ];
+          const matched = f.File.endsWith("/server-reference-manifest.json")
+            ? line.trim()
+            : line.slice(f.StartColumn - 1, f.EndColumn);
+          const reviewed =
+            area === "server" &&
+            f.RuleID === "generic-api-key" &&
+            f.StartLine === f.EndLine &&
+            f.File.startsWith(prefix) &&
+            generatedNextFinding(
+              f.File.slice(prefix.length),
+              matched,
+              manifest,
+            );
+          if (!reviewed) unreviewed++;
+          artifactReviews.push({
+            app,
+            area,
+            rule: f.RuleID,
+            reviewed,
+            reason: reviewed
+              ? "Next generated action ID or required server-only build encryption key; exact manifest match"
+              : "unreviewed finding",
+          });
+        }
+        artifactResults.push(
+          scan.status === 0 ||
+            (scan.status === 1 && found.length > 0 && unreviewed === 0)
+            ? 0
+            : 1,
+        );
+      }
+    }
+    if (artifactResults.some((code) => code !== 0))
+      throw new Error("Compiled artifact secret scan failed");
+  }
   if (process.env.ACTICIV_SECRET_REPORT) {
     const findings = ["history", "candidate"].flatMap((scope) => {
       const path = join(directory, scope + ".json");
@@ -140,7 +210,14 @@ try {
         metrics: {
           version,
           findings,
-          scopes: ["HEAD history", "source candidate"],
+          artifactReviews,
+          scopes: [
+            "HEAD history",
+            "source candidate",
+            ...(artifactResults.length
+              ? ["compiled PROD citizen/pro static/server"]
+              : []),
+          ],
         },
       }),
     );

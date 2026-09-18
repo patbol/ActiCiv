@@ -1,0 +1,48 @@
+rules:
+  - id: dynamic-code
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Dynamic code execution requires removal or security review.
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+  - id: shell-execution
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Shell invocation in product code requires a safe adapter review.
+    pattern-either:
+      - pattern: exec(...)
+      - pattern: execSync(...)
+  - id: raw-html
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Raw HTML sink requires trusted sanitization.
+    pattern-either:
+      - pattern: $X.innerHTML = $Y
+      - pattern: <$X dangerouslySetInnerHTML={$Y} />
+  - id: insecure-tls
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: TLS verification must stay enabled.
+    pattern-either:
+      - pattern: "{rejectUnauthorized: false, ...}"
+      - pattern: process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+  - id: sql-concatenation
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Parameterize SQL queries.
+    pattern-either:
+      - pattern: $DB.query($A + $B, ...)
+      - pattern: $DB.query(`...${...}...`, ...)
+  - id: acticiv-client-privilege
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Privileged credentials must never be browser exposed.
+    pattern-regex: "NEXT_PUBLIC_[A-Z_]*(SERVICE_ROLE|SECRET)"
+  - id: acticiv-auth-metadata-role
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Auth user metadata is not a business authorization source.
+    pattern-either:
+      - pattern: $USER.user_metadata.role
+      - pattern: $USER.user_metadata.organization_id

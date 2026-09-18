@@ -80,3 +80,7 @@ Patrick approved B and ADR-008/009, then explicitly authorized internationalisat
 ## Décision ultérieure — checkpoint 2bis-D
 
 Patrick approuve A/B/C et ADR-008/009/010, puis autorise uniquement D : coverage, rapports structurés, snapshot canonique et gates consultatives. C est figé au commit `1e067b35a148c6a2da9be3857b1ca4170e91bf60`. L’instruction récente prime sur le statut C encore présent dans AGENTS ; aucune nouvelle règle persistante n’y est introduite dans D. Aucun E ni Phase 3 autorisé. [Procédures D](../../quality/quality-evidence.md), [rapport D](../../quality/phase-2bis-d-report.md).
+
+## Décision courante — checkpoint 2bis-E uniquement
+
+Patrick approuve A/B/C/D et ADR-008 à 011. Baseline D : `ced9d07e7f929c8dfdfff236f95c8b6300d6503d`, CI [35285715652](https://github.com/patbol/ActiCiv/actions/runs/35285715652) verte. E autorise sécurité/artefacts/performance uniquement ; les sections précédentes décrivent les autorisations historiques. Aucune acceptation automatique de seuil coverage/performance ni de risque. [Rapport E](../../quality/phase-2bis-e-report.md). STOP avant F ; Phase 3 NOT STARTED.

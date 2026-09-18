@@ -42,3 +42,7 @@ Autorisation Patrick C / Livre §51 ↔ [feature.language-preferences](../kb/bus
 ## Checkpoint 2bis-D
 
 Preuves qualité → [KB quality-engineering](../kb/technical/quality-engineering.md) → [contrat/procédures](quality-evidence.md) → `tooling/quality` et tests comportementaux → [ADR-011](../architecture-decisions/011-quality-evidence.md) → [rapport D](phase-2bis-d-report.md). Aucun droit métier ni mutation/audit métier ajouté.
+
+## Impact map E
+
+Exigences E §§2–24 → KB sécurité/artefact/performance/dépendances → CLI et scans tooling/quality → rapports → snapshot v1 / policy E → CI et ADR-012. Droits/DB/RLS/audit métier inchangés. Surface UI affectée : dialogue DEMO absent PROD, historique E2E conservé + suite PROD/axe. Aucun Analytics/Logs F.

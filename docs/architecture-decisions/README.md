@@ -17,4 +17,6 @@ Les ADR 001–007 conservent leur statut existant. Une décision ancienne n'est 
 
 Une nouvelle ADR expose statut, contexte, décision, alternatives, conséquences, impacts sécurité/tests/migration/exploitation et liens réels. Si une décision change, ajouter une succession explicite et conserver l'ancienne. Les futures ADR E2E, i18n, qualité, sécurité et observabilité seront numérotées lors de leur création autorisée ; aucun numéro futur n'est réservé par l'ancien plan d'audit.
 
-[ADR-011 — Quality Evidence, snapshots et gates](011-quality-evidence.md) : proposée pour revue de 2bis-D.
+[ADR-011 — Quality Evidence, snapshots et gates](011-quality-evidence.md) : **acceptée** par Patrick à la finalisation D et à l’autorisation E.
+
+[ADR-012 — Security Assurance, artefacts PROD et performance](012-security-artifact-performance.md) : proposée pour revue E.

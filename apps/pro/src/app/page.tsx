@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { brand } from "@acticiv/shared";
-import { FoundationDialog } from "@acticiv/ui";
+import { FoundationPreview } from "@acticiv/ui/foundation-preview";
 export default async function Page() {
   const t = await getTranslations();
   return (
@@ -24,17 +24,7 @@ export default async function Page() {
             </h1>
             <p className="lead">{t("foundation.proLead")} </p>
             <div className="actions">
-              <FoundationDialog
-                labels={{
-                  trigger: t("dialog.trigger"),
-                  title: t("dialog.title"),
-                  description: t("dialog.description"),
-                  inputLabel: t("dialog.inputLabel"),
-                  placeholder: t("dialog.placeholder"),
-                  help: t("dialog.help"),
-                  close: t("dialog.close"),
-                }}
-              />
+              <FoundationPreview />
               <Link href="/auth/login">{t("auth.loginTitle")} </Link>
             </div>
             <p className="small">{t("foundation.notice")} </p>
