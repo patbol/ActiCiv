@@ -12,6 +12,7 @@ const policies = [
   "policy-e.json",
   "policy-f.json",
   "policy-g.json",
+  "policy-i.json",
 ].map((n) => JSON.parse(readFileSync(new URL(n, import.meta.url), "utf8")));
 const p = policies.find(
   (p) => p.version === snapshot.gate_evaluation.policy_version,

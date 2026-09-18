@@ -2,7 +2,7 @@
 
 **Phase 2 = CLOSED** — baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
 
-**Phase 2 bis = CURRENT** — **2bis-A/B/C/D/E/F/G APPROVED** ; checkpoint actif : **2bis-H**, Quality Center read-only uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-I ni Phase 3 sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT** — **2bis-A à H CLOSED / APPROVED** ; baseline H `615e59b327ade189d94598b6d35533e689493309`. **I2 seul autorisé** : corrections ciblées de l’audit I1. I3 non commencée ; **Phase 3 = NOT STARTED**.
 
 La [clôture Phase 2](docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md) atteste 260 PASS, 0 FAIL et 1 DEFERRED (TalkBack). Les garanties métier et sécurité de Phase 2 restent acquises.
 
@@ -74,8 +74,8 @@ Checkpoint E : [rapport et preuves](docs/quality/phase-2bis-e-report.md). PROD :
 
 ## Connaissances et procédures G
 
-Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. Livrables G approuvés : [KB](docs/kb/README.md), [traçabilité générée](docs/kb/traceability.md), [quinze Skills](docs/skills/README.md), [audit ADR](docs/architecture-decisions/README.md), [rapport G](docs/quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. G clôturé sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` ; H seul autorisé désormais.
+Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. Livrables G approuvés : [KB](docs/kb/README.md), [traçabilité générée](docs/kb/traceability.md), [quinze Skills](docs/skills/README.md), [audit ADR](docs/architecture-decisions/README.md), [rapport G](docs/quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. G clôturé sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` ; H a ensuite été approuvé.
 
-## Checkpoint courant H
+## Checkpoint courant I2
 
-A–G approuvés ; H seul autorisé, Quality Center read-only en validation. Aucun I ni Phase 3. [Rapport H](docs/quality/phase-2bis-h-report.md).
+A–H approuvés ; I1 terminé, I2 seul autorisé. [Rapport I2](docs/quality/phase-2bis-i2-report.md). Aucun I3 ni Phase 3.

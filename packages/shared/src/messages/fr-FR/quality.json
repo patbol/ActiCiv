@@ -87,5 +87,19 @@
   "artifactLink": "Ouvrir la référence GitHub contrôlée",
   "expiryUnknown": "Conservation / expiration non renseignée",
   "artifactAbsent": "Aucun lien artefact contrôlé disponible. Les empreintes restent consultables.",
-  "deltas": "Deltas observés"
+  "deltas": "Deltas observés",
+  "flakiness": "Stabilité mesurée séparément",
+  "flakinessStable": "Stable sur l’échantillon",
+  "flakinessObserved": "Instabilité observée",
+  "flakinessUnknown": "Échantillon insuffisant ou résultat indéterminé",
+  "flakinessNotRun": "Mesure non exécutée",
+  "repetitions": "Répétitions",
+  "attempts": "Tentatives",
+  "observationInterval": "Période observée",
+  "failureRate": "Taux d’échec (0 à 1)",
+  "reviewRequired": "Revue humaine requise",
+  "noIncomplete": "Aucun résultat automatique incomplet",
+  "incompleteScope": "Les résultats incomplets ne sont ni des violations établies ni une validation manuelle. Les identifiants de règles sont affichés lorsqu’ils sont disponibles dans la preuve.",
+  "due": "Échéance",
+  "firstObserved": "Première observation"
 }

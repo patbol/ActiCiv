@@ -88,7 +88,7 @@ describe("immutable canonical quality source", () => {
     symlinkSync(f.source, join(f.target, "linked"));
     expect((await readRun(f.target, "linked")).state).toBe("invalid");
     const raw = JSON.parse(readFileSync(f.path, "utf8"));
-    raw.identity.schema_version = 2;
+    raw.identity.schema_version = 3;
     writeFileSync(f.path, JSON.stringify(raw));
     writeFileSync(join(f.source, "snapshot.sha256"), digest(raw));
     await expect(importRun(f.source, join(f.root, "other"))).rejects.toThrow();

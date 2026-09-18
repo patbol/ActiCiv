@@ -1,4 +1,4 @@
-# Quality evidence — contrat v1 et procédures courantes
+# Quality evidence — contrats historiques v1 et complément courant v2
 
 ## Exécuter et lire
 
@@ -71,8 +71,12 @@ Le schéma v1 reste inchangé : nouveaux checks `sast`, `dast`, `artifact`, `per
 
 `ACTICIV_RUN_DAST=1 pnpm quality:collect` inclut ZAP local ; sinon sa preuve est DEFERRED. Les CLI sécurité/artefact et leurs contrôles CI stables restent bloquants en cas d’échec. `verify:full` conserve les étapes anciennes et ajoute E2E PROD, SAST, artefact et scan secrets compilés. Les résultats bruts privés ne sont pas uploadés. Comparer une baseline à une autre policy nécessite une décision explicite, pas une compatibilité silencieuse.
 
-## Policy courante G
+## Policy historique G
 
 `policy-g.json` version 2bis-G.v1 est désormais la policy de collecte, advisory. Elle conserve F (dont observability) et ajoute `knowledge-governance` via la source `docs` : exécution réelle de `pnpm docs:validate`, métriques minimisées KB/ADR/Skills/liens et fraîcheur de la trace. Échec ou absence de cette preuve = FAIL. Les policies D/E/F restent inchangées et sélectionnées pour réévaluer leurs snapshots.
 
 Pas de nouveau seuil numérique ni de migration. `verify` inclut le check documentaire, donc CI aussi. Pour G sans DB changée, ne pas passer `--rebuild-db` ; la policy générique conserve une reconstruction manquante DEFERRED, dont la non-applicabilité à ce checkpoint est justifiée dans le rapport G. Aucun override de gate ne fabrique une reconstruction.
+
+## Policy courante I2
+
+`tooling/quality/policy-i.json` (`2bis-I.v1`, schema 2) ajoute les checks flakiness/revue axe/dette et le mécanisme de budgets/éligibilité. Budgets vides : aucun seuil bloquant approuvé. Les CLI collecte/évaluation/import utilisent I et conservent explicitement D/E/F/G. Voir [KB qualité](../kb/technical/quality-engineering.md) et [éligibilité](../kb/technical/release-reproducibility.md). Pas de collecte complète ni de promotion exécutée en I2.

@@ -47,3 +47,5 @@ Les seules données sont preuves d’ingénierie minimisées ; aucun signalement
 ## Accessibilité et tests critiques
 
 FR/EN, clavier, focus, titres et tables sémantiques, statuts lisibles sans couleur, axe et protocole VoiceOver H. Tests vérifient vrais JWT/RLS, rôles clients, metadata forgées, lecture historique/corruption, erreurs et états UI. TalkBack constitue une preuve distincte. Voir [architecture et exploitation](../technical/quality-center.md).
+
+I2 complète la lecture par la stabilité mesurée séparément (stable, instable, inconnu ou non exécuté) et l’état « revue humaine requise » des résultats axe incomplets. Zéro violation automatique ne signifie pas accessibilité intégralement validée.

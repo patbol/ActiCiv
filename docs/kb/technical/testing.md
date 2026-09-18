@@ -34,7 +34,7 @@ related_docs:
 
 POM, tagging et isolation sont implémentés depuis B. Les scénarios de locale C portent la suite DEMO à 38 exécutions desktop/mobile ; E ajoute 14 exécutions PROD. Coverage et snapshots D, scanners E et observabilité F existent : voir les fiches techniques associées.
 
-- `e2e/pages/` : six objets sans classe de base ; navigation, locators et actions réutilisables.
+- `e2e/pages/` : sept objets sans classe de base ; navigation, locators et actions réutilisables.
 - `e2e/components/dialog.ts` : dialogue réellement partagé par Citizen/Pro.
 - `e2e/fixtures/test.ts` : fournit pages et comptes à portée test ; aucun contexte navigateur global ni storageState partagé.
 - `e2e/fixtures/supabase.ts` : préparation Node-side sur Supabase local ; jamais appelée depuis le bundle ni le navigateur.
@@ -75,7 +75,7 @@ pnpm test:e2e --grep '(?=.*@critical)(?=.*@route:auth)'
 pnpm test:e2e --grep '@type:smoke'
 ```
 
-`--list` peut être ajouté pour contrôler une sélection sans exécuter les tests. Aucun grep n'est fixé dans la configuration : la commande E2E normale lance les 38 tests DEMO. Ces sélections ne remplacent pas la suite complète de validation.
+`--list` peut être ajouté pour contrôler une sélection sans exécuter les tests. Aucun grep n'est fixé dans la configuration : la commande E2E normale lance toute la suite DEMO, dont les parcours qualité H. Ces sélections ne remplacent pas la suite complète de validation.
 
 ## Garde-fous et exceptions
 
@@ -116,4 +116,6 @@ Les 38 exécutions issues de C conservent leurs assertions. Le helper axe attach
 
 ## Complément 2bis-E
 
-Les 38 tests historiques conservent leurs assertions sur les builds DEMO séparés (`pnpm test:e2e` les construit). La suite `playwright.prod.config.ts` sélectionne seulement `artifact-prod.spec.ts` contre PROD : absence du dialogue, axe, headers et erreurs réelles. Aucun retry ni skip ajouté. `pnpm build` est requis avant la suite PROD. Les sélections `pnpm exec playwright test` requièrent `pnpm build:demo` préparé. Les traces brutes restent privées, hors upload CI.
+Les 38 tests historiques conservent leurs assertions sur les builds DEMO séparés (`pnpm test:e2e` les construit). La suite `playwright.prod.config.ts` sélectionne `artifact-prod.spec.ts` et `quality.spec.ts` contre PROD : absence du dialogue, axe, headers et erreurs réelles. Aucun retry ni skip ajouté. `pnpm build` est requis avant la suite PROD. Les sélections `pnpm exec playwright test` requièrent `pnpm build:demo` préparé. Les traces brutes restent privées, hors upload CI.
+
+Depuis H : 46 exécutions DEMO et 22 PROD à la baseline H. Les validations I2 sélectionnent les parcours affectés ; elles ne remplacent pas la campagne finale I3. Le helper axe I2 conserve aussi les IDs des règles incomplete, sans DOM.

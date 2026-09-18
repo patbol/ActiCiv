@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { assemble, evaluate, candidate } from "../../tooling/quality/snapshot";
+import { flakinessEvidence } from "../../packages/quality/src/flakiness";
 import { check } from "../../tooling/quality/model";
 import { finalize } from "../../tooling/quality/storage";
 import { importRun } from "../../packages/backend/src/modules/quality/infrastructure/files";
@@ -60,6 +61,51 @@ export async function qualitySource() {
       ],
     });
     snapshot.provenance.unit = ref;
+    snapshot.checks.flakiness = flakinessEvidence(
+      state === "DEFERRED"
+        ? null
+        : {
+            schema_version: 1,
+            run_id: "synthetic-repetition",
+            commit_sha: identity.commit_sha,
+            source_digest: identity.source_digest,
+            environment: identity.environment,
+            source_unchanged: true,
+            first_observed: identity.created_at,
+            last_observed: identity.created_at,
+            repetitions: 2,
+            outcomes: [
+              { exit_code: 0, status: "PASS" },
+              {
+                exit_code: state === "FAIL" ? 1 : 0,
+                status: state === "FAIL" ? "FAIL" : "PASS",
+              },
+            ],
+            tests: [
+              {
+                id: "Synthetic repetition",
+                tags: ["@route:quality"],
+                attempts: 2,
+                passes: state === "FAIL" ? 1 : 2,
+                failures: state === "FAIL" ? 1 : 0,
+                flaky: state === "FAIL",
+                failure_rate: state === "FAIL" ? 0.5 : 0,
+              },
+            ],
+          },
+      identity,
+    );
+    snapshot.provenance.flakiness = ref;
+    snapshot.checks.axe = check({
+      metrics: {
+        analyses: 1,
+        violations: 0,
+        incomplete: 1,
+        review_status: "REVIEW_REQUIRED",
+        reviews: [{ test_id: "Synthetic a11y", rule: "color-contrast" }],
+      },
+    });
+    snapshot.provenance.axe = ref;
     snapshot.checks.dast = check({
       metrics: {
         findings: [

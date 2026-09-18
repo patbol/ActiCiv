@@ -241,7 +241,8 @@ export default async function Quality({
                     <p>
                       {t("acceptedRisk")} : {f.accepted ? t("yes") : t("no")} ·{" "}
                       {t("owner")} : {f.owner} · {t("expiry")} : {f.expiry} ·{" "}
-                      {t("retest")} : {f.retest}
+                      {t("retest")} : {f.retest} · {t("due")} : {f.due} ·{" "}
+                      {t("firstObserved")} : {f.firstObserved}
                     </p>
                   </li>
                 ))}
@@ -252,6 +253,41 @@ export default async function Quality({
           </section>
           <section id="tests" aria-labelledby="test-heading">
             <h2 id="test-heading">{t("tests")}</h2>
+            <h3>{t("flakiness")}</h3>
+            <p>
+              {(
+                {
+                  STABLE: t("flakinessStable"),
+                  OBSERVED_FLAKY: t("flakinessObserved"),
+                  UNKNOWN: t("flakinessUnknown"),
+                  NOT_RUN: t("flakinessNotRun"),
+                } as Record<string, string>
+              )[selected.flakiness.state] ?? t("flakinessUnknown")}
+            </p>
+            <p>
+              {t("repetitions")} : {number(selected.flakiness.repetitions)}
+            </p>
+            {selected.flakiness.first !== "—" &&
+              Number.isFinite(Date.parse(selected.flakiness.first)) && (
+                <p>
+                  {t("observationInterval")} : {date(selected.flakiness.first)}{" "}
+                  — {date(selected.flakiness.last)}
+                </p>
+              )}
+            <p>
+              {t("evidence")} :{" "}
+              <code>{selected.flakiness.provenance ?? t("missing")}</code>
+            </p>
+            <ul>
+              {selected.flakiness.tests.slice(0, 100).map((test) => (
+                <li key={test.id}>
+                  {test.id} · {t("attempts")} {number(test.attempts)} ·{" "}
+                  {t("passed")} {number(test.passes)} · {t("failed")}{" "}
+                  {number(test.failures)} · {t("failureRate")}{" "}
+                  {number(test.rate)}
+                </li>
+              ))}
+            </ul>
             <form method="get" className={styles.filters}>
               <input type="hidden" name="run" value={selected.id} />
               <label>
@@ -469,6 +505,28 @@ export default async function Quality({
                   </dl>
                 </div>
               ))}
+            <p>
+              <strong>
+                {selected.axeReview.state === "REVIEW_REQUIRED"
+                  ? t("reviewRequired")
+                  : selected.axeReview.state === "NOT_RUN"
+                    ? t("missing")
+                    : t("noIncomplete")}
+              </strong>{" "}
+              · {number(selected.axeReview.count)}
+            </p>
+            <p>{t("incompleteScope")}</p>
+            <p>
+              {t("evidence")} :{" "}
+              <code>{selected.axeReview.provenance ?? t("missing")}</code>
+            </p>
+            <ul>
+              {selected.axeReview.rules.slice(0, 100).map((r, i) => (
+                <li key={i}>
+                  {r.test} · {r.rule}
+                </li>
+              ))}
+            </ul>
             <h3>{t("manual")}</h3>
             {selected.manual.length ? (
               selected.manual.map((m, i) => (

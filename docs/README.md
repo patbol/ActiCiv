@@ -1,8 +1,8 @@
 # Documentation ActiCiv
 
 **Phase 2 = CLOSED**. Baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
-**Phase 2 bis = CURRENT**, **2bis-A/B/C/D/E/F/G APPROVED**, checkpoint actif **2bis-H**.
-**Phase 3 = NOT STARTED**. Aucun 2bis-I ni Phase 3 sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT**, **2bis-A à H CLOSED / APPROVED**, checkpoint actif **2bis-I2**.
+**Phase 3 = NOT STARTED**. I1 terminé ; I2 seul autorisé. Aucune I3 ni Phase 3 sans validation explicite de Patrick.
 
 ## CURRENT — contrat applicable
 
@@ -40,8 +40,8 @@ Les anciens journaux/captures déjà rangés dans `docs/quality/` restent en pla
 - [Definition of Done](quality/definition-of-done.md).
 - [Checklist PR / changement](quality/pr-checklist.md).
 - [Traçabilité et impact map](quality/traceability.md).
-- [KB métier et technique](kb/README.md) : structure et templates ; fiches détaillées à compléter dans leur checkpoint.
-- [Skills : quinze procédures canoniques](skills/README.md) : playbooks finalisés en G, revue attendue.
+- [KB métier et technique](kb/README.md) : fiches actives, templates et traçabilité dérivée.
+- [Skills : quinze procédures canoniques](skills/README.md) : playbooks finalisés et approuvés en G.
 - [Questions réellement ouvertes](product-decisions/open-questions.md).
 - [Composants actuels](ui.md).
 - [KB testing : E2E, fixtures et conventions exécutables](kb/technical/testing.md).
@@ -60,8 +60,10 @@ La structure documentaire approuvée est conservée. Toute nouvelle documentatio
 
 ## Connaissances et procédures G
 
-Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. Livrables G approuvés : [KB](kb/README.md), [traçabilité générée](kb/traceability.md), [quinze Skills](skills/README.md), [audit ADR](architecture-decisions/README.md), [rapport G](quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. G clôturé sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` ; H seul autorisé désormais.
+Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. Livrables G approuvés : [KB](kb/README.md), [traçabilité générée](kb/traceability.md), [quinze Skills](skills/README.md), [audit ADR](architecture-decisions/README.md), [rapport G](quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. G clôturé sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` ; H a ensuite été approuvé.
 
-## Checkpoint courant H
+## Checkpoint courant I2
 
-A–G approuvés ; H seul autorisé, Quality Center read-only en validation. Aucun I ni Phase 3. [Rapport H](quality/phase-2bis-h-report.md).
+A–H approuvés ; I2 seul autorisé après I1. [Rapport I2](quality/phase-2bis-i2-report.md). Aucun I3 ni Phase 3.
+
+I2 : [corrections ciblées et résultats](quality/phase-2bis-i2-report.md). Baseline H approuvée : `615e59b327ade189d94598b6d35533e689493309`. Les rapports A–H restent des comptes rendus historiques datés.

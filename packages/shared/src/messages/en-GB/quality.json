@@ -87,5 +87,19 @@
   "artifactLink": "Open controlled GitHub reference",
   "expiryUnknown": "Retention / expiry not provided",
   "artifactAbsent": "No controlled artifact link available. Digests remain available.",
-  "deltas": "Observed deltas"
+  "deltas": "Observed deltas",
+  "flakiness": "Separately measured stability",
+  "flakinessStable": "Stable in this sample",
+  "flakinessObserved": "Observed flakiness",
+  "flakinessUnknown": "Insufficient sample or unknown result",
+  "flakinessNotRun": "Measurement not run",
+  "repetitions": "Repetitions",
+  "attempts": "Attempts",
+  "observationInterval": "Observation interval",
+  "failureRate": "Failure rate (0 to 1)",
+  "reviewRequired": "Human review required",
+  "noIncomplete": "No incomplete automated results",
+  "incompleteScope": "Incomplete results are neither confirmed violations nor a manual pass. Rule identifiers are shown when available in the evidence.",
+  "due": "Due",
+  "firstObserved": "First observed"
 }

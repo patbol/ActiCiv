@@ -9,7 +9,7 @@ Date : 17 septembre 2026
 - **Final Phase 2 matrix** : 260 PASS / 0 FAIL / 1 DEFERRED (TalkBack only)
 - **Current phase** : Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations
 - **2bis-A** : CLOSED / APPROVED by Patrick on `be191f56109ea6380ccbd520ed49eb8a6074a9c0`.
-- **Active checkpoint** : 2bis-H only, explicitly authorized; A–G APPROVED. STOP before I/Phase 3.
+- **Active checkpoint** : 2bis-I2 only, explicitly authorized; A–H CLOSED / APPROVED; I1 completed. STOP before I3/Phase 3.
 - **Phase 3** : NOT STARTED
 
 ## Current authoritative references
@@ -89,7 +89,7 @@ Patrick approuve A/B/C/D et ADR-008 à 011. Baseline D : `ced9d07e7f929c8dfdfff2
 
 Patrick approuve A–E et ADR-008 à 012. Baseline E `70e145da43d246a0452b371dd4da7cf12e0078b3`, branche `phase-2bis-engineering-foundations`. F autorise la séparation Analytics/Audit/Logs, registre analytics no-op/local, logger structuré, corrélation et anti-PII, préservation SQL transactionnelle, documentation et tests. Aucun vendor SaaS, Quality Center, chantier G complet ni Phase 3. [Rapport F](../../quality/phase-2bis-f-report.md), [ADR-013](../../architecture-decisions/013-observability-separation.md). STOP pour revue Patrick. Aucun seuil numérique coverage/performance accepté automatiquement.
 
-## Décision courante — checkpoint 2bis-G uniquement
+## Décision historique — checkpoint 2bis-G uniquement
 
 Patrick approuve A–F et ADR-008 à 013 ; baseline F `ebab16c5c5c3133dda5afa5061263da5c3bcf25e`. G autorise KB, quinze Skills, gouvernance, validateurs et traçabilité. Aucun comportement métier/DB/UI nouveau, H/Quality Center/Phase 3 non commencés. [Rapport G](../../quality/phase-2bis-g-report.md), [ADR-014 proposée](../../architecture-decisions/014-knowledge-skills-governance.md).
 
@@ -99,10 +99,14 @@ Audit éditorial G : le livre courant a une couverture et une conclusion v1.4, m
 
 Patrick approuve l’architecture G et ADR-014 et demande commit propre, preuves locales, push, CI réellement observée et artefacts vérifiés au même SHA. La clôture attend ces résultats ; aucune autorisation de H/Quality Center/Phase 3. Les mesures de revue dirty restent historiques, distinctes du candidat final.
 
-## Décision courante — 2bis-H uniquement
+## Décision historique — 2bis-H uniquement
 
 Patrick approuve G/ADR-014 sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` et autorise le Quality Center read-only. [Rapport H](../../quality/phase-2bis-h-report.md), [ADR-015 proposée](../../architecture-decisions/015-quality-center.md). Aucun I ni Phase 3.
 
 ## Finalisation H autorisée le 18 septembre 2026
 
 Patrick approuve l’architecture H et ADR-015, et confirme VoiceOver H-VO-01 à H-VO-09 comme preuve manuelle distincte. Finalisation autorisée : commit propre, reconstruction DB incluant M12 et seed, validations complètes, snapshot local/CI au même SHA, push sans réécriture et vérification des artefacts téléchargés. La policy `2bis-G.v1` reste applicable : H consomme le schéma et les gates existants, sans nouveau seuil ni règle ; la collecte inclut explicitement la reconstruction DB. Aucun code UI modifié après la validation VoiceOver. STOP pour validation finale de Patrick ; aucun 2bis-I ni Phase 3.
+
+## Décision courante — 2bis-I2 uniquement
+
+Patrick a clôturé A–H et approuvé ADR-008 à 015. Baseline H : `615e59b327ade189d94598b6d35533e689493309`. I1 terminé, six écarts P1 à corriger uniquement en I2. Les limites et résultats sont dans le [rapport I2](../../quality/phase-2bis-i2-report.md). Aucun I3 ni Phase 3 autorisé. Les statuts de revue des rapports historiques ne sont pas réécrits.

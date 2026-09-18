@@ -26,7 +26,7 @@ export type Check = {
   reason: string;
 };
 export type Identity = {
-  schema_version: 1;
+  schema_version: 1 | 2;
   project: "ActiCiv";
   commit_sha: string;
   branch: string;
@@ -55,8 +55,25 @@ export type Rule = {
   applicable?: boolean;
   reason?: string;
 };
-export type Policy = { version: string; mode: "advisory"; rules: Rule[] };
+export type Budget = {
+  id: string;
+  source: string;
+  metric: string;
+  operator: "min" | "max";
+  value: number;
+  mode: "advisory" | "blocking";
+  approval?: { approved_by: string; approved_at: string; decision_ref: string };
+};
+export type Policy = {
+  version: string;
+  mode: "advisory";
+  rules: Rule[];
+  schema_version?: 2;
+  budgets?: Budget[];
+  promotion?: { required_checks: string[]; required_manual: string[] };
+};
 export type Gate = {
+  blocking?: boolean;
   rule_id: string;
   status: Status;
   reason: string;

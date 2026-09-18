@@ -116,7 +116,10 @@ export function present(run: Run) {
         severity: safeText(f.severity),
         status: safeText(f.status),
         summary: safeText(f.category),
-        owner: safeText(risk.owner),
+        owner: safeText(f.owner ?? risk.owner),
+        due: safeText(f.due),
+        firstObserved: safeText(f.first_observed),
+        evidence: arr(f.evidence).map(safeText),
         expiry: safeText(risk.expiry),
         accepted: Object.keys(risk).length > 0,
         retest: safeText(f.retest_status),
@@ -155,6 +158,39 @@ export function present(run: Run) {
         }
       : null,
     findings,
+    flakiness: {
+      state: safeText(s.checks.flakiness?.metrics.state ?? "NOT_RUN"),
+      repetitions: number(s.checks.flakiness?.metrics.repetitions),
+      first: safeText(s.checks.flakiness?.metrics.first_observed),
+      last: safeText(s.checks.flakiness?.metrics.last_observed),
+      provenance: s.provenance.flakiness?.sha256 ?? null,
+      tests: arr(s.checks.flakiness?.metrics.tests).map((raw) => {
+        const t = obj(raw);
+        return {
+          id: safeText(t.id),
+          attempts: number(t.attempts),
+          passes: number(t.passes),
+          failures: number(t.failures),
+          rate: number(t.failure_rate),
+        };
+      }),
+    },
+    axeReview: {
+      state: safeText(
+        s.checks.axe?.metrics.review_status ??
+          ((number(s.checks.axe?.metrics.incomplete) ?? 0) > 0
+            ? "REVIEW_REQUIRED"
+            : s.checks.axe
+              ? "NO_INCOMPLETE"
+              : "NOT_RUN"),
+      ),
+      count: number(s.checks.axe?.metrics.incomplete),
+      provenance: s.provenance.axe?.sha256 ?? null,
+      rules: arr(s.checks.axe?.metrics.reviews).map((raw) => {
+        const r = obj(raw);
+        return { test: safeText(r.test_id), rule: safeText(r.rule) };
+      }),
+    },
     manual: s.manual_evidence.map((e) => ({
       tool: safeText(e.tool),
       status: e.status,

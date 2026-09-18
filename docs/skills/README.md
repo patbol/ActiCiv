@@ -28,4 +28,4 @@ Lire [AGENTS.md](../../AGENTS.md) → cet index → le `SKILL.md` correspondant.
 
 AGENTS porte les règles non négociables ; les Skills portent les étapes spécialisées. Objectif/déclencheur, préconditions/lectures, impact map, procédure ordonnée, tests/preuves, documentation, sécurité/arrêt, DoD et erreurs à éviter sont présents. Runtime : charger nvm et `nvm use` dans chaque shell ; ne pas réinstaller pnpm.
 
-`pnpm docs:validate` contrôle les quinze chemins, métadonnées, sections et liens ; la revue contrôle leur pertinence. [Modèle](template.md), [DoD](../quality/definition-of-done.md) et [KB gouvernance](../kb/technical/knowledge-governance.md). Pas de reset DB pour une fiche seule, pas de nouveau parcours UI/VoiceOver artificiel. G seul autorisé ; STOP avant H et Phase 3.
+`pnpm docs:validate` contrôle les quinze chemins, métadonnées, sections et liens ; la revue contrôle leur pertinence. [Modèle](template.md), [DoD](../quality/definition-of-done.md) et [KB gouvernance](../kb/technical/knowledge-governance.md). Pas de reset DB pour une fiche seule, pas de nouveau parcours UI/VoiceOver artificiel. A–H approuvés ; I2 seul autorisé. STOP avant I3 et Phase 3.

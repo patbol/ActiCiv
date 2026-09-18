@@ -17,6 +17,7 @@ related_code:
   - tooling/quality/snapshot.ts
   - tooling/quality/policy.json
 related_tests:
+  - tooling/quality/i2.test.ts
   - tooling/quality/core.test.ts
   - tooling/quality/privacy.test.ts
   - tooling/quality/flakiness.test.ts
@@ -30,7 +31,7 @@ related_docs:
 
 ## Contrat et responsabilités
 
-Les producteurs exécutent les contrôles, les normalisateurs réduisent les résultats, le snapshot fige une identité/provenance, l’évaluateur applique une policy versionnée. La CLI compose ces éléments. Le futur Quality Center n’a pas de logique parallèle à créer. Aucun accès navigateur, droit métier, mutation DB ou événement analytics/audit/log applicatif ajouté.
+Les producteurs exécutent les contrôles, les normalisateurs réduisent les résultats, le snapshot fige une identité/provenance, l’évaluateur applique une policy versionnée. La CLI compose ces éléments. Le Quality Center H consomme ces mêmes preuves via sa capacité serveur dédiée, sans évaluateur navigateur. Le noyau qualité ne modifie pas les données métier.
 
 Une collecte locale est autorisée uniquement sur les services locaux prévus par les tests existants. Ne pas lancer deux campagnes mutantes simultanément. Le snapshot signale `dirty` et une empreinte des sources : un run de développement n’est pas une attestation de release sur un SHA propre. Le contrôle final de provenance détecte une modification pendant le run.
 
@@ -64,3 +65,13 @@ Policy `tooling/quality/policy-f.json` advisory : preuve observability dérivée
 ## Extension H
 
 Le [Quality Center](quality-center.md) lit désormais ces résultats sans nouveau calcul de gate. Les modules canoniques sont partagés dans packages/quality ; les anciens chemins tooling réexportent leur contrat. Policy G.v1 inchangée, aucun seuil ajouté.
+
+## Complément I2 — contrat canonique version 2
+
+Les nouveaux producteurs portent `identity.schema_version=2`. Le lecteur conserve v1 et les policies D/E/F/G à leur digest d’origine. La policy `2bis-I.v1` ajoute flakiness, revue axe et dette historique ; elle ne contient aucun budget numérique actif. Les règles et budgets refusent les champs inconnus. Aucun second format de snapshot ni nouvel évaluateur UI.
+
+Un budget référence une mesure dans `checks[source].metrics`, un opérateur min/max, une valeur configurable et un mode advisory/blocking. Un budget blocking exige approbateur, date et référence de décision. Un dépassement advisory est visible mais ne bloque pas le verdict ; un dépassement blocking ou sa mesure absente bloque. Les exemples numériques des tests sont synthétiques, pas des décisions produit.
+
+`quality:flakiness` conserve sa campagne manuelle séparée. `quality:collect --flakiness <flakiness.json>` ingère uniquement une mesure du même SHA/source_digest/environnement ; le producteur normalise STABLE / OBSERVED_FLAKY / UNKNOWN / NOT_RUN. Aucun rapprochement par branche ni copie automatique d’un ancien run. Sans option : NOT_RUN, DEFERRED. Les répétitions ne deviennent jamais des retries de release. La gate de mesure reste facultative/advisory dans I ; un run de release repris échoue toujours aux contrôles existants.
+
+Axe conserve les comptes et IDs de règles incompletes associés au test, sans DOM/texte de page. Le check automatique violations reste distinct du check `axe-review` : REVIEW_REQUIRED/DEFERRED tant que des incomplete existent. La présentation affiche état, nombre et empreinte de provenance ; une validation VoiceOver historique ne les clôture pas.

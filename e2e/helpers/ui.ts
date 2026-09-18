@@ -11,6 +11,7 @@ export async function accessible(page: Page) {
       violations: result.violations.length,
       incomplete: result.incomplete.length,
       rules: result.violations.map((v) => v.id),
+      incomplete_rules: result.incomplete.map((v) => v.id),
     }),
     contentType: "application/json",
   });

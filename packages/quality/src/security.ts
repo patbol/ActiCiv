@@ -69,10 +69,52 @@ export function securityGate(
       !["critical", "high", "medium", "low", "info"].includes(
         string(f.severity),
       ) ||
-      f.status !== "open" ||
-      f.retest_status !== "pending"
+      ![
+        "open",
+        "OPEN",
+        "ACCEPTED_RISK",
+        "FIXED_PENDING_RETEST",
+        "CLOSED",
+        "FALSE_POSITIVE",
+      ].includes(string(f.status)) ||
+      !["pending", "passed", "failed"].includes(string(f.retest_status))
     )
       throw Error("Invalid finding");
+    const lifecycle: Record<string, unknown> = {};
+    if (f.status !== "open") {
+      for (const k of ["first_observed", "reason", "mitigation"])
+        lifecycle[k] = string(f[k]);
+      lifecycle.owner =
+        f.owner === null && f.status === "OPEN" ? null : string(f.owner);
+      lifecycle.due =
+        f.due === null && f.status === "OPEN" ? null : string(f.due);
+      if (
+        !Number.isFinite(Date.parse(string(f.first_observed))) ||
+        Date.parse(string(f.first_observed)) > now ||
+        (f.due !== null && !Number.isFinite(Date.parse(string(f.due))))
+      )
+        throw Error("Invalid finding dates");
+      lifecycle.evidence = array(f.evidence).map(string);
+      if (
+        f.status === "FIXED_PENDING_RETEST" &&
+        !array(lifecycle.evidence).length
+      )
+        throw Error("Fix evidence required");
+      if (
+        f.status === "CLOSED" &&
+        (f.retest_status !== "passed" || !array(lifecycle.evidence).length)
+      )
+        throw Error("Closure requires evidenced retest");
+      if (
+        f.status === "FALSE_POSITIVE" &&
+        (!array(lifecycle.evidence).length ||
+          !string(f.qualified_by).trim() ||
+          !string(f.reason).trim())
+      )
+        throw Error("Qualified false positive required");
+      if (f.status === "FALSE_POSITIVE")
+        lifecycle.qualified_by = string(f.qualified_by);
+    }
     const risk = accepted.find(
       (r) =>
         r.finding_id === f.id &&
@@ -85,18 +127,23 @@ export function securityGate(
       tool: string(f.tool),
       category: string(f.category),
       severity: string(f.severity),
-      status: "open",
+      status:
+        f.status === "ACCEPTED_RISK" && (!risk || f.severity === "critical")
+          ? "OPEN"
+          : string(f.status),
       target: string(f.target),
       summary: string(f.summary),
-      retest_status: "pending",
-      accepted_risk: risk ?? null,
+      retest_status: string(f.retest_status),
+      accepted_risk: f.severity === "critical" ? null : (risk ?? null),
+      ...lifecycle,
     };
   });
   return {
     status: findings.some(
       (f) =>
-        f.severity === "critical" ||
-        (f.severity === "high" && !f.accepted_risk),
+        !["CLOSED", "FALSE_POSITIVE"].includes(f.status) &&
+        (f.severity === "critical" ||
+          (f.severity === "high" && !f.accepted_risk)),
     )
       ? "FAIL"
       : "PASS",

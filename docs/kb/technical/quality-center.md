@@ -35,7 +35,7 @@ related_docs:
 
 ## Architecture et source
 
-[ADR-015](../../architecture-decisions/015-quality-center.md) décrit le choix minimal sans DB qualité. Canonique v1 D/E/F/G inchangé ; seuls ses modules réutilisables quittent tooling vers packages/quality, avec réexports rétrocompatibles. Cas d’usage `readQuality` : autorisation avant reader. Adaptateur Supabase `platformIdentity` : getUser et ligne propre active. Adaptateur fichiers : intégrité et stockage. Entrypoint Server Component `/quality` : paramètres bornés, contexte serveur, rendu HTML traduit. Aucun réseau/Next/Supabase dans application.
+[ADR-015](../../architecture-decisions/015-quality-center.md) décrit le choix minimal sans DB qualité. Lecture historique v1 D/E/F/G/H conservée ; I2 ajoute v2 pour les nouvelles preuves ; seuls ses modules réutilisables quittent tooling vers packages/quality, avec réexports rétrocompatibles. Cas d’usage `readQuality` : autorisation avant reader. Adaptateur Supabase `platformIdentity` : getUser et ligne propre active. Adaptateur fichiers : intégrité et stockage. Entrypoint Server Component `/quality` : paramètres bornés, contexte serveur, rendu HTML traduit. Aucun réseau/Next/Supabase dans application.
 
 ## Import de confiance et exploitation
 
@@ -64,3 +64,9 @@ Analytics : aucune nouvelle campagne. Audit : la consultation ne crée pas un fl
 ## Accessibilité et coût
 
 HTML serveur, tables/captions/headers, details/summary, liens et formulaires natifs. Deux catalogues FR/EN, dates UTC explicites, navigation clavier, aucun graphique superflu. Le [protocole manuel](../../quality/phase-2bis-h-voiceover.md) est une validation propre à H, pas la réutilisation de C. Pas de dépendance tierce supplémentaire ; coût Node de lecture/validation partagé avec la CLI, aucun évaluateur navigateur. Les métriques compilées et limites sont dans le rapport.
+
+## Compléments I2
+
+Le read model projette les mesures canoniques de flakiness (état, répétitions, intervalle, tentatives/taux par test et digest de provenance), sans lancer de test ni recalculer la stabilité. Les résultats axe incomplets apparaissent comme revue humaine requise, séparés des violations et des preuves manuelles. Les anciennes pièces sans IDs restent lisibles avec leur compteur, sans inventer les détails manquants. Le lifecycle sécurité expose aussi les dates/ownership disponibles. Aucun nouveau droit, endpoint, Client Component ou dépendance.
+
+La preuve VoiceOver H reste historique ; les ajouts statiques I2 demandent une revue manuelle ciblée, distincte du PASS H.

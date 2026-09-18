@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoints **2bis-A à G CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-014 approuvées. Baseline G : `11d6f94d4f4a7790bd22588847b0bb8aecd1703e`. Architecture H et ADR-015 approuvées par Patrick ; VoiceOver H-VO-01 à H-VO-09 PASS manuel. Checkpoint actif et seul autorisé : **2bis-H — finalisation des preuves du Quality Center read-only**. **STOP après H pour revue de Patrick ; aucun 2bis-I ni Phase 3 sans validation explicite.**
+Checkpoints **2bis-A à H CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-015 approuvées. Baseline H : `615e59b327ade189d94598b6d35533e689493309`. I1 terminé ; I2 approuvé, six P1 corrigés. Checkpoint actif et seul autorisé : **2bis-I3 — gel du candidat et validation locale globale**. **STOP après I3 pour revue de Patrick ; aucun push/CI I4 ni Phase 3 autorisé.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 
@@ -942,6 +942,14 @@ Décision historique G : A–F étaient approuvés ; G seul autorisé à cette d
 
 Une modification de comportement/droit/DB/API/audit/analytics/logs/architecture met à jour sa KB dans la même PR. `pnpm docs:generate` dérive la traçabilité ; `pnpm docs:validate` contrôle métadonnées/liens/ADR/Skills et fraîcheur de la vue. Voir [limites du validateur](docs/kb/technical/knowledge-governance.md). Ne pas étendre les phases actives du validateur avant autorisation explicite.
 
-## Complément opérationnel 2bis-H
+## Complément historique 2bis-H
 
-Patrick approuve G et autorise H uniquement. Lire la [KB Quality Center](docs/kb/technical/quality-center.md) et [ADR-015 proposée](docs/architecture-decisions/015-quality-center.md). Les preuves canoniques restent une source unique ; import CLI de confiance, capability quality.read serveur, interface strictement read-only. Aucun seuil numérique nouveau, aucun I/Phase 3.
+À cette étape, Patrick avait approuvé G et autorisé H uniquement. Lire la [KB Quality Center](docs/kb/technical/quality-center.md) et [ADR-015 acceptée](docs/architecture-decisions/015-quality-center.md). Les preuves canoniques restent une source unique ; import CLI de confiance, capability quality.read serveur, interface strictement read-only. Aucun seuil numérique nouveau, aucun I/Phase 3.
+
+## Complément opérationnel 2bis-I2
+
+L’autorisation récente de Patrick limite I2 aux six écarts de l’audit : promotion sans déploiement, budgets configurables sans seuil bloquant activé, flakiness canonique, lifecycle sécurité, documentation active et revue des résultats axe incomplets. Tests ciblés et compatibilité v1/v2 ; aucune réécriture de policy ou preuve historique. Les campagnes finales appartiennent à I3 après validation. Voir le [rapport I2](docs/quality/phase-2bis-i2-report.md).
+
+## Autorisation courante I3
+
+Patrick autorise le commit du candidat I2, la validation locale globale avec reconstruction, la collecte/évaluation canonique et le [protocole VoiceOver ciblé I2](docs/quality/phase-2bis-i2-voiceover.md). Aucun changement fonctionnel après gel ; anomalie prouvée uniquement, avec nouveau SHA et revalidation. Résultats post-commit conservés séparément des sources figées. STOP avant I4/Phase 3.

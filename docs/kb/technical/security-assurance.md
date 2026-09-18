@@ -37,3 +37,9 @@ Patrick porte la décision d'exploitation et doit nommer les titulaires/suppléa
 - Rétention : artefacts CI qualité 14 jours ; ce choix ne définit pas rétention légale des données/audits métier. Audit append-only transactionnel inchangé, logs techniques distincts. Définir durées et accès cloud avant exposition réelle.
 
 Pentest indépendant/retest requis avant vraie PROD ou pilote significatif. Une référence à une phase future n'est pas une dispense de cette condition. Aucun achat, scan externe ni modification d'administration GitHub effectué ici.
+
+## Cycle de dette I2
+
+États : OPEN, ACCEPTED_RISK, FIXED_PENDING_RETEST, CLOSED, FALSE_POSITIVE qualifié. Propriétaire, première observation, échéance, raison, mitigation, références de preuve et statut de retest sont conservés ; owner/due null n’est autorisé que pour un OPEN non encore attribué, et reste explicitement inconnu. CLOSED exige un retest passé et sa preuve ; FALSE_POSITIVE exige une qualification nominative et preuve. Critical ne peut pas être accepté ; high reste bloquant sans acceptation explicite, bornée et encore valide dans le scope évalué. Expiration rétablit OPEN et le blocage de sévérité.
+
+`tooling/security/security-debt.json` reprend les 17 findings minimisés de la preuve E, tous OPEN/pending, sans inventer owner/due ni acceptation. Son source_snapshot_digest assure la traçabilité ; le check `security-debt` ne prétend pas être un nouveau DAST. L’attribution humaine et les dates de remédiation restent à décider avant exposition réelle. Modifier un état crée une nouvelle preuve canonique ; aucune pièce historique n’est réécrite.

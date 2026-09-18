@@ -12,6 +12,7 @@ import { gzipSync } from "node:zlib";
 import { object, array, string } from "./model.ts";
 import type { Identity, Evidence } from "./model.ts";
 import { sqlReport } from "./sql.ts";
+import { flakinessEvidence } from "../../packages/quality/src/flakiness.ts";
 import { digest } from "./snapshot.ts";
 export const git = (...args: string[]) =>
   execFileSync("git", args, { encoding: "utf8" }).trim();
@@ -86,7 +87,26 @@ export function minimize(source: string, raw: unknown): unknown {
                       attachments: array(r.attachments ?? [])
                         .map(object)
                         .filter((a) => a.name === "acticiv-axe")
-                        .map((a) => ({ name: a.name, body: a.body })),
+                        .map((a) => {
+                          const payload = object(
+                            JSON.parse(
+                              Buffer.from(string(a.body), "base64").toString(
+                                "utf8",
+                              ),
+                            ),
+                          );
+                          return {
+                            name: a.name,
+                            body: Buffer.from(
+                              JSON.stringify({
+                                violations: payload.violations,
+                                incomplete: payload.incomplete,
+                                rules: payload.rules,
+                                incomplete_rules: payload.incomplete_rules,
+                              }),
+                            ).toString("base64"),
+                          };
+                        }),
                     };
                   }),
                 };
@@ -143,7 +163,7 @@ function bundles() {
   }
   return result;
 }
-export function collect(rebuild = false) {
+export function collect(rebuild = false, flakinessPath?: string) {
   const runId =
     new Date().toISOString().replace(/[:.]/g, "-") +
     "-" +
@@ -155,13 +175,13 @@ export function collect(rebuild = false) {
   const version = (args: string[]) =>
     execFileSync("pnpm", args, { encoding: "utf8" }).trim();
   const who: Identity = {
-    schema_version: 1,
+    schema_version: 2,
     project: "ActiCiv",
     commit_sha: git("rev-parse", "HEAD"),
     branch: git("branch", "--show-current") || "detached",
     environment: process.env.CI ? "ci-local" : "local",
     created_at: new Date().toISOString(),
-    producer: "acticiv-quality/1",
+    producer: "acticiv-quality/2",
     run_id: runId,
     source_digest: sourceDigest(),
     dirty: Boolean(git("status", "--porcelain")),
@@ -384,6 +404,29 @@ export function collect(rebuild = false) {
     ACTICIV_SECRET_REPORT: secret,
     ACTICIV_SCAN_ARTIFACTS: "1",
   });
+  let measurement: unknown = null;
+  if (flakinessPath) {
+    const raw = object(json(flakinessPath));
+    const normalized = flakinessEvidence(raw, who);
+    measurement = {
+      schema_version: 1,
+      run_id: normalized.metrics.run_id,
+      commit_sha: who.commit_sha,
+      source_digest: who.source_digest,
+      environment: who.environment,
+      source_unchanged: true,
+      first_observed: normalized.metrics.first_observed,
+      last_observed: normalized.metrics.last_observed,
+      repetitions: normalized.metrics.repetitions,
+      tests: normalized.metrics.tests,
+      outcomes: array(raw.outcomes).map((value) => {
+        const o = object(value);
+        return { exit_code: o.exit_code, status: o.status };
+      }),
+    };
+  }
+  record("flakiness", measurement, 0, 0);
+  record("security-debt", json("tooling/security/security-debt.json"), 0, 0);
   const stable =
     git("rev-parse", "HEAD") === who.commit_sha &&
     sourceDigest() === who.source_digest;

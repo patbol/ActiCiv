@@ -41,3 +41,11 @@ Observer une vraie CI sur le même SHA, télécharger/vérifier l'artefact et se
 ## Limites et décision humaine
 
 Reporter PASS/FAIL/DEFERRED/NOT_APPLICABLE et preuves manuelles pertinentes. VoiceOver historique n'est pas une validation d'une nouvelle interaction ; TalkBack requiert un environnement réel. Pentest avant première vraie PROD/pilote significatif, jamais fabriqué. Le Skill [prepare-release](../../skills/prepare-release/SKILL.md) donne les étapes. READY FOR PATRICK REVIEW ne ferme pas le checkpoint et n'autorise pas le suivant.
+
+## Éligibilité I2, sans déploiement
+
+`packages/quality/src/promotion.ts` évalue candidate → validated → eligible ; promoted exige un reçu externe exact. Un candidat propre et sa réévaluation canonique doivent coïncider. L’éligibilité exige acceptation humaine de ce candidat baseline, approbation du digest de policy, mêmes digests de tous les artefacts et conditions supplémentaires configurées par cette policy. Aucune branche mouvante ni acceptance implicite. Les environnements d’exécution local/ci-local du snapshot restent distincts des étapes dev/demo/prod de promotion.
+
+`pnpm quality:evaluate` vérifie les policies historiques ; `node tooling/quality/cli.ts promotion <requête.json>` charge `snapshot_path` avec contrôle des pièces puis évalue la requête opérateur. La requête contient policy, baseline acceptée, policy_approval, source_environment, target_environment, artifacts, at et éventuellement receipt. Ce modèle ne réalise aucune promotion et n’authentifie pas à lui seul un opérateur : stockage/import et exécution CLI restent la frontière de confiance.
+
+La policy I demande des preuves explicites supplémentaires avant PROD (régression, même artefact DEMO, migration, défauts, sécurité, backup/rollback, notes, pentest et manuel actuel). Elles restent absentes tant que non produites : aucune éligibilité PROD artificielle. Les attestations historiques ne sont pas converties en nouvelles validations.

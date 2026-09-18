@@ -61,13 +61,18 @@ test.describe(
         await expect(quality.main).toContainText("TalkBack : DEFERRED");
         await expect(quality.main).toContainText("medium · open");
         await expect(quality.main).toContainText("aucun seuil bloquant");
+        await expect(quality.main).toContainText("Stable sur l’échantillon");
+        await expect(quality.main).toContainText("Revue humaine requise");
+        await expect(quality.main).toContainText("color-contrast");
         await accessible(page);
         await quality.open("synthetic-fail");
+        await expect(quality.main).toContainText("Instabilité observée");
         await expect(page.locator("aside")).toContainText("FAIL");
         await accessible(page);
         await quality.open("synthetic-deferred");
         await expect(page.locator("aside")).toContainText("DEFERRED");
         await expect(quality.main).toContainText("Aucune baseline");
+        await expect(quality.main).toContainText("Mesure non exécutée");
         await quality.open("synthetic-partial");
         await expect(quality.denied).toContainText("Aucun verdict fiable");
       },

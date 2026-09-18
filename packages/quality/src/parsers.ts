@@ -81,6 +81,7 @@ export function normalizePlaywright(raw: unknown) {
     tests: Test[] = [];
   let suiteCount = 0;
   const axe: { violations: number; incomplete: number; rules: string[] }[] = [];
+  const reviews: { test_id: string; rule: string }[] = [];
   function visit(suites: unknown[]) {
     for (const item of suites) {
       const suite = object(item);
@@ -124,6 +125,16 @@ export function normalizePlaywright(raw: unknown) {
                   Buffer.from(string(a.body), "base64").toString("utf8"),
                 ),
               );
+              for (const rule of array(payload.incomplete_rules ?? []).map(
+                string,
+              )) {
+                if (!/^[a-z0-9-]{1,100}$/.test(rule))
+                  throw Error("Invalid axe rule");
+                reviews.push({
+                  test_id: string(spec.id) + ":" + string(test.projectName),
+                  rule,
+                });
+              }
               axe.push({
                 violations: integer(payload.violations),
                 incomplete: integer(payload.incomplete),
@@ -150,6 +161,10 @@ export function normalizePlaywright(raw: unknown) {
     violations: axe.reduce((n, a) => n + a.violations, 0),
     incomplete: axe.reduce((n, a) => n + a.incomplete, 0),
     rules: [...new Set(axe.flatMap((a) => a.rules))],
+    review_status: axe.some((a) => a.incomplete > 0)
+      ? "REVIEW_REQUIRED"
+      : "NO_INCOMPLETE",
+    reviews,
   };
   return result;
 }

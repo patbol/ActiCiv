@@ -23,14 +23,16 @@ import {
   normalizeCoverage,
   parseTap,
 } from "./parsers.ts";
-import { assuranceCheck } from "./security.ts";
+import { assuranceCheck, securityGate } from "./security.ts";
+import { budgets, evaluateBudget, exactKeys } from "./budgets.ts";
+import { flakinessEvidence } from "./flakiness.ts";
 export function digest(value: unknown) {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex");
 }
 export function identity(raw: unknown): Identity {
   const r = object(raw);
   if (
-    r.schema_version !== 1 ||
+    (r.schema_version !== 1 && r.schema_version !== 2) ||
     r.project !== "ActiCiv" ||
     !/^\w[\w.-]{0,120}$/.test(string(r.run_id)) ||
     !/^[a-f0-9]{40}$/.test(string(r.commit_sha)) ||
@@ -41,7 +43,7 @@ export function identity(raw: unknown): Identity {
   )
     throw Error("Invalid quality identity");
   return {
-    schema_version: 1,
+    schema_version: r.schema_version as 1 | 2,
     project: "ActiCiv",
     commit_sha: r.commit_sha as string,
     branch: string(r.branch),
@@ -58,6 +60,20 @@ export function identity(raw: unknown): Identity {
 }
 export function policy(raw: unknown): Policy {
   const r = object(raw);
+  exactKeys(r, [
+    "version",
+    "mode",
+    "rules",
+    "schema_version",
+    "budgets",
+    "promotion",
+  ]);
+  if (
+    (r.schema_version !== undefined && r.schema_version !== 2) ||
+    ((r.budgets !== undefined || r.promotion !== undefined) &&
+      r.schema_version !== 2)
+  )
+    throw Error("New policy fields require schema v2");
   if (r.mode !== "advisory")
     throw Error(
       "Blocking policy requires explicit approval and implementation review",
@@ -66,6 +82,14 @@ export function policy(raw: unknown): Policy {
   const rules = array(r.rules).map((value) => {
     const v = object(value),
       id = string(v.id);
+    exactKeys(v, [
+      "id",
+      "source",
+      "required",
+      "missing",
+      "applicable",
+      "reason",
+    ]);
     if (
       ids.has(id) ||
       typeof v.required !== "boolean" ||
@@ -89,14 +113,26 @@ export function policy(raw: unknown): Policy {
     };
   });
   if (!rules.length) throw Error("Empty policy");
-  return { version: string(r.version), mode: "advisory", rules };
+  const extensions: Pick<Policy, "schema_version" | "budgets" | "promotion"> =
+    {};
+  if (r.schema_version === 2) extensions.schema_version = 2;
+  if (r.budgets !== undefined) extensions.budgets = budgets(r.budgets, ids);
+  if (r.promotion !== undefined) {
+    const p = object(r.promotion);
+    exactKeys(p, ["required_checks", "required_manual"]);
+    extensions.promotion = {
+      required_checks: array(p.required_checks).map(string),
+      required_manual: array(p.required_manual).map(string),
+    };
+  }
+  return { version: string(r.version), mode: "advisory", rules, ...extensions };
 }
 export function evaluate(
   snapshot: Pick<Snapshot, "checks" | "provenance">,
   raw: unknown,
 ): Snapshot["gate_evaluation"] {
   const p = policy(raw);
-  const results = p.rules.map((rule) => {
+  const results: import("./model.ts").Gate[] = p.rules.map((rule) => {
     const evidence = snapshot.provenance[rule.source] ?? null,
       c = snapshot.checks[rule.source];
     if (rule.applicable === false)
@@ -122,6 +158,11 @@ export function evaluate(
   const required = results.filter(
     (_, i) => p.rules[i]!.required && p.rules[i]!.applicable !== false,
   );
+  for (const b of p.budgets ?? []) {
+    const gate = evaluateBudget(b, snapshot.checks, snapshot.provenance);
+    results.push(gate);
+    if (gate.blocking) required.push(gate);
+  }
   const status = required.some((r) => r.status === "FAIL")
     ? "FAIL"
     : required.some((r) => r.status === "DEFERRED")
@@ -212,7 +253,25 @@ export function assemble(
       duration = count(row.duration_ms);
     let result: Check;
     try {
-      if (source === "unit" || source === "integration-adapters")
+      if (source === "security-debt") {
+        const r = object(row.report);
+        const debt = securityGate(
+          array(r.findings),
+          array(r.accepted_risks),
+          who.created_at,
+        );
+        result = check({
+          status: debt.status as Status,
+          metrics: {
+            ...debt,
+            scope: "Tracked debt; not a fresh scan",
+            source_snapshot_digest: string(r.source_snapshot_digest),
+          },
+          reason: "Historical security debt with explicit lifecycle",
+        });
+      } else if (source === "flakiness")
+        result = flakinessEvidence(row.report, who);
+      else if (source === "unit" || source === "integration-adapters")
         result = normalizeVitest(row.report);
       else if (["e2e", "e2e-prod"].includes(source))
         result = normalizePlaywright(row.report);
@@ -358,6 +417,17 @@ export function assemble(
       reason: "Only axe analyses; incomplete checks require human review",
     });
     provenance.axe = provenance.e2e!;
+    if (who.schema_version === 2) {
+      checks["axe-review"] = check({
+        status: Number(a.incomplete) > 0 ? "DEFERRED" : "PASS",
+        metrics: a,
+        reason:
+          Number(a.incomplete) > 0
+            ? "REVIEW_REQUIRED: incomplete is not a violation or a human PASS"
+            : "No incomplete automatic checks; manual accessibility remains separate",
+      });
+      provenance["axe-review"] = provenance.e2e!;
+    }
   }
   const partial = {
     identity: who,
@@ -399,6 +469,16 @@ export function validateSnapshot(raw: unknown): Snapshot {
       status: v.status as Status,
       reason: string(v.reason),
       evidence: v.evidence === null ? null : reference(v.evidence),
+      ...(v.blocking !== undefined
+        ? {
+            blocking:
+              typeof v.blocking === "boolean"
+                ? v.blocking
+                : (() => {
+                    throw Error("Invalid blocking flag");
+                  })(),
+          }
+        : {}),
     };
   });
   // Coverage has the same metrics shape as its native normalized representation.

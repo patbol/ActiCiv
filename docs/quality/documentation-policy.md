@@ -1,6 +1,6 @@
 # Politique documentaire et conventions d'ingénierie
 
-Statut : gouvernance A approuvée, complétée en G pour revue. A–F et ADR-008 à 013 approuvés ; G seul autorisé.
+Statut : gouvernance A/G approuvée. A–H et ADR-008 à 015 approuvés ; I2 seul autorisé après l’audit I1.
 
 ## Responsabilités des dossiers
 
@@ -50,7 +50,7 @@ Chaîne cible : Prettier → TypeScript strict → ESLint → tests d'architectu
 | Coverage, rapports, snapshots/gates                               | Implémenté D (seuils advisory)                                   |
 | Scanners, artefacts compilés, mesures/budgets performance         | Implémenté E (budgets non approuvés)                             |
 | Contrats et séparation d'observabilité                            | Implémenté F                                                     |
-| Validation approfondie KB/Skills                                  | Implémenté G, revue attendue                                     |
+| Validation approfondie KB/Skills                                  | Implémenté G, approuvé                                           |
 
 G ajoute `pnpm docs:validate` à `verify`/CI et au snapshot canonique ; `pnpm docs:generate` produit la matrice depuis le frontmatter. Voir le [contrat et ses limites](../kb/technical/knowledge-governance.md). Les contrôles éditoriaux restent humains, notamment la cohérence métier et la mise à jour dans la même PR.
 

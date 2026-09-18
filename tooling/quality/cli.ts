@@ -18,11 +18,12 @@ import {
   sourceDigest,
 } from "./collect.ts";
 import { normalizePlaywright } from "./parsers.ts";
+import { assessPromotion } from "../../packages/quality/src/promotion.ts";
 import { repetitions } from "./flakiness.ts";
 import type { Snapshot, Test } from "./model.ts";
 const read = (path: string) =>
   JSON.parse(readFileSync(path, "utf8")) as unknown;
-const p = policy(read("tooling/quality/policy-g.json"));
+const p = policy(read("tooling/quality/policy-i.json"));
 function report(s: Snapshot) {
   return (
     [
@@ -50,11 +51,18 @@ function snapshot(directory: string) {
   const s = assemble(input.identity, input.evidence, p);
   s.manual_evidence = [
     {
+      tool: "VoiceOver-current",
+      status: "DEFERRED",
+      reference: "docs/quality/phase-2bis-i2-report.md",
+      scope:
+        "I2 flakiness and incomplete-result presentation; targeted manual review pending",
+    },
+    {
       tool: "VoiceOver",
       status: "PASS",
       reference: "docs/quality/phase-2bis-h-voiceover.md",
       scope:
-        "H-VO-01…09 confirmed manually by Patrick on 2026-09-18 on Pro build cb_hN-N_QosuXI5ezpDfh; no UI code changed after approval; preserved human evidence, not a new automated reader run",
+        "Historical H-VO-01…09 approved on Pro build cb_hN-N_QosuXI5ezpDfh; I2 adds quality presentation requiring a targeted new manual review",
     },
     {
       tool: "VoiceOver",
@@ -92,7 +100,14 @@ function snapshot(directory: string) {
 async function main() {
   const [command, arg, ...rest] = process.argv.slice(2);
   if (command === "collect") {
-    const dir = collect(arg === "--rebuild-db");
+    const args = process.argv.slice(3);
+    const index = args.indexOf("--flakiness");
+    if (index >= 0 && !args[index + 1])
+      throw Error("Provide flakiness evidence path");
+    const dir = collect(
+      args.includes("--rebuild-db"),
+      index >= 0 ? args[index + 1] : undefined,
+    );
     process.stdout.write("Collected: " + dir + "\n");
     snapshot(dir);
   } else if (command === "snapshot") {
@@ -108,12 +123,23 @@ async function main() {
           ? policy(read("tooling/quality/policy-e.json"))
           : s.gate_evaluation.policy_version === "2bis-F.v1"
             ? policy(read("tooling/quality/policy-f.json"))
-            : p;
+            : s.gate_evaluation.policy_version === "2bis-G.v1"
+              ? policy(read("tooling/quality/policy-g.json"))
+              : p;
     const result = evaluate(s, selected);
     if (result.policy_digest !== s.gate_evaluation.policy_digest)
       throw Error("Changed policy requires a new snapshot");
     process.stdout.write(JSON.stringify(result, null, 2) + "\n");
     if (result.status !== "PASS") process.exitCode = 1;
+  } else if (command === "promotion") {
+    if (!arg) throw Error("Provide trusted eligibility request");
+    const request = read(arg) as Record<string, unknown>;
+    if (typeof request.snapshot_path !== "string")
+      throw Error("Provide verified snapshot path");
+    const s = readSnapshot(request.snapshot_path);
+    const result = assessPromotion({ ...request, snapshot: s });
+    process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+    if (!["eligible", "promoted"].includes(result.state)) process.exitCode = 1;
   } else if (command === "report") {
     if (!arg) throw Error("Provide snapshot.json");
     process.stdout.write(report(readSnapshot(arg)));
