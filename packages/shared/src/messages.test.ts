@@ -21,3 +21,12 @@ it("preserves complete DEMO catalogues outside the production catalogue", async 
   expect(await loadMessages("fr-FR")).not.toHaveProperty("dialog");
   expect(await loadMessages("en-GB")).not.toHaveProperty("dialog");
 });
+
+import { loadQualityMessages } from "./messages/quality";
+it("quality catalogues are complete and stay outside Citizen catalogue", async () => {
+  const fr = await loadQualityMessages("fr-FR"),
+    en = await loadQualityMessages("en-GB");
+  expect(Object.keys(fr)).toEqual(Object.keys(en));
+  for (const v of Object.values(en)) expect(v.trim().length).toBeGreaterThan(0);
+  expect(await loadMessages("fr-FR")).not.toHaveProperty("quality");
+});

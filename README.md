@@ -2,7 +2,7 @@
 
 **Phase 2 = CLOSED** — baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
 
-**Phase 2 bis = CURRENT** — **2bis-A/B/C/D/E/F APPROVED** ; checkpoint actif : **2bis-G**, Knowledge Base, Skills & Documentation Governance uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-H, Quality Center ni Phase 3 sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT** — **2bis-A/B/C/D/E/F/G APPROVED** ; checkpoint actif : **2bis-H**, Quality Center read-only uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-I ni Phase 3 sans validation explicite de Patrick.
 
 La [clôture Phase 2](docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md) atteste 260 PASS, 0 FAIL et 1 DEFERRED (TalkBack). Les garanties métier et sécurité de Phase 2 restent acquises.
 
@@ -74,4 +74,8 @@ Checkpoint E : [rapport et preuves](docs/quality/phase-2bis-e-report.md). PROD :
 
 ## Connaissances et procédures G
 
-Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. G seul autorisé : [KB](docs/kb/README.md), [traçabilité générée](docs/kb/traceability.md), [quinze Skills](docs/skills/README.md), [audit ADR](docs/architecture-decisions/README.md), [rapport G](docs/quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. STOP après G ; H/Quality Center/Phase 3 non commencés.
+Baseline F approuvée : `ebab16c5c5c5c3133dda5afa5061263da5c3bcf25e`. Livrables G approuvés : [KB](docs/kb/README.md), [traçabilité générée](docs/kb/traceability.md), [quinze Skills](docs/skills/README.md), [audit ADR](docs/architecture-decisions/README.md), [rapport G](docs/quality/phase-2bis-g-report.md). Contrôle : `pnpm docs:validate`. G clôturé sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` ; H seul autorisé désormais.
+
+## Checkpoint courant H
+
+A–G approuvés ; H seul autorisé, Quality Center read-only en validation. Aucun I ni Phase 3. [Rapport H](docs/quality/phase-2bis-h-report.md).

@@ -1,3 +1,4 @@
+import { qualitySource } from "./e2e/fixtures/quality-source";
 import { defineConfig, devices } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -14,6 +15,7 @@ process.env.SUPABASE_PUBLISHABLE_KEY = local.ANON_KEY!;
 process.env.SUPABASE_SERVICE_ROLE_KEY = local.SERVICE_ROLE_KEY!;
 process.env.ACTICIV_E2E_PASSWORD ??= randomUUID() + "aA!";
 process.env.PRO_APP_ORIGIN = "http://127.0.0.1:3001";
+process.env.ACTICIV_QUALITY_ROOT = await qualitySource();
 export default defineConfig({
   testDir: "./e2e",
   testIgnore: "artifact-prod.spec.ts",

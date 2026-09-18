@@ -7,7 +7,8 @@
     ".": "./src/index.ts",
     "./locale": "./src/locale.ts",
     "./messages": "./src/messages/index.ts",
-    "./demo-messages": "./src/messages/demo.ts"
+    "./demo-messages": "./src/messages/demo.ts",
+    "./quality-messages": "./src/messages/quality.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

@@ -3,7 +3,7 @@ import base from "./playwright.config";
 export default defineConfig({
   ...base,
   testIgnore: [],
-  testMatch: "artifact-prod.spec.ts",
+  testMatch: ["artifact-prod.spec.ts", "quality.spec.ts"],
   webServer: [
     {
       command: "pnpm --filter @acticiv/citizen start",

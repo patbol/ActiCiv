@@ -114,3 +114,21 @@ it("observability server contracts cannot cross a client entrypoint, including d
     ).toBe(true);
   }
 }, 15000);
+it("quality reader and evaluator cannot cross a client entrypoint", async () => {
+  const eslint = new ESLint();
+  for (const source of [
+    "@acticiv/quality/snapshot",
+    "../../packages/quality/src/storage",
+    "@acticiv/backend/quality",
+  ]) {
+    const results = await eslint.lintText(
+      `"use client"; import * as x from '${source}'; export {x};`,
+      { filePath: "apps/pro/src/app/quality/probe.tsx" },
+    );
+    expect(
+      results
+        .flatMap((r) => r.messages)
+        .some((m) => m.ruleId === "acticiv/production-boundaries"),
+    ).toBe(true);
+  }
+});

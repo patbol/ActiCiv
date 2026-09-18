@@ -181,13 +181,13 @@ export function validateKnowledge(files: Inventory, paths: string[]) {
       errors.push(`${path}: invalid status`);
     if (
       raw.status === "active" &&
-      !/^phase-(?:1|2|2bis-[a-g])$/.test(String(raw.introduced_in))
+      !/^phase-(?:1|2|2bis-[a-h])$/.test(String(raw.introduced_in))
     )
       errors.push(`${path}: unsupported active phase`);
     // Explicit scope deny-list, not a semantic claim about all possible future prose.
     if (
       raw.status === "active" &&
-      /citizen-reporting|smart-queue|duplicate-management|(?:^|[./-])(?:routing|intervention|transfer|quality-center)(?:[./-]|$)/.test(
+      /citizen-reporting|smart-queue|duplicate-management|(?:^|[./-])(?:routing|intervention|transfer)(?:[./-]|$)/.test(
         `${raw.id}/${raw.domain}/${path}`,
       )
     )

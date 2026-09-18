@@ -156,7 +156,7 @@ const productionBoundaries = metadata((context) => {
     if (typeof source !== "string") return;
     if (
       isClient &&
-      /^(?:@acticiv\/backend(?:\/|$)|server-only$)|(?:^|\/)backend\/src\//.test(
+      /^(?:@acticiv\/(?:backend|quality)(?:\/|$)|server-only$)|(?:^|\/)(?:backend|quality)\/src\//.test(
         source,
       )
     )

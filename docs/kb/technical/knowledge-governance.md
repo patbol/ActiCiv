@@ -35,13 +35,13 @@ Une fiche correspond à un comportement/domaine réel, pas à chaque fonction. B
 
 ## Frontmatter
 
-Champs texte requis : `id`, `title`, `domain`, `type`, `status`, `introduced_in`. Listes texte : `roles`, `requirements`, `related_adrs`, `related_code`, `related_tests`, `related_docs`. Types : business-feature, technical-topic ; templates suffixés -template, statut template. Statuts des fiches : draft, active, historical, superseded. Phase déclarée : phase-1, phase-2 ou phase-2bis-a…g pour une fiche active dans le périmètre actuel.
+Champs texte requis : `id`, `title`, `domain`, `type`, `status`, `introduced_in`. Listes texte : `roles`, `requirements`, `related_adrs`, `related_code`, `related_tests`, `related_docs`. Types : business-feature, technical-topic ; templates suffixés -template, statut template. Statuts des fiches : draft, active, historical, superseded. Phase déclarée : phase-1, phase-2 ou phase-2bis-a…h pour une fiche active dans le périmètre actuel.
 
 Une fiche active a exigences, ADR, code et tests non vides. Les listes de chemins sont relatives à la racine ; Markdown est relatif au fichier. Un dossier code existant est admis pour un sujet transversal ; préférer un fichier/test précis lorsqu'utile. `related_docs` relie notamment analytics/audit/logging : l'absence d'événement est expliquée dans le corps, jamais transformée en preuve d'instrumentation.
 
 ## Commandes et limites
 
-Après nvm use : `pnpm docs:generate` régénère une seule [vue](../traceability.md) depuis les métadonnées ; `pnpm docs:validate` exige qu'elle soit à jour. Le contrôle rejette YAML invalide, ID dupliqué, type/statut invalide, chemins absents, ADR inconnues, liens locaux/ancres Markdown cassés et active Phase 3/Quality Center explicitement identifiés. Tests synthétiques couvrent ces refus.
+Après nvm use : `pnpm docs:generate` régénère une seule [vue](../traceability.md) depuis les métadonnées ; `pnpm docs:validate` exige qu'elle soit à jour. Le contrôle rejette YAML invalide, ID dupliqué, type/statut invalide, chemins absents, ADR inconnues, liens locaux/ancres Markdown cassés et active Phase 3 ou checkpoint non autorisé explicitement identifiés. Tests synthétiques couvrent ces refus.
 
 Le contrôle des liens porte sur Markdown explicite (inline/référence) des documents vivants et sources courantes, hors blocs de code. Pas de crawler web, pas d'analyse sémantique de toute prose. Les références historiques peuvent être cibles valides sans devenir sources courantes. Les postmortems/reports A–F et preuves brutes restent hors normalisation ; leur statut est annoncé dans les index. Les chemins nus dans une preuve ne sont pas des liens actifs à réparer.
 

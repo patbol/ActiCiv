@@ -52,6 +52,13 @@ function snapshot(directory: string) {
     {
       tool: "VoiceOver",
       status: "PASS",
+      reference: "docs/quality/phase-2bis-h-voiceover.md",
+      scope:
+        "H-VO-01…09 confirmed manually by Patrick on 2026-09-18 on Pro build cb_hN-N_QosuXI5ezpDfh; no UI code changed after approval; preserved human evidence, not a new automated reader run",
+    },
+    {
+      tool: "VoiceOver",
+      status: "PASS",
       reference: "docs/quality/phase-2bis-c-voiceover.md",
       scope:
         "Historical C-VO-01…05 confirmed by Patrick; historical scope only; current applicability requires review, not a new reader run",

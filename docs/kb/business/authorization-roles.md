@@ -53,3 +53,7 @@ Organisation inactive, profil/membership suspendu, service étranger, capacité 
 ## Preuves et décisions
 
 Unitaires de policy pour chaque rôle et faux contexte ; pgTAP sur grants/RLS ; JWT réels contre IDOR et metadata falsifiées. ADR-004 établit la distinction des rôles, ADR-007 la lecture de l'audit. Cette fiche décrit des capacités backend existantes, pas des workflows opérationnels Phase 3 ni une UI à traduire.
+
+## Capacité quality.read — checkpoint H
+
+La lecture du [Quality Center](quality-center.md) exige administrateur plateforme actif et capability explicite quality.read. Aucun rôle client ni metadata Auth ne l’accorde. Aucun grant automatique ; attribution opérateur/DB auditée par le mécanisme existant.

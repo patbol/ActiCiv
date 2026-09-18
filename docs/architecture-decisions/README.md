@@ -19,6 +19,8 @@ Audit ADR-001 à 013 effectué contre KB, code et tests existants. Toutes demeur
 | [ADR-013](013-observability-separation.md)      | Acceptée, active          | Non supersédée                                               | Analytics/Audit/Logs séparés et privacy                        |
 | [ADR-014](014-knowledge-skills-governance.md)   | Acceptée — finalisation G | Complète 008/011 sans supersession                           | Complément G : validation KB/Skills et traçabilité dérivée     |
 
+| [ADR-015](015-quality-center.md) | Acceptée — finalisation H | Complète 011/012/014 sans supersession | Lecture canonique, capacité plateforme et UI read-only |
+
 Les [associations ADR → KB](../kb/traceability.md#adr--kb) sont générées depuis les fiches, sans seconde matrice manuelle. Les liens et statuts sont vérifiés par `pnpm docs:validate` ; la revue humaine a examiné l’applicabilité et l’impact, ce qu’un validateur syntaxique ne prouve pas.
 
 Une nouvelle décision structurelle crée une ADR avec contexte, alternatives, conséquences, sécurité, tests, migration et liens réels. Le numéro 014 était libre et correspond à G ; elle est acceptée explicitement par Patrick lors de la finalisation G. Une approbation de checkpoint n’autorise jamais le suivant.

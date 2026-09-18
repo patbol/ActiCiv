@@ -41,7 +41,8 @@
     "performance:compare": "node tooling/quality/assurance-cli.ts compare",
     "test:e2e:prod": "playwright test --config playwright.prod.config.ts",
     "docs:validate": "node tooling/quality/knowledge-cli.ts",
-    "docs:generate": "node tooling/quality/knowledge-cli.ts --write"
+    "docs:generate": "node tooling/quality/knowledge-cli.ts --write",
+    "quality:import": "node tooling/quality/import-cli.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

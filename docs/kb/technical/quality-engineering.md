@@ -60,3 +60,7 @@ Policy `tooling/quality/policy-f.json` advisory : preuve observability dérivée
 ## Complément G
 
 `docs:validate` vérifie KB, ADR, Skills, liens et vue dérivée ; son rapport minimisé est une source `docs` du snapshot canonique v1. La policy `2bis-G.v1` ajoute cette preuve requise, sans seuil numérique. Les évaluations D/E/F conservent leurs policies versionnées. [Contrat documentaire](knowledge-governance.md).
+
+## Extension H
+
+Le [Quality Center](quality-center.md) lit désormais ces résultats sans nouveau calcul de gate. Les modules canoniques sont partagés dans packages/quality ; les anciens chemins tooling réexportent leur contrat. Policy G.v1 inchangée, aucun seuil ajouté.

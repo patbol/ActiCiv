@@ -1,11 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import { mayReadQuality } from "@acticiv/backend/quality";
 import { getProfessionalContext, supabaseContext } from "@acticiv/backend";
 import { professionalClient } from "../../lib/auth";
 import { logout } from "../auth/actions";
 import { AuthHeading } from "../../components/auth-feedback";
 export default async function Space() {
   const t = await getTranslations("auth");
+  const quality = await getTranslations("quality");
+  const canReadQuality = await mayReadQuality(await professionalClient());
   const context = await getProfessionalContext(
     supabaseContext(await professionalClient()),
   );
@@ -22,6 +25,11 @@ export default async function Space() {
           {t("spaceInactive")}{" "}
           <Link href="/auth/accept">{t("checkInvite")} </Link> {t("or")}{" "}
           <Link href="/auth/login">{t("signInLink")} </Link>.
+        </p>
+      )}
+      {canReadQuality && (
+        <p>
+          <Link href="/quality">{quality("title")}</Link>
         </p>
       )}
       <form action={logout}>

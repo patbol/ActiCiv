@@ -122,6 +122,9 @@ importers:
 
   packages/backend:
     dependencies:
+      '@acticiv/quality':
+        specifier: workspace:*
+        version: link:../quality
       '@acticiv/shared':
         specifier: workspace:*
         version: link:../shared
@@ -140,6 +143,8 @@ importers:
       zod:
         specifier: ^4.6.5
         version: 4.6.5
+
+  packages/quality: {}
 
   packages/shared: {}
 

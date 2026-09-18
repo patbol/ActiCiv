@@ -9,7 +9,7 @@ Date : 17 septembre 2026
 - **Final Phase 2 matrix** : 260 PASS / 0 FAIL / 1 DEFERRED (TalkBack only)
 - **Current phase** : Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations
 - **2bis-A** : CLOSED / APPROVED by Patrick on `be191f56109ea6380ccbd520ed49eb8a6074a9c0`.
-- **Active checkpoint** : 2bis-G only, explicitly authorized; A–F APPROVED. STOP before H/Quality Center/Phase 3.
+- **Active checkpoint** : 2bis-H only, explicitly authorized; A–G APPROVED. STOP before I/Phase 3.
 - **Phase 3** : NOT STARTED
 
 ## Current authoritative references
@@ -98,3 +98,11 @@ Audit éditorial G : le livre courant a une couverture et une conclusion v1.4, m
 ## Finalisation G autorisée
 
 Patrick approuve l’architecture G et ADR-014 et demande commit propre, preuves locales, push, CI réellement observée et artefacts vérifiés au même SHA. La clôture attend ces résultats ; aucune autorisation de H/Quality Center/Phase 3. Les mesures de revue dirty restent historiques, distinctes du candidat final.
+
+## Décision courante — 2bis-H uniquement
+
+Patrick approuve G/ADR-014 sur `11d6f94d4f4a7790bd22588847b0bb8aecd1703e` et autorise le Quality Center read-only. [Rapport H](../../quality/phase-2bis-h-report.md), [ADR-015 proposée](../../architecture-decisions/015-quality-center.md). Aucun I ni Phase 3.
+
+## Finalisation H autorisée le 18 septembre 2026
+
+Patrick approuve l’architecture H et ADR-015, et confirme VoiceOver H-VO-01 à H-VO-09 comme preuve manuelle distincte. Finalisation autorisée : commit propre, reconstruction DB incluant M12 et seed, validations complètes, snapshot local/CI au même SHA, push sans réécriture et vérification des artefacts téléchargés. La policy `2bis-G.v1` reste applicable : H consomme le schéma et les gates existants, sans nouveau seuil ni règle ; la collecte inclut explicitement la reconstruction DB. Aucun code UI modifié après la validation VoiceOver. STOP pour validation finale de Patrick ; aucun 2bis-I ni Phase 3.

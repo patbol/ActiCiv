@@ -24,3 +24,5 @@ Fiches actuelles issues des comportements Phase 1/2 et des fondations A–G. Les
 - [Tests E2E et conventions exécutables](testing.md).
 
 Aucun comportement Phase 3 ni écran Quality Center n’est présenté comme implémenté.
+
+- [Quality Center](quality-center.md) : capability quality.read, lecture canonique et limites H.

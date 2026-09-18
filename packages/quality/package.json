@@ -1,0 +1,16 @@
+{
+  "name": "@acticiv/quality",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./model": "./src/model.ts",
+    "./snapshot": "./src/snapshot.ts",
+    "./storage": "./src/storage.ts",
+    "./parsers": "./src/parsers.ts",
+    "./security": "./src/security.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

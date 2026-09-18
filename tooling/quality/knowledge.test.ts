@@ -146,3 +146,14 @@ it("requires all fifteen routable Skills with actual procedures and local refere
   expect(validateSkills(files).join(" ")).toContain("missing section");
   expect(validateSkills(files).join(" ")).toContain("broken local link");
 });
+it("authorizes H Quality Center documentation without allowing I or Phase 3", () => {
+  const text = page
+    .replace("feature.example", "feature.quality-center")
+    .replace("introduced_in: phase-2", "introduced_in: phase-2bis-h");
+  expect(check((files) => files.set(file, text)).errors).toEqual([]);
+  expect(
+    check((files) =>
+      files.set(file, text.replace("phase-2bis-h", "phase-2bis-i")),
+    ).errors.join(),
+  ).toContain("phase");
+});

@@ -57,6 +57,8 @@ export default defineConfig([
               group: [
                 "@acticiv/backend",
                 "@acticiv/backend/*",
+                "@acticiv/quality/*",
+                "**/quality/src/**",
                 "**/backend/**",
                 "@supabase/*",
                 "server-only",

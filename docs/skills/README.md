@@ -1,6 +1,6 @@
 # Skills ActiCiv — procédures canoniques
 
-Quinze playbooks rédigés en G, prêts pour revue. Ils utilisent le format `SKILL.md` avec frontmatter `name`/`description` ; ils ne sont pas une autorisation d’exécuter une tâche ni de franchir une phase.
+Quinze playbooks rédigés et approuvés en G. Ils utilisent le format `SKILL.md` avec frontmatter `name`/`description` ; ils ne sont pas une autorisation d’exécuter une tâche ni de franchir une phase.
 
 ## Découverte réelle
 

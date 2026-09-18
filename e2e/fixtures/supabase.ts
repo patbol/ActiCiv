@@ -74,6 +74,29 @@ export class SupabaseFixture {
     );
     return account;
   }
+  async qualityAccount(capabilities: string[] = ["quality.read"]) {
+    const email = `quality-${randomUUID()}@example.test`;
+    const user = await this.request<{ id: string }>("/auth/v1/admin/users", {
+      email,
+      password: this.password,
+      email_confirm: true,
+      user_metadata: { role: "platform_admin", capabilities: ["quality.read"] },
+    });
+    await this.request("/rest/v1/platform_admins", {
+      id: user.id,
+      active: true,
+      capabilities,
+    });
+    return { id: user.id, email, password: this.password };
+  }
+  async retireQuality(account: TestAccount) {
+    await this.request(
+      `/rest/v1/platform_admins?id=eq.${account.id}`,
+      { active: false },
+      this.service,
+      "PATCH",
+    );
+  }
   async resetLocale(account: TestAccount) {
     const session = await this.request<{ access_token: string }>(
       "/auth/v1/token?grant_type=password",

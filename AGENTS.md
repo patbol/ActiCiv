@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoints **2bis-A à F CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-014 approuvées. Baseline F : `ebab16c5c5c3133dda5afa5061263da5c3bcf25e`. Checkpoint actif et seul autorisé : **2bis-G — Knowledge Base, Skills & Documentation Governance (finalisation uniquement ; architecture G approuvée)**. **STOP après G pour revue de Patrick ; aucun 2bis-H, Quality Center ni Phase 3 sans validation explicite.**
+Checkpoints **2bis-A à G CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-014 approuvées. Baseline G : `11d6f94d4f4a7790bd22588847b0bb8aecd1703e`. Architecture H et ADR-015 approuvées par Patrick ; VoiceOver H-VO-01 à H-VO-09 PASS manuel. Checkpoint actif et seul autorisé : **2bis-H — finalisation des preuves du Quality Center read-only**. **STOP après H pour revue de Patrick ; aucun 2bis-I ni Phase 3 sans validation explicite.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 
@@ -938,6 +938,10 @@ En cas de doute :
 
 ## Complément opérationnel 2bis-G
 
-Décision récente : A–F approuvés ; G seul autorisé. Les paragraphes de lancement A/B/C ci-dessus sont historiques. Avant une tâche, lire la [KB liée au comportement](docs/kb/traceability.md) puis le [Skill adapté](docs/skills/README.md). Chemin canonique : `docs/skills/<name>/SKILL.md` ; sélection/lecture explicites, aucun autodiscovery de `/docs` revendiqué. AGENTS porte les règles, les Skills les procédures.
+Décision historique G : A–F étaient approuvés ; G seul autorisé à cette date. Les paragraphes de lancement A/B/C ci-dessus sont historiques. Avant une tâche, lire la [KB liée au comportement](docs/kb/traceability.md) puis le [Skill adapté](docs/skills/README.md). Chemin canonique : `docs/skills/<name>/SKILL.md` ; sélection/lecture explicites, aucun autodiscovery de `/docs` revendiqué. AGENTS porte les règles, les Skills les procédures.
 
 Une modification de comportement/droit/DB/API/audit/analytics/logs/architecture met à jour sa KB dans la même PR. `pnpm docs:generate` dérive la traçabilité ; `pnpm docs:validate` contrôle métadonnées/liens/ADR/Skills et fraîcheur de la vue. Voir [limites du validateur](docs/kb/technical/knowledge-governance.md). Ne pas étendre les phases actives du validateur avant autorisation explicite.
+
+## Complément opérationnel 2bis-H
+
+Patrick approuve G et autorise H uniquement. Lire la [KB Quality Center](docs/kb/technical/quality-center.md) et [ADR-015 proposée](docs/architecture-decisions/015-quality-center.md). Les preuves canoniques restent une source unique ; import CLI de confiance, capability quality.read serveur, interface strictement read-only. Aucun seuil numérique nouveau, aucun I/Phase 3.

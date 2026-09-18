@@ -37,10 +37,10 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - name: Validate exact clean SHA
         run: pnpm release:verify --rebuild-db | tee /tmp/acticiv-quality.log
-      - name: Collect canonical quality evidence (2bis-G; documentation checks; thresholds advisory)
+      - name: Collect canonical quality evidence (H; policy 2bis-G.v1 advisory; DB reconstruction)
         if: always()
         continue-on-error: true
-        run: pnpm quality:collect
+        run: pnpm quality:collect --rebuild-db
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

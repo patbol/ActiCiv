@@ -1,3 +1,4 @@
+import { QualityPage } from "../pages/quality.page";
 import { test as base } from "@playwright/test";
 import { FoundationPage } from "../pages/foundation.page";
 import { LoginPage } from "../pages/login.page";
@@ -8,6 +9,8 @@ import { ProSpacePage } from "../pages/pro-space.page";
 import { SupabaseFixture, type TestAccount } from "./supabase";
 
 type Fixtures = {
+  quality: QualityPage;
+  qualityAccount: TestAccount;
   foundation: (port: 3000 | 3001) => FoundationPage;
   login: LoginPage;
   recovery: RecoveryPage;
@@ -21,6 +24,17 @@ type Fixtures = {
   adminAccount: TestAccount;
 };
 export const test = base.extend<Fixtures>({
+  quality: async ({ page }, provide) => {
+    await provide(new QualityPage(page));
+  },
+  qualityAccount: async ({ supabase }, provide) => {
+    const account = await supabase.qualityAccount();
+    try {
+      await provide(account);
+    } finally {
+      await supabase.retireQuality(account);
+    }
+  },
   foundation: async ({ page }, provide) => {
     await provide((port) => new FoundationPage(page, port));
   },

@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./observability": "./src/platform/observability.ts"
+    "./observability": "./src/platform/observability.ts",
+    "./quality": "./src/platform/quality.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
@@ -16,6 +17,7 @@
     "@supabase/supabase-js": "^2.116.0",
     "server-only": "^0.0.1",
     "zod": "^4.6.5",
-    "@acticiv/shared": "workspace:*"
+    "@acticiv/shared": "workspace:*",
+    "@acticiv/quality": "workspace:*"
   }
 }

@@ -1,0 +1,177 @@
+.page {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 8rem;
+  color: #172338;
+}
+.page h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+.page h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+.page h3 {
+  font-size: 1.15rem;
+}
+.page section {
+  border-top: 1px solid #b5c1cc;
+  padding: 1.5rem 0;
+  scroll-margin-top: 1rem;
+}
+.page p {
+  margin: 0.75rem 0;
+}
+.page a {
+  color: #174e7e;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.page :focus-visible {
+  outline: 3px solid #174e7e;
+  outline-offset: 4px;
+}
+.page code {
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+}
+.page small {
+  display: block;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.page dd {
+  margin: 0.2rem 0 1rem;
+  overflow-wrap: anywhere;
+}
+.page dt {
+  font-weight: 600;
+}
+.page li {
+  margin: 0.65rem 0;
+  overflow-wrap: anywhere;
+}
+.page ul {
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+.nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1.5rem 0;
+}
+.filters {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.filters select,
+.filters input,
+.filters button {
+  background: white;
+  color: #172338;
+  border: 1px solid #647589;
+  border-radius: 0.3rem;
+  padding: 0.55rem;
+  min-height: 2.75rem;
+  max-width: 100%;
+}
+.filters button {
+  background: #174e7e;
+  color: white;
+  cursor: pointer;
+}
+.scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.page table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+}
+.page caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.75rem 0;
+}
+.page th,
+.page td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #b5c1cc;
+  vertical-align: top;
+}
+.page th {
+  font-weight: 600;
+}
+.page td code {
+  display: block;
+  min-width: 9rem;
+}
+.status,
+.deferred,
+.fail {
+  display: inline-block;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  border-radius: 0.2rem;
+  padding: 0.15rem 0.4rem;
+  white-space: nowrap;
+}
+.fail {
+  background: #fff0ee;
+  color: #8c231c;
+}
+.deferred {
+  background: #fff4d1;
+  color: #664400;
+}
+.status {
+  background: #f0f3f6;
+  color: #263c52;
+}
+.verdict {
+  font-size: 1.4rem;
+}
+.count {
+  display: inline-block;
+  margin: 0.3rem 1rem 0.3rem 0;
+}
+.identity {
+  display: grid;
+  grid-template-columns: minmax(7rem, auto) 1fr;
+  gap: 0.3rem 1rem;
+}
+.attention {
+  border-left: 4px solid #8c231c;
+  background: #fff7f4;
+  padding: 1rem;
+}
+.page details {
+  border: 1px solid #b5c1cc;
+  padding: 1rem;
+  margin: 0.75rem 0;
+}
+.page summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+@media (max-width: 40rem) {
+  .identity {
+    display: block;
+  }
+  .filters > * {
+    width: 100%;
+  }
+  .page {
+    padding: 1.5rem 1rem 8rem;
+  }
+}
