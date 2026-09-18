@@ -1,16 +1,7 @@
-import { serializeLog } from "@acticiv/backend";
-/** Process health only; never claims database readiness. */
+import { commandContext, telemetry } from "@acticiv/backend/observability";
+/** Process health only; never claims database readiness. Poll diagnostics disabled in PROD. */
 export function GET() {
-  const start = performance.now();
-  const requestId = crypto.randomUUID();
-  console.info(
-    serializeLog({
-      event: "request.completed",
-      requestId,
-      status: 200,
-      durationMs: Math.round(performance.now() - start),
-    }),
-  );
+  telemetry.logger.debug("HEALTH_CHECK", commandContext(), { status: 200 });
   return Response.json(
     { application: "ok", database: "not_checked" },
     { headers: { "Cache-Control": "no-store" } },

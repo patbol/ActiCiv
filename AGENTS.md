@@ -7,7 +7,7 @@ Projet : **ActiCiv**
 Phase courante :
 **Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations**
 
-Checkpoints **2bis-A, B, C et D CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-011 approuvées. Baseline D : `ced9d07e7f929c8dfdfff236f95c8b6300d6503d`. Checkpoint actif et seul autorisé : **2bis-E — Security Assurance, Production Artifact Hygiene & Performance Hygiene**. **STOP après E pour revue de Patrick ; aucun 2bis-F ni Phase 3 sans validation explicite.**
+Checkpoints **2bis-A, B, C, D et E CLOSED / APPROVED** par Patrick ; ADR-008 à ADR-012 approuvées. Baseline E : `70e145da43d246a0452b371dd4da7cf12e0078b3`. Checkpoint actif et seul autorisé : **2bis-F — Analytics / Audit / Logs**. **STOP après F pour revue de Patrick ; aucun 2bis-G, Quality Center ni Phase 3 sans validation explicite.**
 
 Entrées de gouvernance : [index](docs/README.md), [politique documentaire](docs/quality/documentation-policy.md), [DoD](docs/quality/definition-of-done.md), [checklist PR](docs/quality/pr-checklist.md), [traçabilité](docs/quality/traceability.md), [KB](docs/kb/README.md), [catalogue Skills](docs/skills/README.md).
 

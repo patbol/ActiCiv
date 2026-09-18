@@ -147,13 +147,27 @@ const providerPackages =
 const testPackages =
   /^(?:@playwright\/|playwright(?:\/|$)|vitest(?:\/|$)|@vitest\/|@axe-core\/)|(?:^|\/)(?:e2e|fixtures|__tests__|test-helpers)(?:\/|$)|\.(?:test|spec)(?:\.[cm]?[jt]sx?)?$/;
 const productionBoundaries = metadata((context) => {
+  const isClient = context.sourceCode.ast.body.some(
+    (node) =>
+      node.type === "ExpressionStatement" && node.directive === "use client",
+  );
   const report = (node, message) => context.report({ node, message });
   const imported = (node, source) => {
     if (typeof source !== "string") return;
+    if (
+      isClient &&
+      /^(?:@acticiv\/backend(?:\/|$)|server-only$)|(?:^|\/)backend\/src\//.test(
+        source,
+      )
+    )
+      report(
+        node,
+        "Client entrypoints must not import server observability, audit or backend modules.",
+      );
     if (providerPackages.test(source))
       report(
         node,
-        "Analytics providers belong in a reviewed adapter. None is enabled in 2bis-B.",
+        "Analytics providers belong in a reviewed adapter. No vendor provider is enabled in 2bis-F.",
       );
     if (testPackages.test(source))
       report(

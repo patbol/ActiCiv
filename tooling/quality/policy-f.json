@@ -1,0 +1,148 @@
+{
+  "version": "2bis-F.v1",
+  "mode": "advisory",
+  "rules": [
+    {
+      "id": "format",
+      "source": "format",
+      "required": true
+    },
+    {
+      "id": "lint",
+      "source": "lint",
+      "required": true
+    },
+    {
+      "id": "types",
+      "source": "typecheck",
+      "required": true
+    },
+    {
+      "id": "unit",
+      "source": "unit",
+      "required": true
+    },
+    {
+      "id": "architecture",
+      "source": "architecture",
+      "required": true
+    },
+    {
+      "id": "coverage-evidence",
+      "source": "coverage",
+      "required": true
+    },
+    {
+      "id": "sql",
+      "source": "sql",
+      "required": true
+    },
+    {
+      "id": "security-integration",
+      "source": "integration-node",
+      "required": true
+    },
+    {
+      "id": "adapters-integration",
+      "source": "integration-adapters",
+      "required": true
+    },
+    {
+      "id": "critical-e2e",
+      "source": "e2e-critical",
+      "required": true
+    },
+    {
+      "id": "full-e2e",
+      "source": "e2e",
+      "required": true
+    },
+    {
+      "id": "axe",
+      "source": "axe",
+      "required": true
+    },
+    {
+      "id": "citizen-build",
+      "source": "build-citizen",
+      "required": true
+    },
+    {
+      "id": "pro-build",
+      "source": "build-pro",
+      "required": true
+    },
+    {
+      "id": "dependency-audit",
+      "source": "dependency-audit",
+      "required": true
+    },
+    {
+      "id": "secret-scan",
+      "source": "secret-scan",
+      "required": true
+    },
+    {
+      "id": "bundle-boundaries",
+      "source": "bundles",
+      "required": true
+    },
+    {
+      "id": "source-integrity",
+      "source": "source-integrity",
+      "required": true
+    },
+    {
+      "id": "db-reconstruction",
+      "source": "db-reset",
+      "required": false,
+      "missing": "DEFERRED"
+    },
+    {
+      "id": "sast",
+      "source": "sast",
+      "required": true
+    },
+    {
+      "id": "dast",
+      "source": "dast",
+      "required": false,
+      "reason": "Passive local DEMO only; optional campaign",
+      "missing": "DEFERRED"
+    },
+    {
+      "id": "pentest",
+      "source": "pentest",
+      "required": false,
+      "applicable": false,
+      "reason": "Independent pentest not commissioned; required before first real PROD/significant pilot"
+    },
+    {
+      "id": "artifact-hygiene-advanced",
+      "source": "artifact",
+      "required": true
+    },
+    {
+      "id": "performance-budget",
+      "source": "performance",
+      "required": false,
+      "applicable": false,
+      "reason": "No approved budget"
+    },
+    {
+      "id": "production-e2e",
+      "source": "e2e-prod",
+      "required": true
+    },
+    {
+      "id": "performance-evidence",
+      "source": "performance",
+      "required": true
+    },
+    {
+      "id": "observability-contracts",
+      "source": "observability",
+      "required": true
+    }
+  ]
+}

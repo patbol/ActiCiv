@@ -24,7 +24,7 @@ it.each([
   ["server/a.js", "const x = 'MOCK_AUTH'", "bypass"],
   ["server/a.js", "const x = 'preview-name'", "demo"],
   ["static/a.js", "import 'vitest'", "test-code"],
-])("rejects compiled leakage %s / %s", (path, source, rule) => {
+])("rejects compiled leakage case %# (%s)", (path, source, rule) => {
   expect(inspectFile(path, source).some((f) => f.category === rule)).toBe(true);
 });
 it("accepts clean compiled code without reporting content", () => {

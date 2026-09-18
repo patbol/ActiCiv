@@ -1,3 +1,4 @@
+import type { AuthObserver } from "../modules/auth/application/observation";
 import { saveHoldTranslation } from "../modules/locales/application/translations";
 import { translationWriter } from "../modules/locales/infrastructure/translations";
 import "server-only";
@@ -118,6 +119,7 @@ export async function configure(
   input: unknown,
   env: Record<string, string | undefined>,
   origin: string,
+  observer?: AuthObserver,
 ) {
   const value = command.parse(input);
   const context = await getProfessionalContext(supabaseContext(client));
@@ -182,6 +184,8 @@ export async function configure(
         value.key,
         repository,
         provider,
+        Date.now,
+        observer,
       );
     }
     case "schedule.publish":

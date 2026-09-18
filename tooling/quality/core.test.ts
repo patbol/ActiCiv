@@ -413,3 +413,42 @@ it("counts production E2E results in canonical comparison totals", () => {
     compare(after, { baseline: b, snapshot: before }).deltas,
   ).toMatchObject({ tests: 1 });
 });
+it("observability evidence fails closed when either privacy or logger suite is absent", () => {
+  const report = (names: string[]) => ({
+    success: true,
+    numTotalTests: names.length,
+    numPassedTests: names.length,
+    numFailedTests: 0,
+    numPendingTests: 0,
+    testResults: names.map((name) => ({
+      name,
+      status: "passed",
+      assertionResults: [{ fullName: name, status: "passed", duration: 1 }],
+    })),
+  });
+  const p = {
+    version: "F-test",
+    mode: "advisory",
+    rules: [{ id: "observability", source: "observability", required: true }],
+  };
+  const missing = assemble(
+    identity,
+    [evidence(report(["packages/backend/src/platform/logger.test.ts"]))],
+    p,
+  );
+  expect(missing.gate_evaluation.status).toBe("FAIL");
+  const complete = assemble(
+    identity,
+    [
+      evidence(
+        report([
+          "packages/backend/src/platform/logger.test.ts",
+          "packages/backend/src/platform/observability.test.ts",
+        ]),
+      ),
+    ],
+    p,
+  );
+  expect(complete.gate_evaluation.status).toBe("PASS");
+  expect(complete.provenance.observability).toEqual(complete.provenance.unit);
+});

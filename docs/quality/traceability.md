@@ -46,3 +46,7 @@ Preuves qualité → [KB quality-engineering](../kb/technical/quality-engineerin
 ## Impact map E
 
 Exigences E §§2–24 → KB sécurité/artefact/performance/dépendances → CLI et scans tooling/quality → rapports → snapshot v1 / policy E → CI et ADR-012. Droits/DB/RLS/audit métier inchangés. Surface UI affectée : dialogue DEMO absent PROD, historique E2E conservé + suite PROD/axe. Aucun Analytics/Logs F.
+
+## Impact map F
+
+Exigences F §§1–31 → KB Analytics/Audit/Logs/Corrélation → Auth/locale/configuration/plateforme existants → port Auth pur et composition serveur → projection invitation readonly avec auth.uid → tests anti-PII/SQL/adaptateurs/HTTP → audit SQL inchangé et diagnostics séparés → snapshot canonique policy F → ADR-013 proposée. Aucun droit métier nouveau ; aucune UI modifiée. Migration additive uniquement pour reprendre la corrélation autorisée de l'invité. [Rapport F](phase-2bis-f-report.md).

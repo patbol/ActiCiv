@@ -45,3 +45,7 @@ Tests négatifs avant scanners/validateurs, controles Semgrep réels, E2E DEMO c
 - [Artefacts](../kb/technical/artifact-hygiene.md), [performance](../kb/technical/performance-hygiene.md), [dépendances](../kb/technical/dependency-governance.md).
 - [Rapport E](../quality/phase-2bis-e-report.md), [contrat qualité](../quality/quality-evidence.md).
 - Sources outils : [Semgrep CLI](https://semgrep.dev/docs/cli-reference), [ZAP baseline](https://www.zaproxy.org/docs/docker/baseline-scan/).
+
+## Décision ultérieure — lancement F
+
+Patrick approuve explicitement ADR-012 et le checkpoint E sur `70e145da43d246a0452b371dd4da7cf12e0078b3`. Statut courant : **acceptée**. Le texte de proposition et ses limites historiques sont conservés.

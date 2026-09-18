@@ -1,3 +1,4 @@
+import { notifyAuth, type AuthObserver } from "./observation";
 import {
   requirePermission,
   type Context,
@@ -33,6 +34,7 @@ export async function inviteProfessional(
   repository: Invitations,
   provider: IdentityInviter,
   now: () => number = Date.now,
+  observer?: AuthObserver,
 ) {
   requirePermission(context, "members.write", { organizationId: org });
   const invitation = await repository.reserve(org, email, role, services, key);
@@ -42,11 +44,25 @@ export async function inviteProfessional(
     Date.parse(invitation.expires_at) <= now()
   )
     throw new Error("Invitation expirée ou terminée");
-  if (invitation.state === "sent") return invitation.id;
-  const user = await provider.invite(
-    invitation.email,
-    invitation.correlation_id,
-  );
-  await repository.bind(invitation.id, user);
+  const correlation = invitation.correlation_id;
+  if (invitation.state === "sent") {
+    notifyAuth(observer, "invitation.reused", correlation);
+    return invitation.id;
+  }
+  notifyAuth(observer, "invitation.reserved", correlation);
+  let user: string;
+  try {
+    user = await provider.invite(invitation.email, correlation);
+  } catch (error) {
+    notifyAuth(observer, "invitation.provider_failed", correlation, error);
+    throw error;
+  }
+  try {
+    await repository.bind(invitation.id, user);
+  } catch (error) {
+    notifyAuth(observer, "invitation.bind_failed", correlation, error);
+    throw error;
+  }
+  notifyAuth(observer, "invitation.sent", correlation);
   return invitation.id;
 }

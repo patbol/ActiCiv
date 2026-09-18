@@ -2,7 +2,7 @@
 
 **Phase 2 = CLOSED** — baseline officielle : `fac0fc8663d1f32b09b720fddffd46f0829c8a6a`.
 
-**Phase 2 bis = CURRENT** — **2bis-A/B/C/D APPROVED** ; checkpoint actif : **2bis-E**, Security Assurance, artefacts PROD et performance uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-F sans validation explicite de Patrick.
+**Phase 2 bis = CURRENT** — **2bis-A/B/C/D/E APPROVED** ; checkpoint actif : **2bis-F**, Analytics / Audit / Logs uniquement. **Phase 3 = NOT STARTED**. Aucun 2bis-G, Quality Center ni Phase 3 sans validation explicite de Patrick.
 
 La [clôture Phase 2](docs/evidence/phase2/ActiCiv_Phase2_Closure_Attestation_fac0fc8.md) atteste 260 PASS, 0 FAIL et 1 DEFERRED (TalkBack). Les garanties métier et sécurité de Phase 2 restent acquises.
 

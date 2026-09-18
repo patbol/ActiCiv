@@ -95,3 +95,40 @@ it("uses an exact allowlist for redirect destinations", () => {
     expect(safeDestination(value)).toBe("/espace");
   expect(safeDestination("/auth/password")).toBe("/auth/password");
 });
+it("observability repeated sent invitation keeps the original command without repeating delivery", async () => {
+  const repository: Invitations = {
+    reserve: vi
+      .fn()
+      .mockResolvedValue({
+        id: "i",
+        email: "private@example.test",
+        state: "sent",
+        expires_at: "2099-01-01Z",
+        correlation_id: "1c29fca6-65fa-4d4b-a80c-8a124cf451ba",
+      }),
+    bind: vi.fn(),
+  };
+  const provider = { invite: vi.fn() };
+  const record = vi.fn();
+  expect(
+    await inviteProfessional(
+      context,
+      "o",
+      "private@example.test",
+      "agent",
+      [],
+      "key",
+      repository,
+      provider,
+      Date.now,
+      { record },
+    ),
+  ).toBe("i");
+  expect(provider.invite).not.toHaveBeenCalled();
+  expect(repository.bind).not.toHaveBeenCalled();
+  expect(record).toHaveBeenCalledWith(
+    "invitation.reused",
+    "1c29fca6-65fa-4d4b-a80c-8a124cf451ba",
+    undefined,
+  );
+});

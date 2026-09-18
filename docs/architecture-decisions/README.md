@@ -19,4 +19,6 @@ Une nouvelle ADR expose statut, contexte, décision, alternatives, conséquences
 
 [ADR-011 — Quality Evidence, snapshots et gates](011-quality-evidence.md) : **acceptée** par Patrick à la finalisation D et à l’autorisation E.
 
-[ADR-012 — Security Assurance, artefacts PROD et performance](012-security-artifact-performance.md) : proposée pour revue E.
+[ADR-012 — Security Assurance, artefacts PROD et performance](012-security-artifact-performance.md) : **acceptée** par Patrick au lancement explicite de F.
+
+[ADR-013 — séparation Analytics/Audit/Logs](013-observability-separation.md) : **proposée**, revue F attendue.

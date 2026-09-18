@@ -316,6 +316,26 @@ export function assemble(
       reason: "Architecture and conventions are a subset of unit evidence",
     });
     provenance.architecture = provenance.unit!;
+    const o = array(checks.unit.metrics.observability ?? []).map(object);
+    checks.observability = check({
+      status:
+        checks.unit.status === "PASS" &&
+        ["logger.test.ts", "observability.test.ts"].every((name) =>
+          o.some(
+            (s) =>
+              s.suite === name &&
+              s.status === "passed" &&
+              integer(s.total) > 0 &&
+              integer(s.passed) === integer(s.total),
+          ),
+        )
+          ? "PASS"
+          : "FAIL",
+      metrics: { suites: o },
+      reason:
+        "Registry/privacy/logger subset of unit evidence; SQL audit and real adapters remain separate required checks",
+    });
+    provenance.observability = provenance.unit!;
   }
   if (checks.e2e) {
     const e = checks.e2e;

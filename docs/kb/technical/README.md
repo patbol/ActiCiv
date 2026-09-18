@@ -24,3 +24,5 @@ Fiche active ajoutée en 2bis-C : [internationalisation, préférences et traduc
 - [Quality engineering — preuves, snapshots et gates](quality-engineering.md).
 
 Fiches E : [Security Assurance](security-assurance.md), [Artifact Hygiene](artifact-hygiene.md), [Performance Hygiene](performance-hygiene.md), [Dependency Governance](dependency-governance.md).
+
+Fondations F : [Analytics](analytics.md), [Audit](audit.md), [Logs](logging.md), [Corrélation et erreurs](correlation-errors.md).

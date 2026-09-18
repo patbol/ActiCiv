@@ -1,3 +1,5 @@
+import { localeSaved, type Telemetry } from "./telemetry";
+import type { CommandContext } from "./correlation";
 import "server-only";
 import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -11,8 +13,17 @@ const schema = z.strictObject({
 export async function changeLocalePreference(
   client: SupabaseClient,
   input: unknown,
+  observation?: { telemetry: Telemetry; context: CommandContext },
 ) {
   const value = schema.parse(input);
   const context = await getProfessionalContext(supabaseContext(client));
-  return setOwnLocale(context, value.locale, localePreferences(client));
+  await setOwnLocale(context, value.locale, localePreferences(client));
+  if (observation)
+    localeSaved(
+      observation.telemetry,
+      observation.context,
+      "pro",
+      value.locale,
+      "profile",
+    );
 }

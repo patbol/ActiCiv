@@ -6,6 +6,8 @@ import { changeLocalePreference } from "../src/platform/locale-preference";
 import { configure } from "../src/platform/configuration";
 import { platformAdministration } from "../src/platform/platform-administration";
 import { readLocalePreferences } from "../src/modules/locales/infrastructure/preferences";
+import { createObservability } from "../src/platform/telemetry";
+import { persistedContext } from "../src/platform/correlation";
 const config = localConfig();
 const admin = createClient(config.API_URL!, config.SERVICE_ROLE_KEY!, {
   auth: { persistSession: false, autoRefreshToken: false },
@@ -50,7 +52,30 @@ it("real own-preference adapter derives identity, supports null, rejects targeti
     preferred: null,
     organization: "fr-FR",
   });
-  await changeLocalePreference(client, { locale: "en-GB" });
+  const logs: string[] = [];
+  const telemetry = createObservability(
+    { NODE_ENV: "test", ACTICIV_ANALYTICS_MODE: "local" },
+    (line) => logs.push(line),
+  );
+  await changeLocalePreference(
+    client,
+    { locale: "en-GB" },
+    { telemetry, context: persistedContext(correlation) },
+  );
+  expect(logs.map((line) => JSON.parse(line))).toMatchObject([
+    { error_code: "LOCALE_SAVED", correlation_id: correlation, status: 204 },
+  ]);
+  expect(telemetry.local.events()).toEqual([
+    {
+      event: "pro_locale_changed",
+      surface: "pro",
+      version: 1,
+      properties: { locale: "en-GB", source: "profile" },
+    },
+  ]);
+  expect(logs.join()).not.toMatch(
+    /@example|password|token|user_metadata|user_id/,
+  );
   expect(await readLocalePreferences(client)).toEqual({
     preferred: "en-GB",
     organization: "fr-FR",
@@ -211,12 +236,23 @@ it("real translation adapters enforce capabilities, hold ownership and French co
   ).toBe("t");
 });
 it("a real adapter mutation rolls back when transactional audit fails", async () => {
-  const { client } = await professional();
+  const { client, correlation } = await professional();
+  const logs: string[] = [];
+  const telemetry = createObservability(
+    { NODE_ENV: "test", ACTICIV_ANALYTICS_MODE: "local" },
+    (line) => logs.push(line),
+  );
   sql(
     "create function public.fail_locale_audit() returns trigger language plpgsql as $$begin raise exception 'Injected audit failure'; end$$; create trigger fail_locale_audit before insert on audit_events for each row execute function public.fail_locale_audit();",
   );
   await expect(
-    changeLocalePreference(client, { locale: "en-GB" }),
+    changeLocalePreference(
+      client,
+      { locale: "en-GB" },
+      { telemetry, context: persistedContext(correlation) },
+    ),
   ).rejects.toBeDefined();
+  expect(logs).toEqual([]);
+  expect(telemetry.local.events()).toEqual([]);
   expect((await readLocalePreferences(client))?.preferred).toBeNull();
 });

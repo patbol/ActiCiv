@@ -33,3 +33,11 @@ Mise à jour 2bis-B pour les futurs Skills `add-e2e-test`, `fix-bug`, `change-ex
 Voir le [modèle](template.md). Chaque Skill définira nom/description, déclencheurs, contexte et entrées, étapes, sorties, contrôles finaux et conditions d'arrêt/escalade. Les chemins cités devront exister ; les commandes respecteront le runtime nvm et la phase autorisée.
 
 Les procédures sont proportionnées : pas de DB reset pour corriger un lien ; intégration réelle pour un changement RLS ; preuve d'accessibilité pour une interaction nouvelle. La [DoD](../quality/definition-of-done.md) et la [traçabilité](../quality/traceability.md) portent le contrat commun, sans le dupliquer dans quinze fichiers vides.
+
+## Compléments ciblés F — procédures partielles, pas chantier G
+
+- `add-analytics-event` : vérifier parcours existant et finalité, lire [KB](../kb/technical/analytics.md), test RED événement/propriétés/PII, ajouter au registre canonique, brancher après succès réel, tester off/no-op/local ; aucune activation PROD implicite.
+- `add-audit-event` : lire [contrat SQL](../kb/technical/audit.md), inventorier les triggers avant tout writer ; pas de double audit. Toute mutation nouvelle exige test rollback/acteur/whitelist/corrélation et migration additive si nécessaire. Aucun writer applicatif F ajouté.
+- `add-logging` : lire [KB](../kb/technical/logging.md), justifier diagnostic/code, test RED anti-PII/cause/niveau/contexte, composer serveur uniquement, mesurer volume/coût ; échec log indépendant de mutation métier.
+
+Ces compléments au catalogue sont manuels, ciblés F. Aucun Skill complet/autodiscovery ou nouvelle architecture KB G installé.

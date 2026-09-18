@@ -8,7 +8,7 @@ export function professionalSession(
   origin: string,
 ): ProfessionalSession {
   function checked(error: unknown) {
-    if (error) throw new Error("Opération Auth refusée");
+    if (error) throw new Error("Opération Auth refusée", { cause: error });
   }
   return {
     async identity() {
@@ -36,7 +36,7 @@ export function professionalSession(
       return (await getProfessionalContext(supabaseContext(client))) !== null;
     },
     async pendingInvitations() {
-      const { data, error } = await client.rpc("pending_invitation");
+      const { data, error } = await client.rpc("pending_invitation_context");
       checked(error);
       return data ?? [];
     },

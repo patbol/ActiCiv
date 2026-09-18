@@ -9,7 +9,7 @@ Date : 17 septembre 2026
 - **Final Phase 2 matrix** : 260 PASS / 0 FAIL / 1 DEFERRED (TalkBack only)
 - **Current phase** : Phase 2 bis — Engineering Quality, Internationalisation & Knowledge Foundations
 - **2bis-A** : CLOSED / APPROVED by Patrick on `be191f56109ea6380ccbd520ed49eb8a6074a9c0`.
-- **Active checkpoint** : 2bis-B only, explicitly authorized; STOP for Patrick review before 2bis-C.
+- **Active checkpoint** : 2bis-F only, explicitly authorized; A–E APPROVED. STOP before G/Quality Center/Phase 3.
 - **Phase 3** : NOT STARTED
 
 ## Current authoritative references
@@ -73,7 +73,7 @@ Patrick approved 2bis-A and explicitly authorized POM/Component Objects, reusabl
 
 The remaining v1.3 mention in Master Prompt §56 is corrected to v1.4. The current source index is aligned with Patrick's approved directory roles. Historical matrices remain unchanged; only broken Markdown destinations caused by relocation are repaired. The detailed [checkpoint report](../../quality/phase-2bis-a-report.md) records changes and actual checks. This does not implement any later checkpoint.
 
-## Current authorization — 2bis-C
+## Historical authorization — 2bis-C
 
 Patrick approved B and ADR-008/009, then explicitly authorized internationalisation, locale preferences and reference translations only. See [ADR-010](../../architecture-decisions/010-internationalisation-locales.md), [KB](../../kb/technical/internationalisation.md) and [C report](../../quality/phase-2bis-c-report.md). STOP before D; no Phase 3.
 
@@ -81,6 +81,10 @@ Patrick approved B and ADR-008/009, then explicitly authorized internationalisat
 
 Patrick approuve A/B/C et ADR-008/009/010, puis autorise uniquement D : coverage, rapports structurés, snapshot canonique et gates consultatives. C est figé au commit `1e067b35a148c6a2da9be3857b1ca4170e91bf60`. L’instruction récente prime sur le statut C encore présent dans AGENTS ; aucune nouvelle règle persistante n’y est introduite dans D. Aucun E ni Phase 3 autorisé. [Procédures D](../../quality/quality-evidence.md), [rapport D](../../quality/phase-2bis-d-report.md).
 
-## Décision courante — checkpoint 2bis-E uniquement
+## Décision précédente — checkpoint 2bis-E uniquement
 
 Patrick approuve A/B/C/D et ADR-008 à 011. Baseline D : `ced9d07e7f929c8dfdfff236f95c8b6300d6503d`, CI [35285715652](https://github.com/patbol/ActiCiv/actions/runs/35285715652) verte. E autorise sécurité/artefacts/performance uniquement ; les sections précédentes décrivent les autorisations historiques. Aucune acceptation automatique de seuil coverage/performance ni de risque. [Rapport E](../../quality/phase-2bis-e-report.md). STOP avant F ; Phase 3 NOT STARTED.
+
+## Décision courante — checkpoint 2bis-F uniquement
+
+Patrick approuve A–E et ADR-008 à 012. Baseline E `70e145da43d246a0452b371dd4da7cf12e0078b3`, branche `phase-2bis-engineering-foundations`. F autorise la séparation Analytics/Audit/Logs, registre analytics no-op/local, logger structuré, corrélation et anti-PII, préservation SQL transactionnelle, documentation et tests. Aucun vendor SaaS, Quality Center, chantier G complet ni Phase 3. [Rapport F](../../quality/phase-2bis-f-report.md), [ADR-013 proposée](../../architecture-decisions/013-observability-separation.md). STOP pour revue Patrick. Aucun seuil numérique coverage/performance accepté automatiquement.

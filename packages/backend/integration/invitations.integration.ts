@@ -6,6 +6,8 @@ import { invitationAdapters } from "../src/modules/auth/infrastructure/invitatio
 import { inviteProfessional } from "../src/modules/auth/application/invite";
 import { professionalSession } from "../src/modules/auth/infrastructure/session";
 import { acceptProfessionalInvitation } from "../src/modules/auth/application/session";
+import { createObservability, authObserver } from "../src/platform/telemetry";
+import { commandContext, persistedContext } from "../src/platform/correlation";
 const config = localConfig();
 const env = {
   SUPABASE_URL: config.API_URL!,
@@ -69,6 +71,11 @@ async function harness(prefix: string) {
   const email = `${prefix}-${randomUUID()}@example.test`,
     key = randomUUID();
   const adapters = invitationAdapters(user, env, origin);
+  const logs: string[] = [];
+  const telemetry = createObservability(
+    { NODE_ENV: "test", ACTICIV_ANALYTICS_MODE: "local" },
+    (line) => logs.push(line),
+  );
   const send = () =>
     inviteProfessional(
       context,
@@ -79,8 +86,10 @@ async function harness(prefix: string) {
       key,
       adapters.repository,
       adapters.provider,
+      Date.now,
+      authObserver(telemetry, commandContext()),
     );
-  return { correlationId, user, email, key, send, adapters };
+  return { correlationId, user, email, key, send, adapters, logs, telemetry };
 }
 afterEach(() => {
   sql(
@@ -96,6 +105,10 @@ it("real Auth failure after reservation leaves no rights and resumes through the
   const before = invitation(h.email);
   expect(before.state).toBe("pending");
   noMembership(h.email);
+  expect(h.logs.map((line) => JSON.parse(line).error_code)).toEqual([
+    "INVITATION_RESERVED",
+    "INVITATION_PROVIDER_FAILED",
+  ]);
   expect(sql(`select count(*) from auth.users where email='${h.email}'`)).toBe(
     "0",
   );
@@ -137,11 +150,37 @@ it("real SQL bind failure preserves Auth identity, retries safely and correlates
     type: "invite",
   });
   expect(verified.error).toBeNull();
+  expect((await h.user.rpc("pending_invitation_context")).data).toEqual([]);
+  expect((await invited.rpc("pending_invitation_context")).data).toEqual([
+    { id: before.id, correlation_id: h.correlationId },
+  ]);
+  const acceptanceContext = commandContext();
+  expect(acceptanceContext.correlationId).not.toBe(h.correlationId);
   await acceptProfessionalInvitation(
     "Invité reprise",
     professionalSession(invited, origin),
+    authObserver(h.telemetry, acceptanceContext),
   );
   expect(invitation(h.email).state).toBe("accepted");
+  expect((await invited.rpc("pending_invitation_context")).data).toEqual([]);
+  const records = h.logs.map((line) => JSON.parse(line));
+  expect(records.map((r) => r.error_code)).toEqual([
+    "INVITATION_RESERVED",
+    "INVITATION_BIND_FAILED",
+    "INVITATION_RESERVED",
+    "INVITATION_SENT",
+    "INVITATION_ACCEPTED",
+  ]);
+  expect(
+    records.every(
+      (r) =>
+        r.correlation_id === persistedContext(h.correlationId).correlationId,
+    ),
+  ).toBe(true);
+  expect(h.logs.join()).not.toMatch(
+    /@example|Invité|password|token|stack|Injected/,
+  );
+  expect(h.telemetry.local.events()).toEqual([]);
   expect(
     sql(
       `select count(*) from public.organization_memberships where user_id='${uid}'`,

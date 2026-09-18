@@ -97,3 +97,20 @@ it("rejects infrastructure imports in critical domain and use cases", async () =
     }
   }
 }, 15000);
+it("observability server contracts cannot cross a client entrypoint, including dynamic imports", async () => {
+  const eslint = new ESLint();
+  for (const statement of [
+    "import { logger } from '@acticiv/backend/observability'; export {logger};",
+    "const x=import('@acticiv/backend/observability'); export {x};",
+    "export {logger} from '../../../../packages/backend/src/platform/observability';",
+  ]) {
+    const r = await eslint.lintText('"use client"; ' + statement, {
+      filePath: "apps/pro/src/app/probe.tsx",
+    });
+    expect(
+      r
+        .flatMap((x) => x.messages)
+        .some((x) => x.ruleId === "acticiv/production-boundaries"),
+    ).toBe(true);
+  }
+}, 15000);

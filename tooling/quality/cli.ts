@@ -22,7 +22,7 @@ import { repetitions } from "./flakiness.ts";
 import type { Snapshot, Test } from "./model.ts";
 const read = (path: string) =>
   JSON.parse(readFileSync(path, "utf8")) as unknown;
-const p = policy(read("tooling/quality/policy-e.json"));
+const p = policy(read("tooling/quality/policy-f.json"));
 function report(s: Snapshot) {
   return (
     [
@@ -97,7 +97,9 @@ async function main() {
     const selected =
       s.gate_evaluation.policy_version === "2bis-D.v1"
         ? policy(read("tooling/quality/policy.json"))
-        : p;
+        : s.gate_evaluation.policy_version === "2bis-E.v1"
+          ? policy(read("tooling/quality/policy-e.json"))
+          : p;
     const result = evaluate(s, selected);
     if (result.policy_digest !== s.gate_evaluation.policy_digest)
       throw Error("Changed policy requires a new snapshot");

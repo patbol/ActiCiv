@@ -50,3 +50,7 @@ Le rapport invalide devient FAIL avec une raison stable ; les données brutes re
 La policy reste consultative dans D. Les contrôles historiquement bloquants restent bloquants dans `verify`/`verify:full`/`release:verify`. Une baseline n’est jamais acceptée automatiquement. Les répétitions critiques ont leur propre rapport, leurs tentatives et dates, sans remplacer la campagne principale.
 
 Procédures, schema, exclusions et limites : [Quality evidence](../../quality/quality-evidence.md). Décision et alternatives : [ADR-011](../../architecture-decisions/011-quality-evidence.md). Valeurs réellement observées : [rapport D](../../quality/phase-2bis-d-report.md).
+
+## Extension F
+
+Policy `tooling/quality/policy-f.json` advisory : preuve observability dérivée des suites privacy/registry/logger unitaires, même rapport/provenance. SQL et adaptateurs continuent à prouver l'audit réel ; aucune métrique d'usage produit transformée en gate. Lecteurs D/E conservés. [Rapport F](../../quality/phase-2bis-f-report.md).

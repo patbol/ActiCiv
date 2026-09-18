@@ -202,7 +202,21 @@ test.describe(
         const before = (await context.cookies()).filter((c) =>
           c.name.startsWith("sb-"),
         );
+        const saved = page.waitForResponse(
+          (r) =>
+            r.url() === proOrigin + "/api/locale" &&
+            r.request().method() === "POST",
+        );
+        await page.setExtraHTTPHeaders({
+          "x-acticiv-command-id": "00000000-0000-4000-8000-000000000000",
+        });
         await locale.choose("en-GB");
+        const correlation = (await saved).headers()["x-correlation-id"];
+        expect(correlation).toMatch(
+          /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/,
+        );
+        expect(correlation).not.toBe("00000000-0000-4000-8000-000000000000");
+        await page.setExtraHTTPHeaders({});
         await expect(locale.selector).toBeFocused();
         expect(
           (await context.cookies()).filter((c) => c.name.startsWith("sb-")),

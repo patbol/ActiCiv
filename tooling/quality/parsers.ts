@@ -57,6 +57,23 @@ export function normalizeVitest(raw: unknown) {
         status: row.status,
       };
     });
+  result.metrics.observability = suites
+    .filter((s) =>
+      /packages\/backend\/src\/platform\/(observability|logger)\.test\.ts$/.test(
+        string(object(s).name),
+      ),
+    )
+    .map((s) => {
+      const row = object(s);
+      return {
+        suite: string(row.name).split("/").pop(),
+        passed: array(row.assertionResults).filter(
+          (a) => object(a).status === "passed",
+        ).length,
+        total: array(row.assertionResults).length,
+        status: row.status,
+      };
+    });
   return result;
 }
 export function normalizePlaywright(raw: unknown) {
